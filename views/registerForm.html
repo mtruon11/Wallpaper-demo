@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/Registration-Form-with-Photo.css">
+    <!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+</head>
+
+<body>
+    <div class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form action="/register" method="post">
+                <h2 class="text-center"><strong>Create</strong> an account.</h2>
+                <div class="form-group">
+                	<input class="form-control" type="text" field="firstName" placeholder="First Name" id="firstName">
+                </div>
+                <div class="form-group">
+	                <input class="form-control" type="text" field="lastName" placeholder="Last Name" id="lastName">
+                </div>
+                <div class="form-group">
+                	<input class="form-control" type="email" field="email" placeholder="Email" id ="email">
+               	</div>
+                <div class="form-group">
+                	<input class="form-control" type="password" field="password" placeholder="Password" id="password">
+                </div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit" id="reg-form-btn">Sign Up</button>
+                </div><a href="/login" class="already">You already have an account? Login here.</a>
+        	</form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#reg-form-btn").click(function() {
+                var firstname = $("#firstName").val();
+                var lastName = $("#lastName").val();
+                var email = $("#email").val();
+                var password = $("#password").val();
+                $.post("/register", {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                });
+            });
+        });
+    </script>
+    
+	<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
