@@ -1,0 +1,54 @@
+<div class="register-photo">
+  <div class="form-container">
+      <div class="image-holder"></div>
+      <form action="/users/register" method="post">
+          <h2 class="text-center"><strong>Create</strong> an account.</h2>
+          <% include ./partials/messages %>
+          <div class="form-group">
+            <input 
+              class="form-control" 
+              type="name"
+              id="name" 
+              name="name"
+              placeholder="Name" 
+              value="<%= typeof name != 'undefined' ? name : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <input 
+              class="form-control" 
+              type="email" 
+              id="email"
+              name="email"
+              placeholder="Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <input 
+              class="form-control" 
+              type="password" 
+              id="password"
+              name="password"
+              placeholder="Password"
+              value="<%= typeof password != 'undefined' ? password : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              class="form-control"
+              placeholder="Confirm Password"
+              value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
+          </div>
+          <a href="/users/login" class="already">You already have an account? Login here.</a>
+    </form>
+  </div>
+</div>
+  
