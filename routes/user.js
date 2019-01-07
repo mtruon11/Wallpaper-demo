@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
   }
 
   if (password != password2) {
-    errors.push({ msg: 'Passwords do not match' });
+    errors.push({ msg: 'Invalid Password' });
   }
 
   if (password.length < 6) {
