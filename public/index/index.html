@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Sidebar-Menu-1.css">
+    <link rel="stylesheet" href="assets/css/Sidebar-Menu.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div class="sidebar-nav">
+                <a href="#" class="sidebar-brand">Home </a>
+                <a href="#">Dashboard </a>
+                <button class="dropdown-btn">Product
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Product </a>
+					<a href="#">Edit Product </a>
+					<a href="#">View Product </a>
+				</div>
+				<button class="dropdown-btn">Billing
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Bill </a>
+					<a href="#">Edit Bill </a>
+					<a href="#">Delete Bill </a>
+				</div>
+				<button class="dropdown-btn">Customers
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Customer </a>
+					<a href="#">Edit Customer </a>
+					<a href="#">View Customer </a>
+				</div>
+				<button class="dropdown-btn">Vendors
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Vendor </a>
+					<a href="#">Edit Vendor </a>
+					<a href="#">View Vendor </a>
+				</div>
+				<button class="dropdown-btn">Orders
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Order </a>
+					<a href="#">Edit Order </a>
+					<a href="#">View Order </a>
+				</div>
+				<button class="dropdown-btn">Users
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add User </a>
+					<a href="#">Edit User </a>
+					<a href="#">View User </a>
+				</div>
+				
+				<a href="#">Messaging </a>
+				
+				<button class="dropdown-btn">Reports
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Report </a>
+					<a href="#">Edit Report </a>
+					<a href="#">View Report </a>
+				</div>
+				
+                <button class="dropdown-btn">Categories
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-container">
+					<a href="#">Add Category </a>
+					<a href="#">Edit Category </a>
+					<a href="#">View Category </a>
+				</div>
+            </div>
+        </div>
+        <div class="page-content-wrapper">
+            <header class="container-fluid">
+				<a class="btn btn-link" role="button" href="#menu-toggle" id="menu-toggle">
+					<i class="fa fa-bars"></i>
+				</a>
+            </header>
+			
+			<div class="container-fluid">
+				<div class="row justify-content-md-center">
+					<div class="col-lg-6 col-md-10 col-sm-12" style="border-style: ridge">
+						<div class="block">
+							<div class="block-title">
+								<h2>
+									<i class="fa fa-pencil"></i>
+									<strong> General </strong> Data
+								</h2>
+							</div>
+							
+							<form class="form-horizontal form-bordered" action="/dashboard/addProduct" method="post">
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="sku">SKU</label>
+									<div class="col-md-9">
+										<input 
+											class="form-group"
+											type="text"
+											id="sku"
+											name="sku"
+											placeholder="Sku"
+										/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="name">Name</label>
+									<div class="col-md-9">
+										<input 
+											class="form-group"
+											type="text"
+											id="name"
+											name="name"
+											placeholder="Enter product name..."
+										/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="description">Description</label>
+									<div class="col-md-9">
+										<input 
+											class="form-group"
+											type="textarea"
+											id="description"
+											name="description"
+											placeholder="Enter product description"
+										/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="categories">Categories</label>
+									<div class="col-md-9">
+										<select class="select-chosen" id="categories" name="categories" data-placeholder="Choose category...">
+											<option></option>
+											<option value="category1">Category 1</option>
+											<option value="category2">Category 2</option>
+											<option value="category3">Category 3</option>
+											<option value="category4">Category 4</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="quantity">Quantity</label>
+									<div class="col-md-9">
+										<input 
+											class="form-group"
+											type="number"
+											id="quantity"
+											name="quantity"
+											placeholder="Enter the number of products"
+										/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<input 
+										class="form-group"
+										type="hidden"
+										id="status"
+										name="status"
+										value="available"
+									/>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="regularPrice">Regular Price</label>
+									<div class="col-md-9">
+										<i class="fa fa-usd"></i>
+										<input 
+											class="form-group"
+											type="number"
+											id="regularPrice"
+											name="regularPrice"
+											placeholder="0.000"
+										/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="discountPrice">Discount Price</label>
+									<div class="col-md-9">
+										<i class="fa fa-usd"></i>
+										<input 
+											class="form-group"
+											type="number"
+											id="discountPrice"
+											name="discountPrice"
+											placeholder="0.000"
+										/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="tag">Tags</label>
+									<div class="col-md-9">
+										<input 
+											class="form-group"
+											type="text"
+											id="tag"
+											name="tag"
+											placeholder="Examples: clothes, shirt..."
+										/>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-10 col-sm-12" style="border-style: ridge">
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+						<div>
+							Text
+						</div>
+					</div>
+				</div>
+				
+			</div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Sidebar-Menu.js"></script>
+</body>
+
+</html>

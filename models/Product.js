@@ -12,6 +12,11 @@ var productSchema = new mongoose.Schema({
     description: {
         type:String
     },
+    quantity:{ 
+        type: Number,
+        required:true,
+        default: 0
+    },
     status: {
         type: Boolean,
         required: true
@@ -31,7 +36,8 @@ var productSchema = new mongoose.Schema({
         type: Array
     },
     categories: {
-        type: Array
+        type: String,
+        required: true
     },
     createdOn:{
         type: Date,
