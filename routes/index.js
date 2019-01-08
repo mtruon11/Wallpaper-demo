@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {ensureAuthenticated} = require('../config/auth');
 
 // Home page 
 router.get('/', (req, res) => res.render('index'));
@@ -20,10 +19,6 @@ router.get('/about', (req, res) => res.render('about'));
 //Contact
 router.get('/contact', (req, res) => res.render('contact'));
 
-// router.get('/products', ensureAuthenticated, (req, res) => 
-//     res.render('product', {
-//         user: req.user
-//     })
-// );
+
 
 module.exports = router;

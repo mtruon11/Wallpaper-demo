@@ -59,6 +59,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 //Routes
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/user.js'));
+app.use('/admin', require('./routes/admin.js'));
 
 const PORT = process.env.PORT || 8080;
 
