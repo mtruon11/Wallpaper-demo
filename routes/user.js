@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const ensureLog = require('connect-ensure-login');
+
 // Load User model
 const User = require('../models/User');
 
 // Login Page
-router.get('/login', (req, res) => res.render('login'));
+router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res) => res.render('login'));
 
 // Register Page
-router.get('/register', (req, res) => res.render('register'));
+router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res) => res.render('register'));
 
 // Register
 router.post('/register', (req, res) => {
@@ -78,7 +80,7 @@ router.post('/register', (req, res) => {
 // Login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/',
+    successReturnToOrRedirect: '/',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);

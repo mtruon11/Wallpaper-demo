@@ -1,6 +1,10 @@
-.form-group .text-box{
-    width: 110%;
+.block .form-group .text-box{
     border: 1px solid black;
     border-radius: 4px;
     box-sizing: border-box;
+    width: 100%
+}
+
+.block .block-title .fa-plus {
+    color: rgb(52, 122, 52);
 }
