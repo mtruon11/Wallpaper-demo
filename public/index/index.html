@@ -97,21 +97,21 @@
 			
 			<div class="container-fluid">
 				<div class="row justify-content-md-center">
-					<div class="col-lg-6 col-md-10 col-sm-12" style="border-style: ridge">
+					<div class="col-lg-10 col-md-10 col-sm-12" style="border-style: ridge">
 						<div class="block">
 							<div class="block-title">
 								<h2>
-									<i class="fa fa-pencil"></i>
-									<strong> General </strong> Data
+									<i class="fa fa-plus"></i>
+									<strong> Add </strong> New Product
 								</h2>
 							</div>
 							
-							<form class="form-horizontal form-bordered" action="/dashboard/addProduct" method="post">
+							<form class="form-horizontal form-bordered" action="/admin/addProduct" method="post" enctype="multipart/form-data">
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="sku">SKU</label>
+									<label class="col-md-3 control-label" for="sku"><b>SKU</b></label>
 									<div class="col-md-9">
 										<input 
-											class="form-group"
+											class="form-group text-box"
 											type="text"
 											id="sku"
 											name="sku"
@@ -120,10 +120,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="name">Name</label>
+									<label class="col-md-3 control-label" for="name"><b>Product Name</b></label>
 									<div class="col-md-9">
 										<input 
-											class="form-group"
+											class="form-group text-box"
 											type="text"
 											id="name"
 											name="name"
@@ -132,22 +132,23 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="description">Description</label>
+									<label class="col-md-3 control-label" for="description"><b>Description</b></label>
 									<div class="col-md-9">
 										<input 
-											class="form-group"
+											class="form-group text-box"
 											type="textarea"
 											id="description"
 											name="description"
-											placeholder="Enter product description"
+											placeholder="Enter product description..."
+											style="height:150px"
 										/>
 									</div>
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="categories">Categories</label>
+									<label class="col-md-3 control-label" for="categories"><b>Categories</b></label>
 									<div class="col-md-9">
-										<select class="select-chosen" id="categories" name="categories" data-placeholder="Choose category...">
+										<select class="select-chosen text-box" id="categories" name="categories[]" data-placeholder="Choose category...">
 											<option></option>
 											<option value="category1">Category 1</option>
 											<option value="category2">Category 2</option>
@@ -158,10 +159,23 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="quantity">Quantity</label>
+									<label class="col-md-3 control-label" for="tag"><b>Tags</b></label>
 									<div class="col-md-9">
 										<input 
-											class="form-group"
+											class="form-group text-box"
+											type="text"
+											id="tag"
+											name="tag[]"
+											placeholder="Examples: clothes, shirt..."
+										/>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="quantity"><b>Quantity</b></label>
+									<div class="col-md-9">
+										<input 
+											class="form-group text-box"
 											type="number"
 											id="quantity"
 											name="quantity"
@@ -181,11 +195,11 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="regularPrice">Regular Price</label>
+									<label class="col-md-3 control-label" for="regularPrice"><b>Regular Price</b></label>
 									<div class="col-md-9">
 										<i class="fa fa-usd"></i>
 										<input 
-											class="form-group"
+											class="form-group text-box"
 											type="number"
 											id="regularPrice"
 											name="regularPrice"
@@ -195,11 +209,11 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="discountPrice">Discount Price</label>
+									<label class="col-md-3 control-label" for="discountPrice"><b>Discount Price</b></label>
 									<div class="col-md-9">
 										<i class="fa fa-usd"></i>
 										<input 
-											class="form-group"
+											class="form-group text-box"
 											type="number"
 											id="discountPrice"
 											name="discountPrice"
@@ -209,57 +223,25 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="tag">Tags</label>
+									<label class="col-md-3 control-label" for="discountPrice"><i class="fa fa-picture-o"></i><b>Upload Product Images</b></label>
 									<div class="col-md-9">
-										<input 
-											class="form-group"
-											type="text"
-											id="tag"
-											name="tag"
-											placeholder="Examples: clothes, shirt..."
-										/>
+										<input type="file" name="file[]" id="file" class="form-group file"multiple>
 									</div>
 								</div>
-
+								
+								<div class="form-group">
+									<button type="submit" class="btn btn-sm btn-primary">
+										<i class="fa fa-floppy-o"></i>
+										Save
+									</button>
+									<button type="reset" class="btn btn-sm btn-warning">
+										<i class="fa fa-repeat"></i>
+										Reset
+									</button>
+								</div>
+								
+								
 							</form>
-						</div>
-					</div>
-					<div class="col-lg-6 col-md-10 col-sm-12" style="border-style: ridge">
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
-						</div>
-						<div>
-							Text
 						</div>
 					</div>
 				</div>

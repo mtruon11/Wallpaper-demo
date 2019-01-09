@@ -7,7 +7,7 @@ const {ensureAuthenticated} = require('../config/auth');
 // Load User model
 const User = require('../models/User');
 
-router.get('/dashboard', ensureAuthenticated, (req, res) => 
+router.get('/', (req, res) => 
     res.render('dashboard', {
         user: req.user
     })
