@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {ensureAuthenticated} = require("../config/auth")
-const ensureLog = require("connect-ensure-login")
+
 // Home page 
 router.get('/', (req, res) => res.render('index'));
 
@@ -19,11 +18,5 @@ router.get('/about', (req, res) => res.render('about'));
 
 //Contact
 router.get('/contact', (req, res) => res.render('contact'));
-
-router.get('/admin', ensureLog.ensureLoggedIn("/users/login"), (req, res) => 
-    res.render('dashboard', {
-        user: req.user
-    })
-)
 
 module.exports = router;

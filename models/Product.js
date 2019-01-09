@@ -10,12 +10,12 @@ var productSchema = new mongoose.Schema({
         required: true
     },
     description: {
-        type:String
+        type:String,
+        required: false
     },
     quantity:{ 
         type: Number,
         required:true,
-        default: 0
     },
     status: {
         type: Boolean,
@@ -26,17 +26,23 @@ var productSchema = new mongoose.Schema({
         required: true
     },
     discountPrice: {
-        type: Number
+        type: Number,
+        required: false
     },
     taxable: {
         type: Boolean,
         default: false
     },
     tags: {
-        type: Array
+        type: String,
+        required: false
     },
     categories: {
-        type: String,
+        type: Array,
+        required: true
+    },
+    imageUrl: {
+        type: Array,
         required: true
     },
     createdOn:{
