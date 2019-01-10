@@ -2,23 +2,15 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function(req, file, callback) { 
-        callback(null, './uploads')
+        callback(null, './public/images/uploads')
     },
     filename: function(req, file, callback){
-        callback(null, file.filename + '-' + Date.now)
+        callback(null, Date.now().toString() + '-' + file.originalname)
     }
 })
 
 const upload = multer({
     storage: storage
-},
-{
-    limits: 
-    {
-        fileSize: 5e6,
-        fieldNameSize: 100
-    }
-}
-).array('images');
+});
 
 module.exports = upload;
