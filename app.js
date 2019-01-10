@@ -5,6 +5,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session')
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -28,8 +29,8 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 //Express body parser
-app.use(express.urlencoded({extended:true}))
-
+app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json());
 //Express session
 app.use(
     session({
@@ -54,6 +55,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+//Access to public folder
 app.use(express.static(path.join(__dirname, '/public')));
 
 //Routes
@@ -61,6 +63,10 @@ app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/admin', require('./routes/admin.js'));
 
+//Handle 404 errors. The last middleware.
+app.use('*', (req, res) => { res.status(404).send('404')});
+
+// PORT 
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, function(){

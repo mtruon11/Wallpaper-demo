@@ -19,7 +19,8 @@ var productSchema = new mongoose.Schema({
     },
     status: {
         type: Boolean,
-        required: true
+        required: true,
+        default: true
     },
     regularPrice: {
         type: Number,
@@ -31,7 +32,8 @@ var productSchema = new mongoose.Schema({
     },
     taxable: {
         type: Boolean,
-        default: false
+        default: false,
+        required: true
     },
     tags: {
         type: String,
