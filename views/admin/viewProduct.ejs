@@ -1,0 +1,62 @@
+<div id="wrapper">
+
+    <% include ./sidebar-wrapper %>
+
+    <div class="page-content-wrapper">
+        
+        <% include ./header %>
+
+        <% include ./productReport %>
+        
+        <!-- Add product form -->
+        <div class="container-fluid table-responsive">
+            <table class="table table-light table-striped table-bordered mx-8 my-8">
+                <thead>
+                    <tr>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Reg. Price</th>
+                        <th scope="col">Dis. Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Added On</th>
+                        <th scope="col">Action</th>
+                    </tr>
+
+                    <tbody>
+                        <% data.forEach(function(data) { %>
+                            <tr class="mw-100 p-3">
+                                <td><%= data.sku %></td>
+                                <td class="h-50 mx-auto my-auto">
+                                    <img src=<%= data.imageUrl[0] %> alt="Image" class="img-fluid img-thumbnail rounded"/>
+                                </td>
+                                <td><%= data.name %></td>
+                                <td><%= data.regularPrice %></td>
+                                <td><%= data.discountPrice %></td>
+                                <td><%= data.quantity %></td>
+                                <% if(data.status){ %>
+                                    <td><span class="label label-success">Available</span></td>
+                                <% } else { %>
+                                    <td><span class="label label-danger">Out of Stock</span></td>
+                                <% } %>
+                                <td><%= data.categories %></td>
+                                <td><%= data.tags %></td>
+                                <td><%= data.createdOn.toDateString() %></td>
+                                <td>
+                                    <a href="/admin/product/editProduct"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/product/deleteProduct"><i class="fas fa-trash-alt" style="color:red"></i></a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+
+                </thead>
+            </table>
+        </div>
+        
+    </div>
+
+</div>

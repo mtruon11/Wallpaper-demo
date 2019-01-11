@@ -2,18 +2,17 @@ const express = require('express');
 const router = express.Router();
 const ensureLog = require("connect-ensure-login")
 const upload = require('./upload');
-const async = require('async');
 
 // Load User model
 const Product = require('../models/Product');
 
 router.get('/', ensureLog.ensureLoggedIn("/users/login"), (req, res) => 
-    res.render('./admin/dashboard', {
+    res.status(200).render('./admin/dashboard', {
         user: req.user
     })
 );
 
-router.get('/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, res) => {
+router.get('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, res) => {
     var total;
     var onStock;
     var outOfStock;
@@ -42,7 +41,7 @@ router.get('/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, 
 });
 
 
-router.post('/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
+router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
 
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
@@ -64,7 +63,7 @@ router.post('/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.arra
     }
 
     if(errors.length > 0) {
-        res.render('./admin/productForm', {
+        res.status(404).render('./admin/productForm', {
             errors, sku, name, description, quantity, regularPrice, 
             discountPrice, tags, categories, imageUrl
         });
@@ -72,7 +71,7 @@ router.post('/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.arra
         Product.findOne({sku: sku}).then(product => {
             if(product){
                 errors.push({msg: 'Product already existed.'});
-                res.render('./admin/productForm', {
+                res.status(200).render('./admin/productForm', {
                     errors, sku, name, description, quantity, regularPrice,
                     discountPrice, tags, categories, imageUrl
                 });
@@ -95,12 +94,48 @@ router.post('/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.arra
                         'success_msg',
                         'New product is created.'
                     )
-                    res.redirect('/admin/addProduct')
+                    res.redirect('/admin/product/addProduct')
                 })
                 .catch(err => console.log(err));
             }
         })
     }
+});
+
+router.get('/product/viewProducts', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    
+    Product.find({}, async (err,data) => {
+        if(data){
+
+            var total;
+            var onStock;
+            var outOfStock;
+
+            await Product
+                .countDocuments({}, (err, count) => {
+                    total = count;
+                });
+                
+            await Product
+                .countDocuments({quantity: {$gt: 0}}, (err, count) => {
+                    onStock = count;
+                });
+
+            await Product
+                .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                    outOfStock = count;
+                });
+
+            res.status(200).render('./admin/viewProduct', {
+                user: req.user,
+                total: total,
+                onStock: onStock,
+                outOfStock: outOfStock,
+                data: data,
+                index: 0
+            })
+        }
+    });
 });
 
 
