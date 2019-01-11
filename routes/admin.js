@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ensureLog = require("connect-ensure-login")
 const upload = require('./upload');
-const multer = require('multer');
+const async = require('async');
 
 // Load User model
 const Product = require('../models/Product');
@@ -13,11 +13,34 @@ router.get('/', ensureLog.ensureLoggedIn("/users/login"), (req, res) =>
     })
 );
 
-router.get('/addProduct', ensureLog.ensureLoggedIn("/users/login"), (req, res) => 
-    res.render('./admin/productForm', {
-        user: req.user
+router.get('/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, res) => {
+    var total;
+    var onStock;
+    var outOfStock;
+
+    await Product
+        .countDocuments({}, (err, count) => {
+            total = count;
+        });
+        
+    await Product
+        .countDocuments({quantity: {$gt: 0}}, (err, count) => {
+            onStock = count;
+        });
+
+    await Product
+        .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+            outOfStock = count;
+        });
+
+    res.status(200).render('./admin/productForm', {
+        user: req.user,
+        total: total,
+        onStock: onStock,
+        outOfStock: outOfStock
     })
-);
+});
+
 
 router.post('/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
 

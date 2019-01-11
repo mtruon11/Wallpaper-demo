@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureLog = require('connect-ensure-login');
+const validation = require('validator');
 
 // Load User model
 const User = require('../models/User');
@@ -15,19 +16,35 @@ router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res) => res.render
 
 // Register
 router.post('/register', (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  let { name, email, password, password2 } = req.body;
   let errors = [];
 
   if (!name || !email || !password || !password2) {
     errors.push({ msg: 'Please enter all fields' });
   }
+  
+  //sanitize input
+  name = validation.escape(name);
+  email = validation.escape(email);
+  password = validation.escape(password);
+  password2 = validation.escape(password2);
 
+  //Validate email
+  if(!validation.isEmail(email)){
+    errors.push({msg: 'Bad email.'})
+  } else {
+    email = validation.normalizeEmail(email, [
+      'all_lowercase', 'gmail_remove_dots','gmail_remove_subaddress', 'gmail_convert_googlemaildotcom', 
+      'outlookdotcom_remove_subaddress', 'yahoo_remove_subaddress', 'icloud_remove_subaddress'
+    ])
+  } 
+  
   if (password != password2) {
-    errors.push({ msg: 'Invalid Password' });
+    errors.push({ msg: 'Invalid Password.' });
   }
 
   if (password.length < 6) {
-    errors.push({ msg: 'Password must be at least 6 characters' });
+    errors.push({ msg: 'Password must be at least 6 characters.' });
   }
 
   if (errors.length > 0) {
@@ -41,7 +58,7 @@ router.post('/register', (req, res) => {
   } else {
     User.findOne({ email: email }).then(user => {
       if (user) {
-        errors.push({ msg: 'Email already exists' });
+        errors.push({ msg: 'Email already exists.' });
         res.render('register', {
           errors,
           name,
@@ -65,7 +82,7 @@ router.post('/register', (req, res) => {
               .then(user => {
                 req.flash(
                   'success_msg',
-                  'You are now registered and can log in'
+                  'You are now registered and can log in.'
                 );
                 res.redirect('/users/login');
               })
@@ -89,7 +106,7 @@ router.post('/login', (req, res, next) => {
 // Logout
 router.get('/logout', (req, res) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out');
+  req.flash('success_msg', 'You are logged out.');
   res.redirect('/users/login');
 });
 
