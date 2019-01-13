@@ -6,8 +6,6 @@
         
         <% include ./header %>
         
-        <% include productReport %>
-
         <!-- Add product form -->
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -22,7 +20,7 @@
                         </div>
                         <div class="block-form">
                             <% include ../partials/messages %>
-                            <form action="/admin/product/addProduct" method="post" enctype="multipart/form-data">
+                            <form action="/admin/product/editProduct" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="sku"><b>SKU</b></label>
                                     <div class="col-md-auto">
@@ -32,6 +30,7 @@
                                             id="sku"
                                             name="sku"
                                             placeholder="Enter sku..."
+                                            value= <%- product.sku -%>
                                         />
                                     </div>
                                 </div>
@@ -44,6 +43,7 @@
                                             id="name"
                                             name="name"
                                             placeholder="Enter product name..."
+                                            value= <%- product.name -%>
                                             />
                                     </div>
                                 </div>
@@ -57,14 +57,14 @@
                                             name="description"
                                             placeholder="Enter product description..."
                                             rows="5"
-                                        ></textarea>
+                                        ><%- product.sku -%></textarea>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="categories"><b>Categories</b></label>
                                     <div class="col-md-auto">
-                                        <select class="select-chosen text-box" id="categories" name="categories[]" multiple>
+                                        <select class="select-chosen text-box" id="categories" name="categories[]" data-role="tagsinput" multiple>
                                             <option value="category1">Category 1</option>
                                             <option value="category2">Category 2</option>
                                             <option value="category3">Category 3</option>
@@ -82,6 +82,7 @@
                                             id="tags"
                                             name="tags"
                                             placeholder="Examples: clothes, shirt..."
+                                            value= <%- product.tags -%>
                                         />
                                     </div>
                                 </div>
@@ -95,6 +96,7 @@
                                             id="quantity"
                                             name="quantity"
                                             placeholder="Enter the number of products"
+                                            value= <%- product.quantity -%>
                                         />
                                     </div>
                                 </div>
@@ -110,6 +112,7 @@
                                             id="regularPrice"
                                             name="regularPrice"
                                             placeholder="0.000"
+                                            value= <%- product.regularPrice -%>
                                         />
                                     </div>
                                 </div>
@@ -125,6 +128,7 @@
                                         id="discountPrice"
                                         name="discountPrice"
                                         placeholder="0.000"
+                                        value= <%- product.discountPrice -%>
                                         />
                                     </div>
                                 </div>
@@ -136,7 +140,7 @@
                                         type="file" 
                                         name="images" 
                                         id="images" 
-                                        class="form-control text-box" 
+                                        class="form-control text-box"
                                         multiple>
                                     </div>
                                 </div>

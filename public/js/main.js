@@ -216,4 +216,34 @@
     		$('.registerForm #registerModal').modal();
     	});
     });
+
+    // Tooltip 
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    // Add to cart
+    $('.block2-btn-addcart').each(function(){
+        var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+        $(this).on('click', function(){
+            swal(nameProduct, "is added to cart !", "success");
+        });
+    });
+
+    // add to wishlist
+    $('.block2-btn-addwishlist').each(function(){
+        var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+        $(this).on('click', function(){
+            swal(nameProduct, "is added to wishlist !", "success");
+        });
+    });
+
+    // Selection 1 
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+    
 })(jQuery);
+
+

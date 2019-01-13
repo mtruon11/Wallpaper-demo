@@ -31,7 +31,8 @@
                             <tr class="mw-100 p-3">
                                 <td><%= data.sku %></td>
                                 <td class="h-50 mx-auto my-auto">
-                                    <img src=<%= data.imageUrl[0] %> alt="Image" class="img-fluid img-thumbnail rounded"/>
+                                    <img src='/images/uploads/1547227742454-banner-01.jpg' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
+                                    <!-- <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded"/> -->
                                 </td>
                                 <td><%= data.name %></td>
                                 <td><%= data.regularPrice %></td>
@@ -46,8 +47,12 @@
                                 <td><%= data.tags %></td>
                                 <td><%= data.createdOn.toDateString() %></td>
                                 <td>
-                                    <a href="/admin/product/editProduct"><i class="fas fa-edit"></i></a>
-                                    <a href="/admin/product/deleteProduct"><i class="fas fa-trash-alt" style="color:red"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Edit" data-method="put" href=<%= link + data.sku %> >
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Delete" data-method="delete" href=<%= link + data.sku%>>
+                                        <i class="fas fa-trash-alt" style="color:red"></i>
+                                    </a>
                                 </td>
                             </tr>
                         <% }); %>

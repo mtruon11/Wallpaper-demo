@@ -12,6 +12,42 @@ router.get('/', ensureLog.ensureLoggedIn("/users/login"), (req, res) =>
     })
 );
 
+router.get('/product', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    
+    Product.find({}, async (err,data) => {
+        if(data){
+
+            var total;
+            var onStock;
+            var outOfStock;
+
+            await Product
+                .countDocuments({}, (err, count) => {
+                    total = count;
+                });
+                
+            await Product
+                .countDocuments({quantity: {$gt: 0}}, (err, count) => {
+                    onStock = count;
+                });
+
+            await Product
+                .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                    outOfStock = count;
+                });
+
+            res.status(200).render('./admin/viewProduct', {
+                user: req.user,
+                total: total,
+                onStock: onStock,
+                outOfStock: outOfStock,
+                data: data,
+                link: "/admin/product/"
+            })
+        }
+    });
+});
+
 router.get('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, res) => {
     var total;
     var onStock;
@@ -40,9 +76,7 @@ router.get('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), asyn
     })
 });
 
-
-router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
-
+router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), async (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
     const images = req.files;
@@ -61,6 +95,7 @@ router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upl
     if(quantity <= 0 || regularPrice <= 0 || discountPrice <= 0){
         errors.push({msg: 'Quantity, regular price, and discount price must be greater than 0.'});
     }
+
 
     if(errors.length > 0) {
         res.status(404).render('./admin/productForm', {
@@ -102,41 +137,8 @@ router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upl
     }
 });
 
-router.get('/product/viewProducts', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-    
-    Product.find({}, async (err,data) => {
-        if(data){
-
-            var total;
-            var onStock;
-            var outOfStock;
-
-            await Product
-                .countDocuments({}, (err, count) => {
-                    total = count;
-                });
-                
-            await Product
-                .countDocuments({quantity: {$gt: 0}}, (err, count) => {
-                    onStock = count;
-                });
-
-            await Product
-                .countDocuments({quantity: {$eq: 0}}, (err, count) => {
-                    outOfStock = count;
-                });
-
-            res.status(200).render('./admin/viewProduct', {
-                user: req.user,
-                total: total,
-                onStock: onStock,
-                outOfStock: outOfStock,
-                data: data,
-                index: 0
-            })
-        }
-    });
+router.get('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    res.redirect('/admin/product/viewProduct');
 });
-
 
 module.exports = router;
