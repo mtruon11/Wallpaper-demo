@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session')
 const path = require('path');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.set('view engine', 'ejs');
 //Express body parser
 app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
 //Express session
 app.use(
     session({
@@ -39,6 +41,18 @@ app.use(
         saveUninitialized: true
     })
 );
+ 
+// override with POST having ?_method=DELETE
+app.use((req, res, next) => {
+    if(req.query._method == 'DELETE'){
+        req.method = 'DELETE';
+        req.url = req.path;
+    } else if (req.query._method == 'PUT'){
+        req.method = 'PUT';
+        req.url = req.path;
+    }
+    next();
+});
 
 //Passport middleware
 app.use(passport.initialize());

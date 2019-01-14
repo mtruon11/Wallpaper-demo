@@ -47,12 +47,12 @@
                                 <td><%= data.tags %></td>
                                 <td><%= data.createdOn.toDateString() %></td>
                                 <td>
-                                    <a data-toggle="tooltip" data-placement="top" title="Edit" data-method="put" href=<%= link + data.sku %> >
+                                    <a data-toggle="tooltip" data-placement="top" title="Edit" href="<%= link + data.sku %>" >
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a data-toggle="tooltip" data-placement="top" title="Delete" data-method="delete" href=<%= link + data.sku%>>
+                                    <a data-toggle="tooltip" data-placement="top" title="Delete" href="<%= link + data.sku + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
                                         <i class="fas fa-trash-alt" style="color:red"></i>
-                                    </a>
+                                    </a> 
                                 </td>
                             </tr>
                         <% }); %>

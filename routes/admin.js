@@ -137,8 +137,104 @@ router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upl
     }
 });
 
-router.get('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-    res.redirect('/admin/product/viewProduct');
+router.delete('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    
+    Product.deleteOne({sku: req.params.sku}, (err, product) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.sku + ' Product deleted');
+            res.redirect('/admin/product');
+        }
+    });
 });
+
+router.get('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+
+    Product.findOne({sku: req.params.sku}, async (err, product) => {
+        var total;
+        var onStock;
+        var outOfStock;
+    
+        await Product
+            .countDocuments({}, (err, count) => {
+                total = count;
+            });
+            
+        await Product
+            .countDocuments({quantity: {$gt: 0}}, (err, count) => {
+                onStock = count;
+            });
+    
+        await Product
+            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                outOfStock = count;
+            });   
+    
+        res.render('./admin/editProduct', {
+            user: req.user,
+            total: total,
+            onStock: onStock,
+            outOfStock: outOfStock, 
+            product: product
+        });
+    });
+    
+});
+
+router.post('/product/editProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
+    const {sku, name, description, quantity, regularPrice, 
+        discountPrice, tags, categories} = req.body;
+    const images = req.files;
+    let errors = [];
+    let imageUrl = [];
+
+    if(!sku || !name || !quantity || !regularPrice || !discountPrice 
+        || !tags || !categories ) {
+            errors.push({msg: 'Please enter all fields.'});
+    }
+
+    if(images.length == 0){
+        errors.push({msg: 'Please upload at least 1 image.'});
+    }
+
+    if(quantity <= 0 || regularPrice <= 0 || discountPrice <= 0){
+        errors.push({msg: 'Quantity, regular price, and discount price must be greater than 0.'});
+    }
+
+
+    if(errors.length > 0) {
+        const product = new Product({
+            sku, name, description, quantity, regularPrice,
+            discountPrice, tags, categories, imageUrl
+        });
+        res.status(404).render('./admin/editProduct', {
+            errors, product
+        });
+    } else {
+        for(var idx in images){
+            imageUrl.push(images[idx].path);
+        }
+        Product.findOneAndUpdate(
+            {
+                sku: sku
+            },
+            {
+                name: name, description: description, quantity:quantity, regularPrice:regularPrice,
+                discountPrice:discountPrice, tags:tags, categories:categories, imageUrl:imageUrl
+            },
+            {
+                upsert:true
+            }, 
+            (err, product) => {
+                if(err){
+                    console.log('error while updating');
+                    return;
+                }
+                res.redirect('/admin/product/');
+            });
+    }
+})
+
 
 module.exports = router;
