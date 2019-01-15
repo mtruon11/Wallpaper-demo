@@ -6,7 +6,6 @@ const flash = require('connect-flash');
 const session = require('express-session')
 const path = require('path');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
 
 const app = express();
 

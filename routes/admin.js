@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const ensureLog = require("connect-ensure-login")
-const upload = require('./upload');
+const ensureLog = require("connect-ensure-login");
+const {upload, uploadForUsers} = require('./upload');
+const validation = require('validator');
+const bcrypt = require('bcryptjs');
 
-// Load User model
+// Load Product model
 const Product = require('../models/Product');
+// Load User model
+const User = require('../models/User');
 
 router.get('/', ensureLog.ensureLoggedIn("/users/login"), (req, res) => 
     res.status(200).render('./admin/dashboard', {
@@ -234,7 +238,114 @@ router.post('/product/editProduct', ensureLog.ensureLoggedIn("/users/login"), up
                 res.redirect('/admin/product/');
             });
     }
+});
+
+router.get('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    res.render("./admin/userForm");
 })
 
+router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadForUsers.single('image'), (req, res) => {
+    let {name, email, password, role} = req.body;
+    let image = req.file;
+    let errors = [];
+
+    if(!name || !email || ! password || !role) {
+        errors.push({msg: 'Please enter all fields.'});
+    }
+
+    if(!image) {
+        errors.push({msg: 'Please upload a photo of yourself.'});
+    }
+
+    //sanitize input
+    name = validation.escape(name);
+    email = validation.escape(email);
+    password = validation.escape(password);
+
+    //Validate email
+    if(!validation.isEmail(email)){
+        errors.push({msg: 'Bad email.'})
+    } else {
+        email = validation.normalizeEmail(email, [
+        'all_lowercase', 'gmail_remove_dots','gmail_remove_subaddress', 'gmail_convert_googlemaildotcom', 
+        'outlookdotcom_remove_subaddress', 'yahoo_remove_subaddress', 'icloud_remove_subaddress'
+        ])
+    } 
+    if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters.' });
+    }
+    
+    if (errors.length > 0) {
+        res.render('./admin/userForm', {
+        errors,
+        name,
+        email,
+        password,
+        role,
+        image
+        });
+    } else {
+        User.findOne({ email: email }).then(user => {
+            if (user) {
+                errors.push({ msg: 'Email already exists.' });
+                res.render('./admin/userForm', {
+                    errors,
+                    name,
+                    email,
+                    password,
+                    role,
+                    image
+                });
+            } else {
+                const newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: role,
+                    imageUrl: image.path
+                });
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.password = hash;
+                        newUser
+                        .save()
+                        .then(user => {
+                        req.flash(
+                        'success_msg',
+                        'You are now registered and can log in.'
+                        );
+                        res.redirect('/admin/users/viewUser');
+                        })
+                        .catch(err => console.log(err));
+                    });
+                });
+            }
+        });
+    }
+});
+
+router.get('/users/viewUser', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+    User.find({}, (err, doc) => {
+        res.status(200).render('./admin/viewUser', {
+            user: req.user,
+            doc: doc,
+            link: "/admin/users/"
+        })
+    })
+});
+
+router.delete('/users/:email', ensureLog.ensureLoggedIn('/users/login'), (req, res) => {
+    
+    User.deleteOne({email: req.params.email}, (err, user) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.email + ' deleted');
+            res.redirect('/admin/users/viewUser');
+        }
+    });
+});
 
 module.exports = router;
