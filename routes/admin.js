@@ -302,7 +302,7 @@ router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadFo
                     email: email,
                     password: password,
                     role: role,
-                    imageUrl: image.path
+                    imageUrl: '/images/users/' + image.filename
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
