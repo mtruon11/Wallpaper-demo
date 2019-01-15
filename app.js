@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session')
 const path = require('path');
 const bodyParser = require('body-parser');
+const ensureLog = require('connect-ensure-login');
 
 const app = express();
 
@@ -74,8 +75,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 //Routes
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/user.js'));
-app.use('/admin', require('./routes/admin.js'));
-
+app.use('/employees', require('./routes/employee.js'));
+app.use('/admin', ensureLog.ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});
 

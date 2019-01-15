@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-const storage = multer.diskStorage({
+const storageForProduct = multer.diskStorage({
     destination: function(req, file, callback) { 
         callback(null, './public/images/uploads')
     },
@@ -9,25 +9,38 @@ const storage = multer.diskStorage({
     }
 })
 
-const storageForUsers = multer.diskStorage({
+const storageForEmployee = multer.diskStorage({
     destination: function(req, file, callback) { 
-        callback(null, './public/images/users')
+        callback(null, './public/images/employees')
     },
     filename: function(req, file, callback){
         callback(null, Date.now().toString() + '-' + file.originalname)
     }
 })
 
-const upload = multer({
-    storage: storage
+const storageForVendor = multer.diskStorage({
+    destination: function(req, file, callback) { 
+        callback(null, './public/images/vendors')
+    },
+    filename: function(req, file, callback){
+        callback(null, Date.now().toString() + '-' + file.originalname)
+    }
+})
+
+const uploadForProduct = multer({
+    storage: storageForProduct
 });
 
-const uploadForUsers = multer({
-    storage: storageForUsers
+const uploadForEmployee = multer({
+    storage: storageForEmployee
 });
 
+const uploadForVendor = multer({
+    storage: storageForVendor
+});
 
 module.exports = {
-    upload: upload,
-    uploadForUsers: uploadForUsers
+    uploadProduct: uploadForProduct,
+    uploadForEmployee: uploadForEmployee,
+    uploadForVendor: uploadForVendor
 }

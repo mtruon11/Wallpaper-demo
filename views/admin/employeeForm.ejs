@@ -15,12 +15,12 @@
                         <div class="mx-4 my-4 block-title">
                             <h2>
                                 <i class="fa fa-plus"></i>
-                                <strong> Add </strong> New User
+                                <strong> Add </strong> New Employee
                             </h2>
                         </div>
                         <div class="block-form">
                             <% include ../partials/messages %>
-                            <form action="/admin/users/addUser" method="post" enctype="multipart/form-data">
+                            <form action="/admin/employees/addEmployee" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="name"><b>Name</b></label>
                                     <div class="col-md-auto">
@@ -55,6 +55,30 @@
                                             id="password"
                                             name="password"
                                             placeholder="Enter password..."
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="phone"><b>Phone Number</b></label>
+                                    <div class="col-md-auto">
+                                        <input 
+                                            class="form-control text-box"
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            placeholder="Enter Phone Number"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="address"><b>Address</b></label>
+                                    <div class="col-md-auto">
+                                        <input 
+                                            class="form-control text-box"
+                                            type="text"
+                                            id="address"
+                                            name="address"
+                                            placeholder="Enter address..."
                                         />
                                     </div>
                                 </div>

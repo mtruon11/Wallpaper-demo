@@ -3,24 +3,25 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 //Load User model
-const User = require('../models/User');
+const Employee = require('../models/Employee');
 
 module.exports = function(passport) {
     passport.use(
         new LocalStrategy({usernameField: 'email'} , (email, password, done) => {
             //Match user
-            User.findOne({
+            Employee.findOne({
                 email: email
-            }).then( user => {
-                if (!user) {
+            }).then( employee => {
+                if (!employee) {
                     return done(null, false, {message: 'That email is not registered'});
                 }
 
                 // Match password
-                bcrypt.compare(password, user.password, (err, isMatch) => {
+                bcrypt.compare(password, employee.password, (err, isMatch) => {
                     if(err) throw err;
                     if(isMatch) {
-                        return done(null, user);
+                        console.log('Employee: ' + employee.email + ' logged in.')
+                        return done(null, employee);
                     } else {
                         return done(null, false, {message:'Password incorrect'});
                     }
@@ -30,13 +31,13 @@ module.exports = function(passport) {
         })
     );
 
-    passport.serializeUser(function(user, done){
-        done(null, user.id);
+    passport.serializeUser(function(employee, done){
+        done(null, employee.id);
     });
 
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user){
-            done(err, user);
+        Employee.findById(id, function(err, employee){
+            done(err, employee);
         });
     });
 };

@@ -11,10 +11,12 @@
             <table class="table table-light table-striped table-bordered mx-8 my-8">
                 <thead>
                     <tr>
-                        <th scope="col">Image</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Company Logo</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Vendor Name</th>
+                        <th scope="col">Vendor Email</th>
+                        <th scope="col">Vendor Phone</th>
+                        <th scope="col">Vendor Address</th>
                         <th scope="col">Added On</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -25,9 +27,11 @@
                                 <td class="h-50 mx-auto my-auto">
                                     <img src="<%= doc.imageUrl %>" alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
                                 </td>
+                                <td><%= doc.company %></td>
                                 <td><%= doc.name %></td>
                                 <td><%= doc.email %></td>
-                                <td><%= doc.role %></td>
+                                <td><%= doc.phone %></td>
+                                <td><%= doc.address %></td>
                                 <td><%= doc.createdOn.toDateString() %></td>
                                 <td>
                                     <a doc-toggle="tooltip" doc-placement="top" title="Edit" href="<%= link + doc.email %>" >

@@ -1,22 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const ensureLog = require("connect-ensure-login");
-const {upload, uploadForUsers} = require('./upload');
+const {uploadProduct, uploadForEmployee, uploadForVendor} = require('./upload');
 const validation = require('validator');
 const bcrypt = require('bcryptjs');
 
 // Load Product model
 const Product = require('../models/Product');
-// Load User model
-const User = require('../models/User');
+// Load Employee model
+const Employee = require('../models/Employee');
+// Load Vendor model
+const Vendor = require('../models/Vendor');
 
-router.get('/', ensureLog.ensureLoggedIn("/users/login"), (req, res) => 
+// DashBoard
+router.get('/', (req, res) => 
     res.status(200).render('./admin/dashboard', {
         user: req.user
     })
 );
 
-router.get('/product', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
+router.get('/product', (req, res) => {
     
     Product.find({}, async (err,data) => {
         if(data){
@@ -52,7 +54,7 @@ router.get('/product', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
     });
 });
 
-router.get('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), async (req, res) => {
+router.get('/product/addProduct', async (req, res) => {
     var total;
     var onStock;
     var outOfStock;
@@ -80,7 +82,40 @@ router.get('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), asyn
     })
 });
 
-router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), async (req, res) => {
+router.get('/product/:sku', (req, res) => {
+
+    Product.findOne({sku: req.params.sku}, async (err, product) => {
+        var total;
+        var onStock;
+        var outOfStock;
+    
+        await Product
+            .countDocuments({}, (err, count) => {
+                total = count;
+            });
+            
+        await Product
+            .countDocuments({quantity: {$gt: 0}}, (err, count) => {
+                onStock = count;
+            });
+    
+        await Product
+            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                outOfStock = count;
+            });   
+    
+        res.render('./admin/editProduct', {
+            user: req.user,
+            total: total,
+            onStock: onStock,
+            outOfStock: outOfStock, 
+            product: product
+        });
+    });
+    
+});
+
+router.post('/product/addProduct', uploadProduct.array('images'), async (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
     const images = req.files;
@@ -141,52 +176,7 @@ router.post('/product/addProduct', ensureLog.ensureLoggedIn("/users/login"), upl
     }
 });
 
-router.delete('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-    
-    Product.deleteOne({sku: req.params.sku}, (err, product) => {
-        if(err) {
-            console.log('Error while deleting product');
-        } else {
-            console.log(req.params.sku + ' Product deleted');
-            res.redirect('/admin/product');
-        }
-    });
-});
-
-router.get('/product/:sku', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-
-    Product.findOne({sku: req.params.sku}, async (err, product) => {
-        var total;
-        var onStock;
-        var outOfStock;
-    
-        await Product
-            .countDocuments({}, (err, count) => {
-                total = count;
-            });
-            
-        await Product
-            .countDocuments({quantity: {$gt: 0}}, (err, count) => {
-                onStock = count;
-            });
-    
-        await Product
-            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
-                outOfStock = count;
-            });   
-    
-        res.render('./admin/editProduct', {
-            user: req.user,
-            total: total,
-            onStock: onStock,
-            outOfStock: outOfStock, 
-            product: product
-        });
-    });
-    
-});
-
-router.post('/product/editProduct', ensureLog.ensureLoggedIn("/users/login"), upload.array('images'), (req, res) => {
+router.post('/product/editProduct', uploadProduct.array('images'), (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
     const images = req.files;
@@ -240,16 +230,38 @@ router.post('/product/editProduct', ensureLog.ensureLoggedIn("/users/login"), up
     }
 });
 
-router.get('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-    res.render("./admin/userForm");
-})
+router.delete('/product/:sku', (req, res) => {
+    
+    Product.deleteOne({sku: req.params.sku}, (err, product) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.sku + ' Product deleted');
+            res.redirect('/admin/product');
+        }
+    });
+});
 
-router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadForUsers.single('image'), (req, res) => {
-    let {name, email, password, role} = req.body;
+router.get('/employees/viewEmployee', (req, res) => {
+    Employee.find({}, (err, doc) => {
+        res.status(200).render('./admin/viewEmployee', {
+            user: req.user,
+            doc: doc,
+            link: "/admin/employees/"
+        })
+    })
+});
+
+router.get('/employees/addEmployee', (req, res) => {
+    res.render("./admin/employeeForm");
+});
+
+router.post('/employees/addEmployee', uploadForEmployee.single('image'), (req, res) => {
+    let {name, email, password, phone, address, role} = req.body;
     let image = req.file;
     let errors = [];
 
-    if(!name || !email || ! password || !role) {
+    if(!name || !email || ! password || !phone || !address || !role) {
         errors.push({msg: 'Please enter all fields.'});
     }
 
@@ -261,6 +273,8 @@ router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadFo
     name = validation.escape(name);
     email = validation.escape(email);
     password = validation.escape(password);
+    phone = validation.escape(phone);
+    address = validation.escape(address);
 
     //Validate email
     if(!validation.isEmail(email)){
@@ -276,47 +290,53 @@ router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadFo
     }
     
     if (errors.length > 0) {
-        res.render('./admin/userForm', {
-        errors,
-        name,
-        email,
-        password,
-        role,
-        image
+        res.render('./admin/employeeForm', {
+            errors,
+            name,
+            email,
+            password,
+            phone,
+            address,
+            role,
+            image
         });
     } else {
-        User.findOne({ email: email }).then(user => {
-            if (user) {
+        Employee.findOne({ email: email }).then(employee => {
+            if (employee) {
                 errors.push({ msg: 'Email already exists.' });
-                res.render('./admin/userForm', {
+                res.render('./admin/employeeForm', {
                     errors,
                     name,
                     email,
                     password,
+                    phone,
+                    address,
                     role,
                     image
                 });
             } else {
-                const newUser = new User({
+                const newEmployee = new Employee({
                     name: name,
                     email: email,
                     password: password,
+                    phone: phone,
+                    address: address,
                     role: role,
-                    imageUrl: '/images/users/' + image.filename
+                    imageUrl: '/images/employees/' + image.filename
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    bcrypt.hash(newEmployee.password, salt, (err, hash) => {
                         if (err) throw err;
-                        newUser.password = hash;
-                        newUser
+                        newEmployee.password = hash;
+                        newEmployee
                         .save()
                         .then(user => {
                         req.flash(
                         'success_msg',
                         'You are now registered and can log in.'
                         );
-                        res.redirect('/admin/users/viewUser');
+                        res.redirect('/admin/employees/viewEmployee');
                         })
                         .catch(err => console.log(err));
                     });
@@ -326,26 +346,117 @@ router.post('/users/addUser', ensureLog.ensureLoggedIn("/users/login"), uploadFo
     }
 });
 
-router.get('/users/viewUser', ensureLog.ensureLoggedIn("/users/login"), (req, res) => {
-    User.find({}, (err, doc) => {
-        res.status(200).render('./admin/viewUser', {
-            user: req.user,
-            doc: doc,
-            link: "/admin/users/"
-        })
-    })
-});
-
-router.delete('/users/:email', ensureLog.ensureLoggedIn('/users/login'), (req, res) => {
+router.delete('/employees/:email', (req, res) => {
     
-    User.deleteOne({email: req.params.email}, (err, user) => {
+    Employee.deleteOne({email: req.params.email}, (err, employee) => {
         if(err) {
             console.log('Error while deleting product');
         } else {
             console.log(req.params.email + ' deleted');
-            res.redirect('/admin/users/viewUser');
+            res.redirect('/admin/employees/viewEmployee');
         }
     });
 });
+
+router.get('/vendors/viewVendor', (req, res) => {
+    Vendor.find({}, (err, doc) => {
+        res.status(200).render('./admin/viewVendor', {
+            user: req.user,
+            doc: doc,
+            link: "/admin/vendors/"
+        })
+    })
+});
+
+router.get('/vendors/addVendor', (req, res) => {
+    res.render("./admin/vendorForm");
+});
+
+router.post('/vendors/addVendor', uploadForVendor.single('image'), (req, res) => {
+    let {name, email, company, address, phone } = req.body;
+    let image = req.file;
+    let errors = [];
+
+    if(!name || !email || !company || !phone || !address) {
+        errors.push({msg: 'Please enter all fields.'});
+    }
+
+    if(!image) {
+        errors.push({msg: 'Please upload a logo of vendor.'});
+    }
+
+    //sanitize input
+    name = validation.escape(name);
+    email = validation.escape(email);
+    company = validation.escape(company);
+    phone = validation.escape(phone);
+    address = validation.escape(address);
+
+    //Validate email
+    if(!validation.isEmail(email)){
+        errors.push({msg: 'Bad email.'})
+    } else {
+        email = validation.normalizeEmail(email, [
+        'all_lowercase', 'gmail_remove_dots','gmail_remove_subaddress', 'gmail_convert_googlemaildotcom', 
+        'outlookdotcom_remove_subaddress', 'yahoo_remove_subaddress', 'icloud_remove_subaddress'
+        ])
+    } 
+    
+    if (errors.length > 0) {
+        res.render('./admin/vendorForm', {
+            errors,
+            name,
+            email,
+            company,
+            address,
+            phone,
+            image
+        });
+    } else {
+        Vendor.findOne({ email: email }).then(vendor => {
+            if (vendor) {
+                errors.push({ msg: 'Email already exists.' });
+                res.render('./admin/vendorForm', {
+                    errors,
+                    name,
+                    email,
+                    company,
+                    address,
+                    phone,
+                    image
+                });
+            } else {
+                const newVendor = new Vendor({
+                    name: name,
+                    email: email,
+                    company: company,
+                    address: address,
+                    phone: phone,
+                    imageUrl: '/images/vendors/' + image.filename
+                });
+                newVendor.save().then(vendor => {
+                req.flash(
+                    'success_msg',
+                    'You are now registered and can log in.'
+                );
+                res.redirect('/admin/vendors/viewVendor');
+                }).catch(err => console.log(err));
+            }
+        });
+    }
+});
+
+router.delete('/vendors/:email', (req, res) => {
+    
+    Vendor.deleteOne({email: req.params.email}, (err, vendor) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.email + ' deleted');
+            res.redirect('/admin/vendors/viewVendor');
+        }
+    });
+});
+
 
 module.exports = router;
