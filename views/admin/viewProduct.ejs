@@ -10,7 +10,7 @@
         
         <!-- Add product form -->
         <div class="container-fluid table-responsive">
-            <table class="table table-light table-striped table-bordered table-sm mx-8 my-8">
+            <table id="dataTable" class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
                 <thead>
                     <tr>
                         <th class="th-sm" id="sku" scope="col">SKU</th>
@@ -31,8 +31,8 @@
                     <tr class="mw-100 p-3">
                         <td><%= data.sku %></td>
                         <td class="h-50 mx-auto my-auto">
-                            <img src='/images/uploads/1547227742454-banner-01.jpg' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
-                            <!-- <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded"/> -->
+                            <!-- <img src='/images/uploads/1547227742454-banner-01.jpg' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/> -->
+                            <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
                         </td>
                         <td><%= data.name %></td>
                         <td><%= data.regularPrice %></td>

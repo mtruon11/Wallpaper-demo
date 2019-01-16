@@ -244,6 +244,25 @@
         dropdownParent: $('#dropDownSelect1')
     });
 
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+        $('#dataTable_wrapper').find('label').each(function () {
+            $(this).parent().append($(this).children());
+          });
+          $('#dataTable_wrapper .dataTables_filter').find('input').each(function () {
+            $('input').attr("placeholder", "Search");
+            $('input').removeClass('form-control-sm');
+          });
+          $('#dataTable_wrapper .dataTables_length').addClass('d-flex flex-row');
+          $('#dataTable_wrapper .dataTables_filter').addClass('md-form');
+          $('#dataTable_wrapper select').removeClass(
+            'custom-select custom-select-sm form-control form-control-sm');
+          $('#dataTable_wrapper select').addClass('mdb-select');
+          $('#dataTable_wrapper .mdb-select').materialSelect();
+          $('#dataTable_wrapper .dataTables_filter').find('label').remove();
+    });
+
+
 })(jQuery);
 
 

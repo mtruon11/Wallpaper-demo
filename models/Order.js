@@ -12,13 +12,14 @@ var orderSchema = new mongoose.Schema({
         required: true
     },
     couponID: {
-        type: Object
+        type: Object,
+        required: false
     }, 
     sessionID: {
         type: Object,
         required: true
     },
-    userID: {
+    customerID: {
         type: Object,
         required: true
     },

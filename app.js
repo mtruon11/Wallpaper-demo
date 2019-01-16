@@ -77,6 +77,7 @@ app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/employees', require('./routes/employee.js'));
 app.use('/admin', ensureLog.ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
+
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});
 

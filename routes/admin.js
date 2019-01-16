@@ -158,7 +158,7 @@ router.post('/product/addProduct', uploadProduct.array('images'), async (req, re
             } else {
 
                 for(var idx in images){
-                    imageUrl.push(images[idx].path);
+                    imageUrl.push('/images/uploads/' + images[idx].filename);
                 }
                 
                 const newProduct = new Product({
