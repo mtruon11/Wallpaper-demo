@@ -11,41 +11,39 @@
             <table class="table table-light table-striped table-bordered mx-8 my-8">
                 <thead>
                     <tr>
-                        <th scope="col">Company Logo</th>
-                        <th scope="col">Company Name</th>
-                        <th scope="col">Vendor Name</th>
-                        <th scope="col">Vendor Email</th>
-                        <th scope="col">Vendor Phone</th>
-                        <th scope="col">Vendor Address</th>
-                        <th scope="col">Added On</th>
-                        <th scope="col">Action</th>
+                        <th class="th-sm" scope="col">Company Logo</th>
+                        <th class="th-sm" id="company" scope="col">Company Name</th>
+                        <th class="th-sm" id="name" scope="col">Vendor Name</th>
+                        <th class="th-sm" id="email" scope="col">Vendor Email</th>
+                        <th class="th-sm" id="phone" scope="col">Vendor Phone</th>
+                        <th class="th-sm" id="address" scope="col">Vendor Address</th>
+                        <th class="th-sm" id="createdOn" scope="col">Added On</th>
+                        <th class="th-sm" scope="col">Action</th>
                     </tr>
-
-                    <tbody>
-                        <% doc.forEach(function(doc) { %>
-                            <tr class="mw-100 p-3">
-                                <td class="h-50 mx-auto my-auto">
-                                    <img src="<%= doc.imageUrl %>" alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
-                                </td>
-                                <td><%= doc.company %></td>
-                                <td><%= doc.name %></td>
-                                <td><%= doc.email %></td>
-                                <td><%= doc.phone %></td>
-                                <td><%= doc.address %></td>
-                                <td><%= doc.createdOn.toDateString() %></td>
-                                <td>
-                                    <a doc-toggle="tooltip" doc-placement="top" title="Edit" href="<%= link + doc.email %>" >
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a doc-toggle="tooltip" doc-placement="top" title="Delete" href="<%= link + doc.email + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
-                                        <i class="fas fa-trash-alt" style="color:red"></i>
-                                    </a> 
-                                </td>
-                            </tr>
-                        <% }); %>
-                    </tbody>
-
                 </thead>
+                <tbody>
+                    <% doc.forEach(function(doc) { %>
+                    <tr class="mw-100 p-3">
+                        <td class="h-50 mx-auto my-auto">
+                            <img src="<%= doc.imageUrl %>" alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
+                        </td>
+                        <td><%= doc.company %></td>
+                        <td><%= doc.name %></td>
+                        <td><%= doc.email %></td>
+                        <td><%= doc.phone %></td>
+                        <td><%= doc.address %></td>
+                        <td><%= doc.createdOn.toDateString() %></td>
+                        <td>
+                            <a doc-toggle="tooltip" doc-placement="top" title="Edit" href="<%= link + doc.email %>" >
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a doc-toggle="tooltip" doc-placement="top" title="Delete" href="<%= link + doc.email + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash-alt" style="color:red"></i>
+                            </a> 
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
             </table>
         </div>
         

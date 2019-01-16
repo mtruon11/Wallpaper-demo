@@ -1,0 +1,91 @@
+<div id="wrapper">
+
+    <% include ./sidebar-wrapper %>
+
+    <div class="page-content-wrapper">
+        
+        <% include ./header %>
+                <!-- Add product form -->
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-10 col-sm-12" style="border-radius: 15px; background-color: lightgray">
+                    <div class="block mx-4 my-4">
+                        
+                        <div class="mx-4 my-4 block-title">
+                            <h2>
+                                <i class="fa fa-plus"></i>
+                                <strong> Add </strong> New Category
+                            </h2>
+                        </div>
+                        <div class="block-form">
+
+                            <% include ../partials/messages %>
+                            <form action="/admin/categories/addCategory" method="post">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="name"><b>Category Name</b></label>
+                                    <div class="col-md-auto">
+                                        <input 
+                                            class="form-control text-box"
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Enter category name..."
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-auto">
+                                        <button type="submit" class="btn btn-sm btn-primary p-2 mr-2">
+                                            <i class="fa fa-floppy-o"></i>
+                                            Save
+                                        </button>
+                                        <button type="reset" class="btn btn-sm btn-warning p-2 mr-2">
+                                            <i class="fa fa-repeat"></i>
+                                            Reset
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category View  -->
+        <div class="container-fluid table-responsive">
+            <table class="table table-light table-striped table-bordered mx-8 my-8">
+                <thead>
+                    <tr>
+                        <th class="th-sm" scope="col">Category Name</th>
+                        <th class="th-sm" scope="col">Added On</th>
+                        <th class="th-sm" scope="col">Updated On</th>
+                        <th class="th-sm" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% doc.forEach(function(doc) { %>
+                    <tr class="mw-100 p-3">
+                        <td><%= doc.name %></td>
+                        <td><%= doc.createdOn.toDateString() %></td>
+                        <td><%= doc.updatedOn.toDateString() %></td>
+                        <td>
+                            <a doc-toggle="tooltip" doc-placement="top" title="Edit" href="<%= link + doc.name %>" >
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a doc-toggle="tooltip" doc-placement="top" title="Delete" href="<%= link + doc.name + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash-alt" style="color:red"></i>
+                            </a> 
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+</div>

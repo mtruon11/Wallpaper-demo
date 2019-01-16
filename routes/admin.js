@@ -4,12 +4,18 @@ const {uploadProduct, uploadForEmployee, uploadForVendor} = require('./upload');
 const validation = require('validator');
 const bcrypt = require('bcryptjs');
 
+module.exports = router;
+
 // Load Product model
 const Product = require('../models/Product');
 // Load Employee model
 const Employee = require('../models/Employee');
 // Load Vendor model
 const Vendor = require('../models/Vendor');
+// Load Category model
+const Category = require('../models/Category');
+// Load Tag model
+const Tag = require('../models/Tag');
 
 // DashBoard
 router.get('/', (req, res) => 
@@ -458,5 +464,128 @@ router.delete('/vendors/:email', (req, res) => {
     });
 });
 
+router.get('/categories', (req, res) => {
+    Category.find({}, (err, doc) => {
+        res.status(200).render('./admin/viewCategory', {
+            user: req.user,
+            doc: doc,
+            link: "/admin/categories/"
+        })
+    })
+})
 
-module.exports = router;
+router.post('/categories/addCategory', (req, res) => {
+    let name = req.body.name;
+    let errors = [];
+
+    if(!name) {
+        errors.push({msg: 'Please enter category name.'});
+    }
+
+    //sanitize input
+    name = validation.escape(name);
+
+    if (errors.length > 0) {
+        res.render('./admin/viewCategory', {
+            errors,
+            name
+        });
+    } else {
+        Category.findOne({ name: name }).then(category => {
+            if(category){
+                errors.push({ msg: 'Category name already exists.' });
+                res.render('./admin/viewCategory', {
+                    errors,
+                    name
+                });
+            } else {
+                const newCategory = new Category({
+                    name: name
+                });
+                newCategory.save().then(category => {
+                    req.flash(
+                        'success_msg',
+                        'Category ' + category.name +' is created.'
+                    );
+                    res.redirect('/admin/categories');
+                }).catch(err => console.log(err));
+            }
+        });
+    }
+});
+
+router.delete('/categories/:name', (req, res) => {
+    
+    Category.deleteOne({name: req.params.name}, (err, category) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.name + ' deleted');
+            res.redirect('/admin/categories');
+        }
+    });
+});
+
+
+router.get('/tags', (req, res) => {
+    Tag.find({}, (err, doc) => {
+        res.status(200).render('./admin/viewTag', {
+            user: req.user,
+            doc: doc,
+            link: "/admin/tags/"
+        })
+    })
+})
+
+router.post('/tags/addTag', (req, res) => {
+    let name = req.body.name;
+    let errors = [];
+
+    if(!name) {
+        errors.push({msg: 'Please enter tag name.'});
+    }
+
+    //sanitize input
+    name = validation.escape(name);
+
+    if (errors.length > 0) {
+        res.render('./admin/viewTag', {
+            errors,
+            name
+        });
+    } else {
+        Tag.findOne({ name: name }).then(tag => {
+            if(tag){
+                errors.push({ msg: 'Tag name already exists.' });
+                res.render('./admin/viewTag', {
+                    errors,
+                    name
+                });
+            } else {
+                const newTag = new Tag({
+                    name: name
+                });
+                newTag.save().then(tag => {
+                    req.flash(
+                        'success_msg',
+                        'Tag ' + tag.name +' is created.'
+                    );
+                    res.redirect('/admin/tags');
+                }).catch(err => console.log(err));
+            }
+        });
+    }
+});
+
+router.delete('/tags/:name', (req, res) => {
+    
+    Tag.deleteOne({name: req.params.name}, (err, tag) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.name + ' deleted');
+            res.redirect('/admin/tags');
+        }
+    });
+});
+
