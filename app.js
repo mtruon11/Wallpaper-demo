@@ -75,6 +75,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 //Routes
 app.use('/', require('./routes/index.js'));
+app.use('/products', require('./routes/product.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/employees', require('./routes/employee.js'));
 app.use('/admin', ensureLog.ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
