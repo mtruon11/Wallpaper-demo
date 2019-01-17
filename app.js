@@ -36,9 +36,10 @@ app.use(bodyParser.json());
 //Express session
 app.use(
     session({
-        secret: 'secret',
+        secret: 'my secret session',
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        cookie: {secure: true}
     })
 );
  

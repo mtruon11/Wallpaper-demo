@@ -39,9 +39,9 @@
                         <td><%= data.discountPrice %></td>
                         <td><%= data.quantity %></td>
                         <% if(data.status){ %>
-                            <td><span class="label label-success">Available</span></td>
+                            <td><span class="label label-success" style="background-color:#449d44">Available</span></td>
                         <% } else { %>
-                            <td><span class="label label-danger">Out of Stock</span></td>
+                            <td><span class="label label-danger" style="background-color:red">Out of Stock</span></td>
                         <% } %>
                         <td><%= data.categories %></td>
                         <td><%= data.tags %></td>
