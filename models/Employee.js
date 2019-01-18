@@ -22,7 +22,8 @@ var employeeSchema = new mongoose.Schema({
         required: true
     },
     role:{
-        type: Array,
+        type: String,
+        default: 'Employee',
         required: true
     },
     imageUrl:{

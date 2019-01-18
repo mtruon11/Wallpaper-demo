@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const ensureLog = require('connect-ensure-login');
+const {ensureLoggedOut} = require('connect-ensure-login');
 const csrf = require('csurf');
 
 const csrfProtection = csrf();
 router.use(csrfProtection);
 
 // Login Page
-router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res) => {
+router.get('/login', ensureLoggedOut('/'), (req, res) => {
     res.render('./admin/login', {
         csrfToken: req.csrfToken()
     });
@@ -16,7 +16,7 @@ router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
+    passport.authenticate('employee-local', {
         successReturnToOrRedirect: '/admin',
         failureRedirect: '/employees/login',
         failureFlash: true

@@ -17,6 +17,16 @@ const Category = require('../models/Category');
 // Load Tag model
 const Tag = require('../models/Tag');
 
+router.use('/', (req, res, next) => {
+    console.log(req.user);
+    if(req.user.role == 'Employee' || req.user.role == 'Admin'){
+        next();
+    } else {
+        req.logout();
+        res.status(401).send('Access Denied');
+    }
+})
+
 // DashBoard
 router.get('/', (req, res) => 
     res.status(200).render('./admin/dashboard', {

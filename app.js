@@ -7,7 +7,7 @@ const session = require('express-session')
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const ensureLog = require('connect-ensure-login');
+const {ensureLoggedIn} = require('connect-ensure-login');
 
 const app = express();
 
@@ -75,12 +75,18 @@ app.use(function(req, res, next) {
 //Access to public folder
 app.use(express.static(path.join(__dirname, '/public')));
 
+app.use((req, res, next) => {
+    res.locals.login = req.isAuthenticated();
+    next();
+});
+
 //Routes
 app.use('/', require('./routes/index.js'));
 app.use('/products', require('./routes/product.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/employees', require('./routes/employee.js'));
-app.use('/admin', ensureLog.ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
+app.use('/admin', ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
+
 
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});

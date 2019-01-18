@@ -2,26 +2,44 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const ensureLog = require('connect-ensure-login');
+const {ensureLoggedIn, ensureLoggedOut} = require('connect-ensure-login');
 const validation = require('validator');
 const csrf = require('csurf');
+const auth = require('../config/auth')
 
 const csrfProtection = csrf();
-router.use(csrfProtection);
 
 // Load User model
 const User = require('../models/User');
 
+router.use(csrfProtection);
+
+//Profile
+router.get('/profile', ensureLoggedIn('/users/login'), (req, res, next) => {
+  res.render('profile')
+});
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out.');
+  res.redirect('/users/login');
+});
+
+// router.use('/', auth.notLoggedIn, (req, res, next) => {
+//   next();
+// });
+
 // Login Page
-router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
-  res.render('login', {
+router.get('/login', ensureLoggedOut('/'), (req, res, next) => {
+  res.render('./home/login', {
     csrfToken: req.csrfToken()
   })
 });
 
 // Register Page
-router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
-  res.render('register', {
+router.get('/register', ensureLoggedOut('/'), (req, res, next) => {
+  res.render('./home/register', {
     csrfToken: req.csrfToken()
   })
 });
@@ -60,7 +78,7 @@ router.post('/register', (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render('register', {
+    res.render('./home/register', {
       errors,
       name,
       email,
@@ -71,7 +89,7 @@ router.post('/register', (req, res) => {
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists.' });
-        res.render('register', {
+        res.render('./home/register', {
           errors,
           name,
           email,
@@ -108,18 +126,12 @@ router.post('/register', (req, res) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
+  passport.authenticate('user-local', {
     successReturnToOrRedirect: '/',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
 });
 
-// Logout
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', 'You are logged out.');
-  res.redirect('/users/login');
-});
 
 module.exports = router;
