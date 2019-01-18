@@ -22,7 +22,7 @@ router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
 // Register Page
 router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
   res.render('register', {
-    csrfToken: req.csrfToken();
+    csrfToken: req.csrfToken()
   })
 });
 

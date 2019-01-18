@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session')
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const ensureLog = require('connect-ensure-login');
 
 const app = express();
@@ -30,16 +31,17 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 //Express body parser
-app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 //Express session
 app.use(
     session({
         secret: 'my secret session',
         resave: true,
-        saveUninitialized: true,
-        cookie: {secure: true}
+        saveUninitialized: true
+        // cookie: {secure: true}
     })
 );
  

@@ -8,7 +8,7 @@ const csrfProtection = csrf();
 router.use(csrfProtection);
 
 // Login Page
-router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
+router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res) => {
     res.render('./admin/login', {
         csrfToken: req.csrfToken()
     });
