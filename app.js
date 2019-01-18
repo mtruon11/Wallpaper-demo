@@ -41,7 +41,7 @@ app.use(
         secret: 'my secret session',
         resave: true,
         saveUninitialized: true
-        // cookie: {secure: true}
+        // cookie: {secure: true} // Cause an error that continuously redirect to Login page
     })
 );
  
