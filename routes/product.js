@@ -28,7 +28,6 @@ router.get('/:sku', (req, res) => {
         if(err) {
             console.log('Error while loading product')
         } else {
-            console.log(product);
             res.status(200).render('./home/product-detail', {
                 user: req.user,
                 product: product

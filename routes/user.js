@@ -4,15 +4,27 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const ensureLog = require('connect-ensure-login');
 const validation = require('validator');
+const csrf = require('csurf');
+
+const csrfProtection = csrf();
+router.use(csrfProtection);
 
 // Load User model
 const User = require('../models/User');
 
 // Login Page
-router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res) => res.render('login'));
+router.get('/login', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
+  res.render('login', {
+    csrfToken: req.csrfToken()
+  })
+});
 
 // Register Page
-router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res) => res.render('register'));
+router.get('/register', ensureLog.ensureLoggedOut('/'), (req, res, next) => {
+  res.render('register', {
+    csrfToken: req.csrfToken();
+  })
+});
 
 // Register
 router.post('/register', (req, res) => {

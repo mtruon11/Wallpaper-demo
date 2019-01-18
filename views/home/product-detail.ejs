@@ -28,19 +28,19 @@
                 <div class="wrap-slick3-dots"></div>
 
                 <div class="slick3">
-                    <div class="item-slick3" data-thumb="images/thumb-item-01.jpg">
+                    <div class="item-slick3" data-thumb="<%= product[0].imageUrl[0] %>">
                         <div class="wrap-pic-w">
                             <img src="<%= product[0].imageUrl[0] %>" alt="IMG-PRODUCT">
                         </div>
                     </div>
 
-                    <div class="item-slick3" data-thumb="images/thumb-item-02.jpg">
+                    <div class="item-slick3" data-thumb="<%= product[0].imageUrl[1] %>">
                         <div class="wrap-pic-w">
                             <img src="<%= product[0].imageUrl[1] %>" alt="IMG-PRODUCT">
                         </div>
                     </div>
 
-                    <div class="item-slick3" data-thumb="images/thumb-item-03.jpg">
+                    <div class="item-slick3" data-thumb="<%= product[0].imageUrl[2] %>">
                         <div class="wrap-pic-w">
                             <img src="<%= product[0].imageUrl[2] %>" alt="IMG-PRODUCT">
                         </div>
@@ -51,7 +51,7 @@
 
         <div class="w-size14 p-t-30 respon5">
             <h4 class="product-detail-name m-text16 p-b-13">
-                Boxy T-Shirt with Roll Sleeve Detail
+                <%= product[0].name %>
             </h4>
 
             <span class="m-text17">

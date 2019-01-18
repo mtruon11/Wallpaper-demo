@@ -7,7 +7,7 @@ const Employee = require('../models/Employee');
 
 module.exports = function(passport) {
     passport.use(
-        new LocalStrategy({usernameField: 'email'} , (email, password, done) => {
+        new LocalStrategy({usernameField: 'email', passwordField: 'password', passReqToCallback: true} , (email, password, done) => {
             //Match user
             Employee.findOne({
                 email: email
