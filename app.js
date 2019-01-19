@@ -8,6 +8,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {ensureLoggedIn} = require('connect-ensure-login');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -40,8 +41,9 @@ app.use(
     session({
         secret: 'my secret session',
         resave: true,
-        saveUninitialized: true
-        // cookie: {secure: true} // Cause an error that continuously redirect to Login page
+        saveUninitialized: true,
+        store: new MongoStore({mongooseConnection: mongoose.connection}),
+        cookie: {maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
     })
 );
  
@@ -64,29 +66,25 @@ app.use(passport.session());
 //Connect flash
 app.use(flash());
 
+//Access to public folder
+app.use(express.static(path.join(__dirname, '/public')));
+
 //Global variables
 app.use(function(req, res, next) {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
-    next();
-});
-
-//Access to public folder
-app.use(express.static(path.join(__dirname, '/public')));
-
-app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
     next();
 });
 
 //Routes
-app.use('/', require('./routes/index.js'));
-app.use('/products', require('./routes/product.js'));
+app.use('/', require('./routes/home/home.js'));
+app.use('/products', require('./routes/home/product.js'));
 app.use('/users', require('./routes/user.js'));
-app.use('/employees', require('./routes/employee.js'));
-app.use('/admin', ensureLoggedIn('/employees/login'), require('./routes/admin.js'));
-
+app.use('/employees', require('./routes/admin/employee.js'));
+app.use('/admin', ensureLoggedIn('/users/login'), require('./routes/admin/dashboard.js'));
 
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});

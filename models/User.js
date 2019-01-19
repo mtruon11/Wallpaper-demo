@@ -13,10 +13,22 @@ var userSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    role: {
+    phone:{
+        type: Number,
+        required: false
+    },
+    address:{
+        type: String,
+        required: false
+    },
+    role:{
         type: String,
         default: 'User',
         required: true
+    },
+    imageUrl:{
+        type: String,
+        required: false
     },
     createdOn:{
         type: Date,
