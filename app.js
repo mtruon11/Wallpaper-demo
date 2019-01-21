@@ -90,6 +90,7 @@ var roleRequired = function(req, res, next){
 //Routes
 app.use('/', require('./routes/home/home.js'));
 app.use('/cart', require('./routes/home/cart.js'));
+app.use('/checkout', require('./routes/home/checkout.js'));
 app.use('/products', require('./routes/home/product.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./routes/admin/dashboard.js'));
