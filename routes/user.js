@@ -5,14 +5,11 @@ const passport = require('passport');
 const {ensureLoggedIn, ensureLoggedOut} = require('connect-ensure-login');
 const validation = require('validator');
 const csrf = require('csurf');
-const auth = require('../config/auth')
 
 const csrfProtection = csrf();
 
 // Load User model
 const User = require('../models/User');
-
-router.use(csrfProtection);
 
 //Profile
 router.get('/profile', ensureLoggedIn('/users/login'), (req, res, next) => {
@@ -26,9 +23,16 @@ router.get('/logout', (req, res) => {
   res.redirect('/users/login');
 });
 
-// router.use('/', auth.notLoggedIn, (req, res, next) => {
-//   next();
-// });
+// Login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successReturnToOrRedirect: '/',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+router.use(csrfProtection);
 
 // Login Page
 router.get('/login', ensureLoggedOut('/'), (req, res, next) => {
@@ -44,7 +48,7 @@ router.get('/register', ensureLoggedOut('/'), (req, res, next) => {
   })
 });
 
-// Register
+// Register 
 router.post('/register', (req, res) => {
   let { name, email, password, password2 } = req.body;
   let errors = [];
@@ -83,7 +87,8 @@ router.post('/register', (req, res) => {
       name,
       email,
       password,
-      password2
+      password2,
+      csrfToken: req.csrfToken()
     });
   } else {
     User.findOne({ email: email }).then(user => {
@@ -94,7 +99,8 @@ router.post('/register', (req, res) => {
           name,
           email,
           password,
-          password2
+          password2,
+          csrfToken: req.csrfToken()
         });
       } else {
         const newUser = new User({
@@ -123,15 +129,5 @@ router.post('/register', (req, res) => {
     });
   }
 });
-
-// Login
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successReturnToOrRedirect: '/',
-    failureRedirect: '/users/login',
-    failureFlash: true
-  })(req, res, next);
-});
-
 
 module.exports = router;

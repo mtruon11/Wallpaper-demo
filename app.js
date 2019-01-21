@@ -31,22 +31,6 @@ mongoose
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
-//Express body parser
-app.use(bodyParser.json());
-app.use(express.urlencoded({extended:true}));
-app.use(cookieParser());
-
-//Express session
-app.use(
-    session({
-        secret: 'my secret session',
-        resave: true,
-        saveUninitialized: true,
-        store: new MongoStore({mongooseConnection: mongoose.connection}),
-        cookie: {maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
-    })
-);
- 
 // override with POST having ?_method=DELETE
 app.use((req, res, next) => {
     if(req.query._method == 'DELETE'){
@@ -59,15 +43,31 @@ app.use((req, res, next) => {
     next();
 });
 
-//Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+//Access to public folder
+app.use(express.static(path.join(__dirname, '/public')));
+//Express body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
+app.use( //Express session
+    session({
+        secret: 'my secret session',
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({
+            mongooseConnection: mongoose.connection,
+            autoRemove: 'native'
+        }),
+        cookie: {maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
+    })
+);
 
 //Connect flash
 app.use(flash());
 
-//Access to public folder
-app.use(express.static(path.join(__dirname, '/public')));
+//Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Global variables
 app.use(function(req, res, next) {
@@ -79,12 +79,20 @@ app.use(function(req, res, next) {
     next();
 });
 
+var roleRequired = function(req, res, next){
+    if(req.user.role.includes('Employee') || req.user.role.includes('Admin')){
+        next();
+    } else {
+        res.status(401).send('Access Denied');
+    }
+}
+
 //Routes
 app.use('/', require('./routes/home/home.js'));
+app.use('/cart', require('./routes/home/cart.js'));
 app.use('/products', require('./routes/home/product.js'));
 app.use('/users', require('./routes/user.js'));
-app.use('/employees', require('./routes/admin/employee.js'));
-app.use('/admin', ensureLoggedIn('/users/login'), require('./routes/admin/dashboard.js'));
+app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./routes/admin/dashboard.js'));
 
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});

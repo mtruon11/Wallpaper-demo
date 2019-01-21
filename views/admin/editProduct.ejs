@@ -9,7 +9,7 @@
         <% include ./productReport %>
 
         <!-- Add product form -->
-        <div class="container-fluid">
+        <div class="container-fluid m-t-50 m-b-50">
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-md-10 col-sm-12" style="border-radius: 15px; background-color: lightgray">
                     <div class="block mx-4 my-4">
@@ -23,6 +23,7 @@
                         <div class="block-form">
                             <% include ../partials/messages %>
                             <form action="/admin/product/editProduct" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="sku"><b>SKU</b></label>
                                     <div class="col-md-auto">
@@ -32,7 +33,7 @@
                                             id="sku"
                                             name="sku"
                                             placeholder="Enter sku..."
-                                            value= "<%- product.sku -%>"
+                                            value= "<%= product.sku %>"
                                         />
                                     </div>
                                 </div>
@@ -45,7 +46,7 @@
                                             id="name"
                                             name="name"
                                             placeholder="Enter product name..."
-                                            value= "<%- product.name -%>"
+                                            value= "<%= product.name %>"
                                             />
                                     </div>
                                 </div>
@@ -59,7 +60,7 @@
                                             name="description"
                                             placeholder="Enter product description..."
                                             rows="5"
-                                            value= "<%- product.description -%>"
+                                            value= "<%= product.description %>"
                                         >
                                     </textarea>
                                     </div>
@@ -86,7 +87,7 @@
                                             id="tags"
                                             name="tags"
                                             placeholder="Examples: clothes, shirt..."
-                                            value= "<%- product.tags -%>"
+                                            value= "<%= product.tags %>"
                                         />
                                     </div>
                                 </div>

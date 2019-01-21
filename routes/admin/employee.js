@@ -1,40 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const {ensureLoggedOut} = require('connect-ensure-login');
 const {uploadProduct, uploadForEmployee, uploadForVendor} = require('../upload');
 const validation = require('validator');
 const bcrypt = require('bcryptjs');
 const csrf = require('csurf');
 
 const csrfProtection = csrf();
-router.use(csrfProtection);
 
-// Login Page
-router.get('/login', ensureLoggedOut('/'), (req, res) => {
-    res.render('./admin/login', {
-        csrfToken: req.csrfToken()
-    });
-});
+//Load User model
+const User = require('../../models/User');
 
-// Login
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successReturnToOrRedirect: '/admin',
-        failureRedirect: '/employees/login',
-        failureFlash: true
-    })(req, res, next);
-});
-
-// Logout
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success_msg', 'You are logged out.');
-    res.redirect('/employees/login');
-});
-
-router.get('/employees/viewEmployee', (req, res) => {
-    User.find({}, (err, doc) => {
+router.get('/viewEmployee', (req, res) => {
+    User.find({$or: [{role: 'Admin'}, {role: 'Employee'}] }, (err, doc) => {
         res.status(200).render('./admin/viewEmployee', {
             user: req.user,
             doc: doc,
@@ -43,11 +20,25 @@ router.get('/employees/viewEmployee', (req, res) => {
     })
 });
 
-router.get('/addEmployee', (req, res) => {
-    res.render("../admin/employeeForm");
+router.delete('/:email', (req, res) => {
+    
+    User.deleteOne({email: req.params.email}, (err, user) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.email + ' deleted');
+            res.redirect('/admin/employees/viewEmployee');
+        }
+    });
 });
 
-router.post('/addEmployee', uploadForEmployee.single('image'), (req, res) => {
+router.get('/addEmployee', csrfProtection, (req, res) => {
+    res.render("./admin/employeeForm", {
+        csrfToken: req.csrfToken()
+    })
+});
+
+router.post('/addEmployee', uploadForEmployee.single('image'), csrfProtection, (req, res) => {
     let {name, email, password, phone, address, role} = req.body;
     let image = req.file;
     let errors = [];
@@ -81,7 +72,7 @@ router.post('/addEmployee', uploadForEmployee.single('image'), (req, res) => {
     }
     
     if (errors.length > 0) {
-        res.render('./admin/UserForm', {
+        res.render('./admin/employeeForm', {
             errors,
             name,
             email,
@@ -89,13 +80,14 @@ router.post('/addEmployee', uploadForEmployee.single('image'), (req, res) => {
             phone,
             address,
             role,
-            image
+            image,
+            csrfToken: req.csrfToken()
         });
     } else {
-        User.findOne({ email: email }).then(User => {
-            if (User) {
+        User.findOne({ email: email }).then(user => {
+            if (user) {
                 errors.push({ msg: 'Email already exists.' });
-                res.render('./admin/UserForm', {
+                res.render('./admin/employeeForm', {
                     errors,
                     name,
                     email,
@@ -103,7 +95,8 @@ router.post('/addEmployee', uploadForEmployee.single('image'), (req, res) => {
                     phone,
                     address,
                     role,
-                    image
+                    image,
+                    csrfToken: req.csrfToken()
                 });
             } else {
                 const newUser = new User({
@@ -137,16 +130,5 @@ router.post('/addEmployee', uploadForEmployee.single('image'), (req, res) => {
     }
 });
 
-router.delete('/:email', (req, res) => {
-    
-    User.deleteOne({email: req.params.email}, (err, User) => {
-        if(err) {
-            console.log('Error while deleting product');
-        } else {
-            console.log(req.params.email + ' deleted');
-            res.redirect('/admin/employees/viewEmployee');
-        }
-    });
-});
 
 module.exports = router;

@@ -79,8 +79,14 @@
                 <span class="linedivide1"></span>
 
                 <div class="header-wrapicon2">
-                    <img src="/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">0</span>
+                    <a href="/cart/viewCart">
+                        <img src="/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <% if (session.cart) { %>
+                        <span class="header-icons-noti"> <%= session.cart.totalQty %></span>
+                        <% } else { %>
+                        <span class="header-icons-noti">0</span>
+                        <% } %>
+                    </a>
                 </div>
             </div>
         </div>

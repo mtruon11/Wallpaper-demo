@@ -5,8 +5,8 @@
     <div class="page-content-wrapper">
         
         <% include ./header %>
-                <!-- Add product form -->
-        <div class="container-fluid">
+        <!-- Add category form -->
+        <div class="container-fluid m-t-50 m-b-50">
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-md-10 col-sm-12" style="border-radius: 15px; background-color: lightgray">
                     <div class="block mx-4 my-4">
@@ -21,6 +21,7 @@
 
                             <% include ../partials/messages %>
                             <form action="/admin/categories/addCategory" method="post">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="name"><b>Category Name</b></label>
                                     <div class="col-md-auto">
@@ -55,8 +56,8 @@
             </div>
         </div>
 
-        <!-- Category View  -->
-        <div class="container-fluid table-responsive">
+        <!-- Category Table View  -->
+        <div class="container-fluid table-responsive m-t-50 m-b-50">
             <table id="dataTable" class="table table-light table-striped table-bordered table-hover mx-8 my-8">
                 <thead>
                     <tr>

@@ -1,17 +1,34 @@
 const express = require('express');
 const router = express.Router();
-
+const validation = require('validator')
+const csrf = require('csurf');
+const csrfProtection = csrf({cookie:true});
 // Load Category model
 const Category = require('../../models/Category');
 
 module.exports = router;
+
+router.delete('/:name', (req, res) => {
+    
+    Category.deleteOne({name: req.params.name}, (err, category) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.name + ' deleted');
+            res.redirect('/admin/categories');
+        }
+    });
+});
+
+router.use(csrfProtection);
 
 router.get('/', (req, res) => {
     Category.find({}, (err, doc) => {
         res.status(200).render('./admin/viewCategory', {
             user: req.user,
             doc: doc,
-            link: "/admin/categories/"
+            link: "/admin/categories/",
+            csrfToken: req.csrfToken()
         })
     })
 })
@@ -30,7 +47,8 @@ router.post('/addCategory', (req, res) => {
     if (errors.length > 0) {
         res.render('./admin/viewCategory', {
             errors,
-            name
+            name,
+            csrfToken: req.csrfToken()
         });
     } else {
         Category.findOne({ name: name }).then(category => {
@@ -38,7 +56,8 @@ router.post('/addCategory', (req, res) => {
                 errors.push({ msg: 'Category name already exists.' });
                 res.render('./admin/viewCategory', {
                     errors,
-                    name
+                    name,
+                    csrfToken: req.csrfToken()
                 });
             } else {
                 const newCategory = new Category({
@@ -56,14 +75,3 @@ router.post('/addCategory', (req, res) => {
     }
 });
 
-router.delete('/:name', (req, res) => {
-    
-    Category.deleteOne({name: req.params.name}, (err, category) => {
-        if(err) {
-            console.log('Error while deleting product');
-        } else {
-            console.log(req.params.name + ' deleted');
-            res.redirect('/admin/categories');
-        }
-    });
-});

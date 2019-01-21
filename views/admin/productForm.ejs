@@ -9,7 +9,7 @@
         <% include productReport %>
 
         <!-- Add product form -->
-        <div class="container-fluid">
+        <div class="container-fluid m-t-50 m-b-50">
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-md-10 col-sm-12" style="border-radius: 15px; background-color: lightgray">
                     <div class="block mx-4 my-4">
@@ -23,6 +23,9 @@
                         <div class="block-form">
                             <% include ../partials/messages %>
                             <form action="/admin/product/addProduct" method="post" enctype="multipart/form-data">
+                                
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="sku"><b>SKU</b></label>
                                     <div class="col-md-auto">
@@ -51,7 +54,7 @@
                                     <label class="col-md-auto control-label" for="description"><b>Description</b></label>
                                     <div class="col-md-auto">
                                         <textarea 
-                                            class="form-control text-box"
+                                            class="form-control text-box overflow-auto"
                                             type="text"
                                             id="description"
                                             name="description"
@@ -76,13 +79,12 @@
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="tags"><b>Tags</b></label>
                                     <div class="col-md-auto">
-                                        <input 
-                                            class="form-control text-box"
-                                            type="text"
-                                            id="tags"
-                                            name="tags"
-                                            placeholder="Examples: clothes, shirt..."
-                                        />
+                                        <select class="select-chosen text-box" id="tags" name="tags[]" data-role="tagsinput" multiple>
+                                            <option value="Tag 1">Tag 1</option>
+                                            <option value="Tag 2">Tag 2</option>
+                                            <option value="Tag 3">Tag 3</option>
+                                            <option value="Tag 4">Tag 4</option>
+                                        </select>
                                     </div>
                                 </div>
                                 

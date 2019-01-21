@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {uploadProduct, uploadForUser, uploadForVendor} = require('../upload');
-const validation = require('validator');
-const bcrypt = require('bcryptjs');
+const csrf = require('csurf');
+
+const csrfProtection = csrf({cookie:true});
 
 // Load Product model
 const Product = require('../../models/Product');
@@ -15,17 +16,11 @@ router.get('/', (req, res) => {
         if(data){
 
             var total;
-            var onStock;
             var outOfStock;
 
             await Product
                 .countDocuments({}, (err, count) => {
                     total = count;
-                });
-                
-            await Product
-                .countDocuments({quantity: {$gt: 0}}, (err, count) => {
-                    onStock = count;
                 });
 
             await Product
@@ -34,9 +29,7 @@ router.get('/', (req, res) => {
                 });
 
             res.status(200).render('./admin/viewProduct', {
-                user: req.user,
                 total: total,
-                onStock: onStock,
                 outOfStock: outOfStock,
                 data: data,
                 link: "/admin/product/"
@@ -45,68 +38,41 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/addProduct', async (req, res) => {
-    var total;
-    var onStock;
-    var outOfStock;
+router.delete('/:sku', (req, res) => {
+    
+    Product.deleteOne({sku: req.params.sku}, (err, product) => {
+        if(err) {
+            console.log('Error while deleting product');
+        } else {
+            console.log(req.params.sku + ' Product deleted');
+            res.redirect('/admin/product');
+        }
+    });
+});
 
-    await Product
-        .countDocuments({}, (err, count) => {
-            total = count;
-        });
-        
-    await Product
-        .countDocuments({quantity: {$gt: 0}}, (err, count) => {
-            onStock = count;
-        });
+
+router.get('/addProduct', csrfProtection, async (req, res) => {
+    var total;
+    var outOfStock;
 
     await Product
         .countDocuments({quantity: {$eq: 0}}, (err, count) => {
             outOfStock = count;
         });
+    
+    await Product
+        .countDocuments({}, (err, count) => {
+            total = count;
+        });
 
     res.status(200).render('./admin/productForm', {
-        user: req.user,
         total: total,
-        onStock: onStock,
-        outOfStock: outOfStock
+        outOfStock: outOfStock,
+        csrfToken: req.csrfToken()
     })
 });
 
-router.get('/:sku', (req, res) => {
-
-    Product.findOne({sku: req.params.sku}, async (err, product) => {
-        var total;
-        var onStock;
-        var outOfStock;
-    
-        await Product
-            .countDocuments({}, (err, count) => {
-                total = count;
-            });
-            
-        await Product
-            .countDocuments({quantity: {$gt: 0}}, (err, count) => {
-                onStock = count;
-            });
-    
-        await Product
-            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
-                outOfStock = count;
-            });   
-    
-        res.render('./admin/editProduct', {
-            user: req.user,
-            total: total,
-            onStock: onStock,
-            outOfStock: outOfStock, 
-            product: product
-        });
-    });
-    
-});
-
-router.post('/addProduct', uploadProduct.array('images'), async (req, res) => {
+router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
     const images = req.files;
@@ -126,19 +92,32 @@ router.post('/addProduct', uploadProduct.array('images'), async (req, res) => {
         errors.push({msg: 'Quantity, regular price, and discount price must be greater than 0.'});
     }
 
+            
+    var total;
+    var outOfStock;
+
+    await Product
+        .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+            outOfStock = count;
+        });
+    
+    await Product
+        .countDocuments({}, (err, count) => {
+            total = count;
+        });
 
     if(errors.length > 0) {
         res.status(404).render('./admin/productForm', {
-            errors, sku, name, description, quantity, regularPrice, 
-            discountPrice, tags, categories, imageUrl
+            errors, sku, name, description, quantity, regularPrice, discountPrice, tags,
+            categories, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken()
         });
     } else {
         Product.findOne({sku: sku}).then(product => {
             if(product){
                 errors.push({msg: 'Product already existed.'});
                 res.status(200).render('./admin/productForm', {
-                    errors, sku, name, description, quantity, regularPrice,
-                    discountPrice, tags, categories, imageUrl
+                    errors, sku, name, description, quantity, regularPrice, discountPrice, tags, 
+                    categories, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken() 
                 });
             } else {
 
@@ -167,7 +146,33 @@ router.post('/addProduct', uploadProduct.array('images'), async (req, res) => {
     }
 });
 
-router.post('/editProduct', uploadProduct.array('images'), (req, res) => {
+router.get('/:sku', csrfProtection, (req, res) => {
+
+    Product.findOne({sku: req.params.sku}, async (err, product) => {
+        var total;
+        var outOfStock;
+    
+        await Product
+            .countDocuments({}, (err, count) => {
+                total = count;
+            });
+    
+        await Product
+            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                outOfStock = count;
+            });   
+    
+        res.render('./admin/editProduct', {
+            total: total,
+            outOfStock: outOfStock, 
+            product: product,
+            csrfToken: req.csrfToken()
+        });
+    });
+    
+});
+
+router.post('/editProduct', uploadProduct.array('images'), csrfProtection, (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
         discountPrice, tags, categories} = req.body;
     const images = req.files;
@@ -191,10 +196,10 @@ router.post('/editProduct', uploadProduct.array('images'), (req, res) => {
     if(errors.length > 0) {
         const product = new Product({
             sku, name, description, quantity, regularPrice,
-            discountPrice, tags, categories, imageUrl
+            discountPrice, tags, categories, imageUrl 
         });
         res.status(404).render('./admin/editProduct', {
-            errors, product
+            errors, product, csrfToken: req.csrfToken()
         });
     } else {
         for(var idx in images){
@@ -219,16 +224,4 @@ router.post('/editProduct', uploadProduct.array('images'), (req, res) => {
                 res.redirect('/admin/product/');
             });
     }
-});
-
-router.delete('/:sku', (req, res) => {
-    
-    Product.deleteOne({sku: req.params.sku}, (err, product) => {
-        if(err) {
-            console.log('Error while deleting product');
-        } else {
-            console.log(req.params.sku + ' Product deleted');
-            res.redirect('/admin/product');
-        }
-    });
 });
