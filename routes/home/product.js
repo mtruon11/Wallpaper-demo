@@ -35,22 +35,6 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// //Add to cart
-// router.get('/:id/addToCart', (req, res) => {
-//     var productId = req.params.id;
-//     var cart = new Cart(req.session.cart ? req.session.cart : {});
-//     Product.findById(productId, (err, product) => {
-//         if (err) {
-//             return res.status(400).send('Bad Request');
-//         }
-//         cart.add(product, product._id);
-//         req.session.cart = cart;
-//         console.log(req.session.cart)
-//         res.redirect('/products');
-//     })
-// })
-
-
 //Sale
 router.get('/onSale', (req, res) => res.render('./home/products'));
 

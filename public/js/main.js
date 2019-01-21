@@ -262,6 +262,29 @@
           $('#dataTable_wrapper .dataTables_filter').find('label').remove();
     });
 
+    /*[Check Out]
+    ============================================================*/
+   // card expiry month selection
+    $(document).ready(function(){
+        $("#card-expiry-month").each(function(){
+            $(this).append('<option selected>Month</option>');
+            for(var i=1; i<=12; i++){
+                $(this).append('<option value="' + i + '">' + i + '</option>');
+            }
+        });
+    });
+
+
+    // card expiry month selection
+    $(document).ready(function(){
+        $("#card-expiry-year").each(function(){
+            var year = (new Date()).getFullYear();
+            $(this).append('<option selected>Year</option>');
+            for(var i = 0; i <= 20; i++){
+                $(this).append('<option value="' + (year+i) + '">' + (year+i) + '</option>');
+            }
+        });
+    });
 
 })(jQuery);
 

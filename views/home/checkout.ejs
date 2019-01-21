@@ -1,5 +1,202 @@
-<%= user %>
+<% include ./partials/header%>
 
-<%= cart %>
+<div class="container-fluid px-lg-5 m-t-50 m-b-50">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8 border border-dark rounded">
+            <h2 class="m-t-10 m-b-10">Shipping Address</h2>
 
-<%= totalPrice %>
+            <form action="/checkout/updateShippingInfo" action="post">
+
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="name">Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="name" class="form-control border border-secondary" name="name" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="address">Address:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="address" class="form-control border border-secondary" required name="address">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="city">City:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="city" class="form-control border border-secondary" required name="city">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="state">State/Province/Region:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="state" class="form-control border border-secondary" required name="state">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="zip">ZIP:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="zip" class="form-control border border-secondary" required name="zip">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="country">Country/Region:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="country" class="form-control border border-secondary" required name="country">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="phone">Phone number:</label>
+                    <div class="col-sm-9">
+                        <input type="tel" id="phone" class="form-control border border-secondary" required name="phone">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-auto">
+                        <button type="submit" class="btn btn-sm btn-primary p-2 mr-2">
+                            <i class="fa fa-floppy-o"></i>
+                            Update
+                        </button>
+                        <button type="reset" class="btn btn-sm btn-warning p-2 mr-2">
+                            <i class="fa fa-repeat"></i>
+                            Reset
+                        </button>
+                    </div>
+                    
+                </div>
+
+            </form>
+            
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-4 position-fixed">
+            <div class="container">
+                <div class="justify-content-center m-t-10 m-b-10">
+                    <a href="/checkout/placeOrder" type="button" class="btn flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">Place Your Order</a>
+                </div>
+                <hr/>
+                <div>
+                    <p class="text-center">
+                        <h6 class="m-t-10 m-b-10">Order Summary</h6>
+                        <div>Items (<%= totalQty %>): <span class="float-right">$<%= totalPrice %></span></div>
+                        <div>Shipping & Handling: <span class="float-right">$0.00</span></div><hr/>
+                        <div>Total before tax: <span class="float-right">$<%= totalPrice %></span></div>
+                        <div>Estimated tax: <span class="float-right">$<%= totalPrice * 0.06 %></span></div><hr/>
+                        <div class="text-danger">Order total: <span class="float-right">$<%= totalPrice + totalPrice * 0.06 %></span></div><hr/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8 border border-dark rounded">
+            <h2 class="m-t-10 m-b-10">Credit Card Info</h2>
+            <form action="/checkout/updateCreditCard" method="post">
+
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="card">Card number:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="card" class="form-control border border-secondary" name="card" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="cardHolder">Card Holder Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="cardHolder" class="form-control border border-secondary" name="cardHolder" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="address">Billing Address:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="address" class="form-control border border-secondary" name="address" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="card-expiry-month">Expiration Month:</label>
+                    <div class="col-sm-3">
+                        <select name="card-expiry-month" id="card-expiry-month" class="custom-select">
+                        </select>
+                    </div>
+                    <label class="col-sm-3 col-form-label" for="card-expiry-year">Expiration Year:</label>
+                    <div class="col-sm-3">
+                        <select name="card-expiry-year" id="card-expiry-year" class="custom-select">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="card-cvc">CVC:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="card-cvc" class="form-control border border-secondary" name="card-cvc" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-auto">
+                        <button type="submit" class="btn btn-sm btn-primary p-2 mr-2">
+                            <i class="fa fa-floppy-o"></i>
+                            Update
+                        </button>
+                        <button type="reset" class="btn btn-sm btn-warning p-2 mr-2">
+                            <i class="fa fa-repeat"></i>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8 border border-dark rounded">
+            <h2 class="m-t-10 m-b-10">Review items and shipping</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="table table-responsive col-sm-12 col-md-6 col-lg-6">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="th-sm" scope="col"></th>
+                                    <th class="th-sm" scope="col">Product</th>
+                                    <th class="th-sm" scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% products.forEach(function(product) { %>
+                                <tr class="mw-100 p-3">
+                                    <td class="h-50 mx-auto my-auto"><img src="<%= product.item.imageUrl[0] %>" alt="image" class="img-fluid img-thumbnail rounded" width="100px" /></td>
+                                    <td><%= product.item.name %></td>
+                                    <td><%= product.qty %> </td>
+                                </tr>
+
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <!-- <img src="/images/item-01.jpg" alt="image" class="image-fluid" /> -->
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+<% include ./partials/footer %>
