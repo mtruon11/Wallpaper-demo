@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const {stripeSecretKey} = require('../../config/keys');
 const csrf = require('csurf');
-
+const {ensureLoggedIn} = require('connect-ensure-login');
 const csrfProtection = csrf();
 
 const Cart = require('../../models/Cart');
 const Order = require('../../models/Order');
 
-router.get('/', csrfProtection, (req, res, next) => {
+router.get('/', ensureLoggedIn('/users/login'), csrfProtection, (req, res, next) => {
     var cart = new Cart(req.session.cart);
+    console.log(req.user);
     res.render('./home/checkout', {
         user: req.user,
         cart: cart,
@@ -20,11 +21,8 @@ router.get('/', csrfProtection, (req, res, next) => {
     });
 })
 
-router.post('/updateCreditCard', (req, res, next) => {
-    res.send('Credit card is updated');
-})
-
 router.post('/placeOrder', (req, res, next) => {
+    
     if(!req.session.cart) {
         return res.redirect('/products');
     }
@@ -44,10 +42,11 @@ router.post('/placeOrder', (req, res, next) => {
             return res.redirect('/checkout');
         } else {
             var order = new Order({
-                user: req.user,
+                name: req.body.cardName,
+                customerID: req.user._id,
                 cart: cart,
-                address: req.body.address,
-                name: req.body.name,
+                shippingAddress: req.body.shippingAddress,
+                total: cart.totalPrice * 0.06 * 100,
                 paymentId: charge.id
             });
             order.save((err, result) => {

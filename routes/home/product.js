@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const shuffle = require('shuffle-array');
 
 //Load Product model
 const Product = require('../../models/Product');
@@ -13,7 +12,7 @@ router.get('/', (req, res) => {
         } else {
             res.status(200).render('./home/products', {
                 user: req.user,
-                products: shuffle(products)
+                products: products
             })
         }
     });
