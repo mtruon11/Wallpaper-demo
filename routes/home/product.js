@@ -36,6 +36,17 @@ router.get('/:id', (req, res) => {
 });
 
 //Sale
-router.get('/onSale', (req, res) => res.render('./home/products'));
+router.get('/onSale', (req, res) => {
+    Product.find({status: true}, (err, products) => {
+        if(err){
+            console.log('Error while loading products')
+        } else {
+            res.status(200).render('./home/products', {
+                user: req.user,
+                products: shuffle(products)
+            })
+        }
+    });
+});
 
 module.exports = router;

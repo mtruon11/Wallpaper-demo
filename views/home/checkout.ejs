@@ -100,21 +100,21 @@
     <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-8 border border-dark rounded">
             <h2 class="m-t-10 m-b-10">Credit Card Info</h2>
-            <form action="/checkout/updateCreditCard" method="post">
-
+            <form id="credit-cart-form" action="/checkout/updateCreditCard" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
 
+                <span id="charge-error" class="invisible alert alert-danger"></span>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="card">Card number:</label>
+                    <label class="col-sm-3 col-form-label" for="card-number">Card number:</label>
                     <div class="col-sm-9">
-                        <input type="text" id="card" class="form-control border border-secondary" name="card" required>
+                        <input type="text" id="card-number" class="form-control border border-secondary" name="card-number" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="cardHolder">Card Holder Name:</label>
+                    <label class="col-sm-3 col-form-label" for="card-name">Card Holder Name:</label>
                     <div class="col-sm-9">
-                        <input type="text" id="cardHolder" class="form-control border border-secondary" name="cardHolder" required>
+                        <input type="text" id="card-name" class="form-control border border-secondary" name="card-name" required>
                     </div>
                 </div>
 
@@ -139,9 +139,9 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" for="card-cvc">CVC:</label>
+                    <label class="col-sm-3 col-form-label" for="cvc">CVC:</label>
                     <div class="col-sm-9">
-                        <input type="text" id="card-cvc" class="form-control border border-secondary" name="card-cvc" required>
+                        <input type="text" id="cvc" class="form-control border border-secondary" name="cvc" required>
                     </div>
                 </div>
 
@@ -150,10 +150,6 @@
                         <button type="submit" class="btn btn-sm btn-primary p-2 mr-2">
                             <i class="fa fa-floppy-o"></i>
                             Update
-                        </button>
-                        <button type="reset" class="btn btn-sm btn-warning p-2 mr-2">
-                            <i class="fa fa-repeat"></i>
-                            Reset
                         </button>
                     </div>
                 </div>
@@ -196,7 +192,5 @@
     </div>
 
 </div>
-
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 <% include ./partials/footer %>
