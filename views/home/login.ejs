@@ -1,12 +1,23 @@
-
-
-<a href="/auth/facebook">Facebook login</a>
-
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body" style="background-color:lightgray">
       <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Login</h1>
       <% include ../partials/messages %>
+        <div class="login-box-content">
+            <div class="fb-login box-shadow">
+              <a class="d-flex flex-row align-items-center social-login-link" href="/auth/facebook">
+                <i class="fab fa-facebook-f" style="margin-left:0px;padding-right:20px;padding-left:22px;width:56px;">
+                </i>Login with Facebook
+              </a>
+            </div>
+            <div class="gp-login box-shadow">
+              <a class="d-flex flex-row align-items-center social-login-link" href="/auth/google" style="margin-bottom:10px;">
+                <i class="fab fa-google" style="color:rgb(255,255,255);width:56px;">
+                </i>Login with Google+
+              </a>
+            </div>
+        </div>
+      <hr/>
       <form action="/users/login" method="POST">
         <div class="form-group">
           <input

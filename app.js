@@ -92,14 +92,9 @@ app.use('/', require('./routes/home/home.js'));
 app.use('/cart', require('./routes/home/cart.js'));
 app.use('/checkout', require('./routes/home/checkout.js'));
 app.use('/products', require('./routes/home/product.js'));
+app.use('/auth', require('./routes/auth-routes.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./routes/admin/dashboard.js'));
-app.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { 
-    successRedirect: '/', 
-    failureRedirect: '/users/login' 
-  })
-);
 
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});

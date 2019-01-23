@@ -1,7 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcryptjs');
-const {facebook_api_key, facebook_secrey_key, callback_url} = require('./keys');
+const keys = require('./keys');
 
 //Load User model
 const User = require('../models/User');
@@ -21,7 +22,6 @@ module.exports = function(passport) {
                 bcrypt.compare(password, user.password, (err, isMatch) => {
                     if(err) throw err;
                     if(isMatch) {
-                        console.log('User: ' + user.email + ' logged in.')
                         return done(null, user);
                     } else {
                         return done(null, false, {message:'Password incorrect'});
@@ -34,17 +34,47 @@ module.exports = function(passport) {
 
     passport.use(
         new FacebookStrategy({
-            clientID: facebook_api_key,
-            clientSecret: facebook_secrey_key,
-            callbackURL: "http://localhost:8080/auth/facebook/callback",
-            profileFields:['id','displayName','emails']
+            clientID: keys.facebook.api_key,
+            clientSecret: keys.facebook.secret_key,
+            callbackURL: keys.facebook.callbackUrl,
+            profileFields:['id','displayName', 'profileUrl','emails']
         }, (accessToken, refreshToken, profile, done) => {
             console.log(profile);
-            console.log(profile.profileUrl);
             var me = new User({
                 email: profile.emails[0].value,
                 password: accessToken,
                 name: profile.displayName
+            });
+            
+            User.findOne({email: profile.emails[0].value}, (err, user) => {
+                if(!user){
+                    me.save((err, me) => {
+                        if(err) {
+                            return done(me);
+                        } else { 
+                            return done(null, me);
+                        }
+                    });
+                } else {
+                    done(null, user);
+                }
+            })
+        })
+    );
+
+    passport.use(
+        new GoogleStrategy({
+            clientID: keys.google.api_key,
+            clientSecret: keys.google.secret_key,
+            callbackURL: keys.google.callbackUrl,
+            profileFields:['id','displayName', 'photos', 'emails']
+        }, (accessToken, refreshToken, profile, done) => {
+            console.log(profile);
+            var me = new User({
+                email: profile.emails[0].value,
+                password: accessToken,
+                name: profile.displayName,
+                imageUrl: profile.photos[0].value
             });
             
             User.findOne({email: profile.emails[0].value}, (err, user) => {

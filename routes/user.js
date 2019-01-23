@@ -32,24 +32,24 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.use(csrfProtection);
+// router.use(csrfProtection);
 
 // Login Page
-router.get('/login', ensureLoggedOut('/'), (req, res, next) => {
+router.get('/login', ensureLoggedOut('/'), csrfProtection, (req, res, next) => {
   res.render('./home/login', {
     csrfToken: req.csrfToken()
   })
 });
 
 // Register Page
-router.get('/register', ensureLoggedOut('/'), (req, res, next) => {
+router.get('/register', ensureLoggedOut('/'), csrfProtection, (req, res, next) => {
   res.render('./home/register', {
     csrfToken: req.csrfToken()
   })
 });
 
 // Register 
-router.post('/register', (req, res) => {
+router.post('/register', csrfProtection, (req, res) => {
   let { name, email, password, password2 } = req.body;
   let errors = [];
 

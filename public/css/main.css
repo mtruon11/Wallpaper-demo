@@ -2237,3 +2237,42 @@ input.num-product::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; 
 }
+
+.login-box-content {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  padding-top: 20px;
+}
+
+.social-login-link {
+  text-decoration: none;
+  color: white;
+  margin-top: 10px;
+}
+
+.fb-login {
+  background-color: #1a538a;
+}
+
+.gp-login {
+  background-color: #db4437;
+  margin-top: 10px;
+}
+
+.login-box-content i {
+  padding: 11px 0px 11px 15px;
+  color: white;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.box-shadow {
+  box-shadow: 0 2px 2px 0 rgba(41,48,59,.24), 0 0 2px 0 rgba(41,48,59,.12);
+  border-radius: 5px;
+}
+
+.social-login-link:hover {
+  text-decoration: none;
+  color: white;
+}
