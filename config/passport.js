@@ -1,5 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const bcrypt = require('bcryptjs');
+const {facebook_api_key, facebook_secrey_key, callback_url} = require('./keys');
 
 //Load User model
 const User = require('../models/User');
@@ -27,6 +29,37 @@ module.exports = function(passport) {
                 });
 
             });
+        })
+    );
+
+    passport.use(
+        new FacebookStrategy({
+            clientID: facebook_api_key,
+            clientSecret: facebook_secrey_key,
+            callbackURL: "http://localhost:8080/auth/facebook/callback",
+            profileFields:['id','displayName','emails']
+        }, (accessToken, refreshToken, profile, done) => {
+            console.log(profile);
+            console.log(profile.profileUrl);
+            var me = new User({
+                email: profile.emails[0].value,
+                password: accessToken,
+                name: profile.displayName
+            });
+            
+            User.findOne({email: profile.emails[0].value}, (err, user) => {
+                if(!user){
+                    me.save((err, me) => {
+                        if(err) {
+                            return done(me);
+                        } else { 
+                            return done(null, me);
+                        }
+                    });
+                } else {
+                    done(null, user);
+                }
+            })
         })
     );
 
