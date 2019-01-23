@@ -55,6 +55,7 @@ router.post('/addVendor', uploadForVendor.single('image'), (req, res) => {
     
     if (errors.length > 0) {
         res.render('./admin/vendorForm', {
+            user: req.user, 
             errors,
             name,
             email,
@@ -68,6 +69,7 @@ router.post('/addVendor', uploadForVendor.single('image'), (req, res) => {
             if (vendor) {
                 errors.push({ msg: 'Email already exists.' });
                 res.render('./admin/vendorForm', {
+                    user: req.user, 
                     errors,
                     name,
                     email,

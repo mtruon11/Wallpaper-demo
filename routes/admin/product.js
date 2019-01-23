@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
                 });
 
             res.status(200).render('./admin/viewProduct', {
+                user: req.user, 
                 total: total,
                 outOfStock: outOfStock,
                 data: data,
@@ -66,6 +67,7 @@ router.get('/addProduct', csrfProtection, async (req, res) => {
         });
 
     res.status(200).render('./admin/productForm', {
+        user: req.user, 
         total: total,
         outOfStock: outOfStock,
         csrfToken: req.csrfToken()
@@ -116,6 +118,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
             if(product){
                 errors.push({msg: 'Product already existed.'});
                 res.status(200).render('./admin/productForm', {
+                    user: req.user, 
                     errors, sku, name, description, quantity, regularPrice, discountPrice, tags, 
                     categories, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken() 
                 });
@@ -163,6 +166,7 @@ router.get('/:sku', csrfProtection, (req, res) => {
             });   
     
         res.render('./admin/editProduct', {
+            user: req.user, 
             total: total,
             outOfStock: outOfStock, 
             product: product,
@@ -199,6 +203,7 @@ router.post('/editProduct', uploadProduct.array('images'), csrfProtection, (req,
             discountPrice, tags, categories, imageUrl 
         });
         res.status(404).render('./admin/editProduct', {
+            user: req.user, 
             errors, product, csrfToken: req.csrfToken()
         });
     } else {

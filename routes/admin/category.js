@@ -46,6 +46,7 @@ router.post('/addCategory', (req, res) => {
 
     if (errors.length > 0) {
         res.render('./admin/viewCategory', {
+            user: req.user, 
             errors,
             name,
             csrfToken: req.csrfToken()
@@ -55,6 +56,7 @@ router.post('/addCategory', (req, res) => {
             if(category){
                 errors.push({ msg: 'Category name already exists.' });
                 res.render('./admin/viewCategory', {
+                    user: req.user, 
                     errors,
                     name,
                     csrfToken: req.csrfToken()

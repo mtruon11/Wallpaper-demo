@@ -1,6 +1,6 @@
 <% include ./partials/header%>
 <div class="container-fluid px-lg-5 m-t-50 m-b-50">
-    <form action="/checkout/placeOrder" action="post" id="payment-form">
+    <form action="/checkout" action="post" id="payment-form">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
         <div class="row">      
             <div class="col-sm-12 col-md-8 col-lg-8">

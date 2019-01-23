@@ -1,17 +1,17 @@
 var mongoose = require('mongoose');
-
+var Schema = mongoose.Schema;
 
 var orderSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    customerID: {
-        type: Object,
-        required: false
+    user: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User'
     },
     paymentId: {
-        type: Object,
+        type: String,
         required: true
     },
     cart: {
@@ -38,6 +38,7 @@ var orderSchema = new mongoose.Schema({
     }
 
 });
+
 const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;

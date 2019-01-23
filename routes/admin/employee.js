@@ -34,6 +34,7 @@ router.delete('/:email', (req, res) => {
 
 router.get('/addEmployee', csrfProtection, (req, res) => {
     res.render("./admin/employeeForm", {
+        user: req.user, 
         csrfToken: req.csrfToken()
     })
 });
@@ -73,6 +74,7 @@ router.post('/addEmployee', uploadForEmployee.single('image'), csrfProtection, (
     
     if (errors.length > 0) {
         res.render('./admin/employeeForm', {
+            user: req.user, 
             errors,
             name,
             email,
@@ -88,6 +90,7 @@ router.post('/addEmployee', uploadForEmployee.single('image'), csrfProtection, (
             if (user) {
                 errors.push({ msg: 'Email already exists.' });
                 res.render('./admin/employeeForm', {
+                    user: req.user, 
                     errors,
                     name,
                     email,

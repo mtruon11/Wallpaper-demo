@@ -46,6 +46,7 @@ router.post('/addTag', (req, res) => {
 
     if (errors.length > 0) {
         res.render('./admin/viewTag', {
+            user: req.user, 
             errors,
             name,
             csrfToken: req.csrfToken()
@@ -55,6 +56,7 @@ router.post('/addTag', (req, res) => {
             if(tag){
                 errors.push({ msg: 'Tag name already exists.' });
                 res.render('./admin/viewTag', {
+                    user: req.user, 
                     errors,
                     name,
                     csrfToken: req.csrfToken()

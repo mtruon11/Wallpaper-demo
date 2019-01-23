@@ -10,7 +10,7 @@ const Order = require('../../models/Order');
 
 router.get('/', ensureLoggedIn('/users/login'), csrfProtection, (req, res, next) => {
     var cart = new Cart(req.session.cart);
-    console.log(req.user);
+    
     res.render('./home/checkout', {
         user: req.user,
         cart: cart,
@@ -21,7 +21,7 @@ router.get('/', ensureLoggedIn('/users/login'), csrfProtection, (req, res, next)
     });
 })
 
-router.post('/placeOrder', (req, res, next) => {
+router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
     
     if(!req.session.cart) {
         return res.redirect('/products');
@@ -30,7 +30,7 @@ router.post('/placeOrder', (req, res, next) => {
     var cart = new Cart(req.session.cart);
 
     var stripe = require('stripe')(stripeSecretKey);
-
+    
     stripe.charges.create({
         amount: cart.totalPrice * 0.06 * 100,
         currency: "usd",
@@ -42,13 +42,14 @@ router.post('/placeOrder', (req, res, next) => {
             return res.redirect('/checkout');
         } else {
             var order = new Order({
-                name: req.body.cardName,
-                customerID: req.user._id,
+                name: req.body.name,
+                userId: req.user._id,
                 cart: cart,
-                shippingAddress: req.body.shippingAddress,
+                shippingAddress: (req.body.shippingAddress + ' ' + req.body.city + ' ' + req.body.state + ' ' + req.body.country + ' ' + req.body.zip),
                 total: cart.totalPrice * 0.06 * 100,
                 paymentId: charge.id
             });
+            
             order.save((err, result) => {
                 req.flash('success', 'Successfully bought product!');
                 req.session.cart = null;

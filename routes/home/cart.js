@@ -9,10 +9,10 @@ const Cart = require('../../models/Cart');
 router.get('/viewCart', (req, res, next) => {
 
     if(!req.session.cart){
-        return res.render('./home/cart', {products: null})
+        return res.render('./home/cart', {user: req.user, products: null})
     }
     var cart = new Cart(req.session.cart);
-    res.render('./home/cart', {products: cart.generateArray(), totalPrice: cart.totalPrice, totalQty: cart.totalQty});
+    res.render('./home/cart', {user: req.user, products: cart.generateArray(), totalPrice: cart.totalPrice, totalQty: cart.totalQty});
 })
 
 //Add to cart
