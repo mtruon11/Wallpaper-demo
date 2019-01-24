@@ -22,7 +22,6 @@ router.get('/', ensureLoggedIn('/users/login'), csrfProtection, (req, res, next)
 })
 
 router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
-    
     if(!req.session.cart) {
         return res.redirect('/products');
     }
@@ -31,10 +30,12 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
 
     var stripe = require('stripe')(stripeSecretKey);
     
+    const {stripeToken, name, shippingAddress, city, state, country, zip} = req.body;
+    
     stripe.charges.create({
-        amount: cart.totalPrice * 0.06 * 100,
+        amount: cart.totalPrice * 100 + cart.totalPrice * 0.06 * 100,
         currency: "usd",
-        source: req.body.stripeToken,
+        source: stripeToken,
         description: "Test Charge"
     }, (err, charge) => {
         if(err){
@@ -42,10 +43,10 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
             return res.redirect('/checkout');
         } else {
             var order = new Order({
-                name: req.body.name,
+                name: name,
                 userId: req.user._id,
                 cart: cart,
-                shippingAddress: (req.body.shippingAddress + ' ' + req.body.city + ' ' + req.body.state + ' ' + req.body.country + ' ' + req.body.zip),
+                shippingAddress: (shippingAddress + ' ' + city + ' ' + state + ' ' + country + ' ' + zip),
                 total: cart.totalPrice * 0.06 * 100,
                 paymentId: charge.id
             });

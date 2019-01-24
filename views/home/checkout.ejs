@@ -1,10 +1,12 @@
 <% include ./partials/header%>
 <div class="container-fluid px-lg-5 m-t-50 m-b-50">
-    <form action="/checkout" action="post" id="payment-form">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+
+    <form action="/checkout" method="post" id="payment-form">
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken%>"/>
 
         <div class="row">
-            <div class="col-sm-12 col-md-8 col-lg-8">
+             <div class="col-sm-12 col-md-8 col-lg-8">
                 <hr/>
                 <div class="row">      
                     <div class="col-sm-12 col-md-12 col-lg-12">
@@ -20,7 +22,6 @@
                         </div>
                     </div>
                 </div>
-                    
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 collapse" id="collapseShippingAddress">
                         <div class="form-group row">
@@ -74,7 +75,6 @@
                         
                     </div>
                 </div>
-
                 <hr/>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
@@ -90,7 +90,6 @@
                         </div>
                     </div>
                 </div>
-            
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 collapse" id="collapseCreditCard">
                         <div class="form-group row">
@@ -184,7 +183,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <hr/>
                 <div class="container">
@@ -205,12 +203,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-        
-            
+        </div>      
     </form>
 </div>
 

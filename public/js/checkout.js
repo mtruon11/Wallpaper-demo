@@ -42,6 +42,16 @@ function createToken(){
     });
 };
 
+var stripeResponseHandler = function(token){
+    var hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', 'stripeToken');
+    hiddenInput.setAttribute('value', token.id);
+    form.appendChild(hiddenInput);
+    console.log('append successfully', token.id);
+    form.submit();
+}
+
 var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(e){
@@ -49,11 +59,3 @@ form.addEventListener('submit', function(e){
     createToken();
 });
 
-var stripeResponseHandler = function(token){
-    var hiddenInput = document.createElement('input');
-    hiddenInput.setAttribute('type', 'hidden');
-    hiddenInput.setAttribute('name', 'stripeToken');
-    hiddenInput.setAttribute('value', token.id);
-    form.appendChild(hiddenInput);
-    form.submit();
-}
