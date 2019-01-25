@@ -35,6 +35,14 @@ router.get('/', (req, res) => {
                 data: data,
                 link: "/admin/product/"
             })
+        } else {
+            res.status(200).render('./admin/viewProduct', {
+                user: req.user, 
+                total: 0,
+                outOfStock: 0,
+                data: null,
+                link: "/admin/product/"
+            })
         }
     });
 });

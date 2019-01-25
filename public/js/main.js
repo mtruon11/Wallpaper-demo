@@ -244,6 +244,8 @@
         dropdownParent: $('#dropDownSelect1')
     });
 
+
+    // Client-side pagination
     $(document).ready(function () {
         $('#dataTable').DataTable();
         $('#dataTable_wrapper').find('label').each(function () {

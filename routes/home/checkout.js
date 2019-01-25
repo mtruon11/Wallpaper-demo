@@ -44,7 +44,7 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
         } else {
             var order = new Order({
                 name: name,
-                userId: req.user._id,
+                user: req.user._id,
                 cart: cart,
                 shippingAddress: (shippingAddress + ' ' + city + ' ' + state + ' ' + country + ' ' + zip),
                 total: cart.totalPrice * 0.06 * 100,
