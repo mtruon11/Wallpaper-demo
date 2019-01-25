@@ -39,7 +39,6 @@ module.exports = function(passport) {
             callbackURL: keys.facebook.callbackUrl,
             profileFields:['id','displayName', 'profileUrl','emails']
         }, (accessToken, refreshToken, profile, done) => {
-            console.log(profile);
             var me = new User({
                 email: profile.emails[0].value,
                 password: accessToken,
@@ -69,7 +68,6 @@ module.exports = function(passport) {
             callbackURL: keys.google.callbackUrl,
             profileFields:['id','displayName', 'photos', 'emails']
         }, (accessToken, refreshToken, profile, done) => {
-            console.log(profile);
             var me = new User({
                 email: profile.emails[0].value,
                 password: accessToken,

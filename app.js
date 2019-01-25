@@ -9,6 +9,14 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {ensureLoggedIn} = require('connect-ensure-login');
 const MongoStore = require('connect-mongo')(session);
+var fs = require('fs'); 
+var http = require('http');
+var https = require('https'); 
+var options = { 
+    key: fs.readFileSync('./ssl/server-key.pem'), 
+    cert: fs.readFileSync('./ssl/server-crt.pem'), 
+    ca: fs.readFileSync('./ssl/ca-crt.pem'), 
+}; 
 
 const app = express();
 
@@ -58,7 +66,7 @@ app.use( //Express session
             mongooseConnection: mongoose.connection,
             autoRemove: 'native'
         }),
-        cookie: {maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
+        cookie: {secure: true, maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
     })
 );
 
@@ -100,8 +108,6 @@ app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./route
 app.use('*', (req, res) => { res.status(404).send('404')});
 
 // PORT 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8443;
 
-app.listen(PORT, function(){
-    console.log('Server running on port 8080!')
-});
+https.createServer(options, app).listen(PORT, ()=> console.log('Server running on port 8443!'));

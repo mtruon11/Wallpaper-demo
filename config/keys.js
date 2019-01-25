@@ -4,11 +4,11 @@ module.exports = {
     facebook: {
         api_key: '2265968780327578',
         secret_key: '5bf6b7122584a67d902378e27500a7ac',
-        callbackUrl: 'http://localhost:8080/auth/facebook/callback'
+        callbackUrl: 'https://localhost:8443/auth/facebook/callback'
     },
     google: {
         api_key: '958906150907-onvvm3rdsogn7stssm15hg0507cteiq2.apps.googleusercontent.com',
         secret_key: 'asmdl68diBLrCUycQeSPNcBM',
-        callbackUrl: 'http://localhost:8080/auth/google/callback'
+        callbackUrl: 'https://localhost:8443/auth/google/callback'
     }
 };
