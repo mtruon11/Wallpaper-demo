@@ -13,40 +13,40 @@
             <table id="dataTable" class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
                 <thead>
                     <tr>
-                        <th class="th-sm" id="sku" scope="col">SKU</th>
-                        <th class="th-sm" id="image" scope="col">Image</th>
-                        <th class="th-sm" id="name" scope="col">Name</th>
-                        <th class="th-sm" id="regPrice" scope="col">Reg. Price</th>
-                        <th class="th-sm" id="disPrice" scope="col">Dis. Price</th>
-                        <th class="th-sm" id="quantity" scope="col">Quantity</th>
-                        <th class="th-sm" id="status" scope="col">Status</th>
-                        <th class="th-sm" scope="col">Categories</th>
-                        <th class="th-sm" scope="col">Tags</th>
-                        <th class="th-sm" id="createdOn" scope="col">Added On</th>
-                        <th class="th-sm" scope="col">Action</th>
+                        <th class="th-sm text-center" id="sku" scope="col">SKU</th>
+                        <th class="th-sm text-center" id="image" scope="col">Image</th>
+                        <th class="th-sm text-center" id="product" scope="col">Name</th>
+                        <th class="th-sm text-center" id="regPrice" scope="col">Reg. Price</th>
+                        <th class="th-sm text-center" id="disPrice" scope="col">Dis. Price</th>
+                        <th class="th-sm text-center" id="quantity" scope="col">Quantity</th>
+                        <th class="th-sm text-center" id="status" scope="col">Status</th>
+                        <th class="th-sm text-center" scope="col">Categories</th>
+                        <th class="th-sm text-center" scope="col">Tags</th>
+                        <th class="th-sm text-center" id="createdOn" scope="col">Added On</th>
+                        <th class="th-sm text-center" scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% data.forEach(function(data) { %>
-                    <tr class="mw-100 p-3">
-                        <td><%= data.sku %></td>
-                        <td class="h-50 mx-auto my-auto">
+                    <tr class="mw-100 p-3 text-center">
+                        <td class="text-center"><%= data.sku %></td>
+                        <td class="h-50 mx-auto my-auto text-center">
                             <!-- <img src='/images/uploads/1547227742454-banner-01.jpg' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/> -->
                             <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
                         </td>
-                        <td><%= data.name %></td>
-                        <td><%= data.regularPrice %></td>
-                        <td><%= data.discountPrice %></td>
-                        <td><%= data.quantity %></td>
+                        <td class="text-center"><%= data.name %></td>
+                        <td class="text-center"><%= data.regularPrice %></td>
+                        <td class="text-center"><%= data.discountPrice %></td>
+                        <td class="text-center"><%= data.quantity %></td>
                         <% if(data.status){ %>
-                            <td><span class="label label-success" style="background-color:#449d44">Available</span></td>
+                            <td class="text-center"><span class="label label-success" style="background-color:#449d44">Available</span></td>
                         <% } else { %>
-                            <td><span class="label label-danger" style="background-color:red">Out of Stock</span></td>
+                            <td class="text-center"><span class="label label-danger" style="background-color:red">Out of Stock</span></td>
                         <% } %>
-                        <td><%= data.categories %></td>
-                        <td><%= data.tags %></td>
-                        <td><%= data.createdOn.toDateString() %></td>
-                        <td>
+                        <td class="text-center"><%= data.categories %></td>
+                        <td class="text-center"><%= data.tags %></td>
+                        <td class="text-center"><%= data.createdOn.toDateString() %></td>
+                        <td class="text-center">
                             <a data-toggle="tooltip" data-placement="top" title="Edit" href="<%= link + data.sku %>" >
                                 <i class="fas fa-edit"></i>
                             </a>

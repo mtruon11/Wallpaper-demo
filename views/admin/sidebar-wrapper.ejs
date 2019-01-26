@@ -1,57 +1,164 @@
 <div id="sidebar-wrapper">
     <div class="sidebar-nav">
-        <!-- <a href="/" class="sidebar-brand">Home </a> -->
-        <a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
-
-        <a href="/admin/orders"><i class="fas fa-cart-plus"></i> Orders</a>
-        
-        <a href="/admin/product"><i class="fas fa-box-open"></i> Product </a>
-        
-        <a href="/admin/categories"><i class="fas fa-shapes"></i> Categories </a>
-
-        <a href="/admin/tags"><i class="fa fa-tags"></i> Tags </a>
-
-        <button class="dropdown-btn"><i class="fa fa-money"></i> Billing
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/admin/addBill">Add Bill </a>
-            <a href="/admin/editBill">Edit Bill </a>
-            <a href="/admin/viewBill">View Bill </a>
-        </div>
-        
-        <button class="dropdown-btn"><i class="fa fa-users"></i> Customers
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/admin/addCustomer">Add Customer </a>
-            <a href="/admin/editCustomer">Edit Customer </a>
-            <a href="/admin/viewCustomer">View Customer </a>
-        </div>
-        
-        <button class="dropdown-btn"><i class="fas fa-handshake"></i> Vendors
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/admin/vendors/addVendor">Add Vendor </a>
-            <a href="/admin/vendors/editVendor">Edit Vendor </a>
-            <a href="/admin/vendors/viewVendor">View Vendor </a>
+        <div class="container-fluid">
+            <div class="container">
+                <img src="<%= user.imageUrl %>" alt="User Image" class="mx-auto img-responsive img-fluid img-thumbnail rounded">
+            </div>
+            <div class="container">
+                <p class="text-center"><font size="5">Welcome, <%= user.name%></font></p>
+            </div>
         </div>
 
-        <button class="dropdown-btn"><i class="fa fa-user"></i> Employee
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/admin/employees/addEmployee">Add Employee </a>
-            <a href="/admin/employees/editEmployee">Edit Employee </a>
-            <a href="/admin/employees/viewEmployee">View Employee </a>
+        <hr id="divider"/>
+        
+        <div class="container-fluid">
+            <a href="/admin" class="text-center">
+                <div>
+                    <i class="fas fa-tachometer-alt fa-2x"></i>
+                </div>
+                <div>
+                    <p>Dashboard</p>
+                </div> 
+            </a>
         </div>
         
-        <a href="/admin/messaging"><i class="fa fa-envelope"></i> Messaging </a>
+        <div class="container-fluid">
+            <a href="/admin/orders" class="text-center">
+                <div>
+                    <i class="fas fa-cart-plus fa-2x"></i>
+                </div>
+                <div>
+                    <p>Orders</p>
+                </div> 
+            </a>
+        </div>
+        <div class="container-fluid">
+            <a href="/admin/product" class="text-center">
+                <div>
+                    <i class="fas fa-box-open fa-2x"></i>
+                </div>
+                <div>
+                    <p>Products</p>
+                </div> 
+            </a>
+        </div>
 
-        <a href="/admin/statistic"><i class="fa fa-bar-chart-o"></i> Statistic </a>
+        <div class="container-fluid">
+            <a href="/admin/categories" class="text-center">
+                <div>
+                    <i class="fas fa-shapes fa-2x"></i>
+                </div>
+                <div>
+                    <p>Categories</p>
+                </div> 
+            </a>
+        </div>
+        <div class="container-fluid">
+            <a href="/admin/tags" class="text-center">
+                <div>
+                    <i class="fas fa-tags fa-2x"></i>
+                </div>
+                <div>
+                    <p>Tags</p>
+                </div> 
+            </a>
+        </div>
+        <div class="container-fluid">
+            <button class="dropdown-btn text-center">
+                <div>
+                    <i class="fa fa-money fa-2x"></i>
+                </div>
+                <div>
+                    <p>Billing</p>
+                </div>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/addBill">Add Bill </a>
+                <a href="/admin/editBill">Edit Bill </a>
+                <a href="/admin/viewBill">View Bill </a>
+            </div>
+        </div>
 
-        <a href="/users/logout"><i class="fa fa-power-off"></i> Log Out</a>
+        <div class="container-fluid">
+            <button class="dropdown-btn text-center">
+                <div>
+                    <i class="fa fa-users fa-2x"></i>
+                </div>
+                <div>
+                    <p>Customers</p>
+                </div>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/addCustomer">Add Customer </a>
+                <a href="/admin/editCustomer">Edit Customer </a>
+                <a href="/admin/viewCustomer">View Customer </a>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <button class="dropdown-btn text-center">
+                <div>
+                    <i class="fas fa-handshake fa-2x"></i>
+                </div>
+                <div>
+                    <p>Vendors</p>
+                </div>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/vendors/addVendor">Add Vendor </a>
+                <a href="/admin/vendors/editVendor">Edit Vendor </a>
+                <a href="/admin/vendors/viewVendor">View Vendor </a>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <button class="dropdown-btn text-center">
+                <div>
+                    <i class="fa fa-user fa-2x"></i>
+                </div>
+                <div>
+                    <p>Employee</p>
+                </div>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/employees/addEmployee">Add Employee </a>
+                <a href="/admin/employees/editEmployee">Edit Employee </a>
+                <a href="/admin/employees/viewEmployee">View Employee </a>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <a href="/admin/messaging" class="text-center">
+                <div>
+                    <i class="fa fa-envelope fa-2x"></i>
+                </div>
+                <div>
+                    <p>Messaging</p>
+                </div> 
+            </a>
+        </div>
+
+        <div class="container-fluid">
+            <a href="/admin/statistic" class="text-center">
+                <div>
+                    <i class="fa fa-bar-chart-o fa-2x"></i>
+                </div>
+                <div>
+                    <p>Statistic</p>
+                </div> 
+            </a>
+        </div>
+
+        <div class="container-fluid">
+            <a href="/users/logout" class="text-center">
+                <div>
+                    <i class="fa fa-power-off fa-2x"></i>
+                </div>
+                <div>
+                    <p>Log Out</p>
+                </div> 
+            </a>
+        </div>
 
     </div>
 </div>

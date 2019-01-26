@@ -13,35 +13,35 @@
             <table id="dataTable" class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
                 <thead>
                     <tr>
-                        <th class="th-sm" id="id" scope="col">ID</th>
-                        <th class="th-sm" id="customerID" scope="col">Customer ID</th>
-                        <th class="th-sm" id="paymentID" scope="col">Payment ID</th>
-                        <th class="th-sm" id="products" scope="col">Products</th>
-                        <th class="th-sm" id="value" scope="col">Value</th>
-                        <th class="th-sm" id="status" scope="col">Status</th>
-                        <th class="th-sm" id="orderDate" scope="col">Order Date</th>
-                        <th class="th-sm" scope="col">Action</th>
+                        <th class="th-sm text-center" id="id" scope="col">ID</th>
+                        <th class="th-sm text-center" id="customerID" scope="col">Customer ID</th>
+                        <th class="th-sm text-center" id="paymentID" scope="col">Payment ID</th>
+                        <th class="th-sm text-center" id="products" scope="col">Products</th>
+                        <th class="th-sm text-center" id="value" scope="col">Value</th>
+                        <th class="th-sm text-center" id="status" scope="col">Status</th>
+                        <th class="th-sm text-center" id="orderDate" scope="col">Order Date</th>
+                        <th class="th-sm text-center" scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% data.forEach(function(data) { %>
                     <tr class="mw-100 p-3">
-                        <td><%= data.id %></td>
-                        <td><%= data.user %></td>
-                        <td><%= data.paymentId %></td>
-                        <td><%= data.cart.totalQty %></td>
-                        <td><%= parseFloat(data.total).toFixed(2) %></td>
+                        <td class="text-center"><%= data.id %></td>
+                        <td class="text-center"><%= data.user %></td>
+                        <td class="text-center"><%= data.paymentId %></td>
+                        <td class="text-center"><%= data.cart.totalQty %></td>
+                        <td class="text-center"><%= parseFloat(data.total).toFixed(2) %></td>
                         <% if(data.status){ %>
-                            <td><span class="label label-warning">Processing</span></td>
+                            <td class="text-center"><span class="label label-warning">Processing</span></td>
                         <% } else { %>
-                            <td><span class="label label-primary">Out for delivery</span></td>
+                            <td class="text-center"><span class="label label-primary">Out for delivery</span></td>
                         <% } %>
-                        <td><%= data.orderedDate.toDateString() %></td>
-                        <td>
-                            <a data-toggle="tooltip" data-placement="top" title="View" href="<%= link + data.id %>" >
+                        <td class="text-center"><%= data.orderedDate.toDateString() %></td>
+                        <td class="text-center">
+                            <a class="text-center" data-toggle="tooltip" data-placement="top" title="View" href="<%= link + data.id %>" >
                                 <i class="far fa-eye"></i>
                             </a>
-                            <a data-toggle="tooltip" data-placement="top" title="Delete" href="<%= link + data.id + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
+                            <a class="text-center" data-toggle="tooltip" data-placement="top" title="Delete" href="<%= link + data.id + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
                                 <i class="fas fa-trash-alt" style="color:red"></i>
                             </a> 
                         </td>

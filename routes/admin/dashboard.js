@@ -9,11 +9,11 @@ router.use('/employees', require('./employee.js'));
 router.use('/orders', require('./order.js'));
 
 // DashBoard
-router.get('/', (req, res) => 
+router.get('/', (req, res) => {
     res.status(200).render('./admin/dashboard', {
         user: req.user
     })
-);
+});
 
 module.exports = router;
 
