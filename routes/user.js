@@ -130,4 +130,17 @@ router.post('/register', csrfProtection, (req, res) => {
   }
 });
 
+router.get('/account', (req, res) => {
+  res.render('./home/myAccount', {
+    user: req.user
+  })
+});
+
+router.get('/orders', (req, res) => {
+  res.render('./home/myOrder', {
+    user: req.user
+  })
+});
+
+
 module.exports = router;

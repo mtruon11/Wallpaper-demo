@@ -288,6 +288,26 @@
         });
     });
 
+    /*[My Orders]
+    ============================================================*/
+    $(document).ready(function(){
+        $("#past-order-date").each(function(){
+            var year = (new Date()).getFullYear();
+            $(this).append('<option value="' + (year) + '">' + (year) + '</option>');
+            $(this).append('<option value="' + (year-1) + '">' + (year-1) + '</option>');
+        });
+    });
+
+    $(document).ready(function(){
+        $("#past-order-form #past-order-date").on('change', function() {
+            $(this).closest('#past-order-form').submit();
+        });
+    })
+
+
+
+    
+
 })(jQuery);
 
 

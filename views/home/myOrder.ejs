@@ -1,0 +1,69 @@
+<!-- Header -->
+<% include ./partials/header %>
+
+<!-- Content for my order -->
+<div class="container-fluid m-t-50 m-b-50">
+    <div class="container m-t-20 m-b-20">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="/users/account">My Account</a></li>
+                    <li class="breadcrumb-item"><a href="/users/orders">My Orders</a></li>
+                </ol>
+            </nav>
+        </div>
+        <hr>
+        <div class="container m-t-20 m-b-20">
+            <h2 class="float-left">Your Orders</h2>
+            <form action="/users/orders" method="get" id="past-order-form">
+                <select class="float-right m-2 p-1" id="past-order-date" name="pastOrder">
+                    <option value="30days" selected>last 30 days</option>
+                    <option value="6months">past 6 months</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="container card m-t-30 m-b-30">
+            <div class="card-header">
+                <div class="float-left">
+                    <span class="d-block">Order Placed</span>
+                    <span class="d-block">Date</span>
+                </div>
+
+                <div class="float-right">
+                    <span class="d-block text-right">Order # 123123123123</span>
+                    <span class="d-block">
+                        <a href="#" class="text-left text-primary m-r-10">Order Details</a> 
+                        <a href="#" class="text-right text-primary">Invoice</a>
+                    </span>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Delivered time: Date</h4>
+                <p class="card-text">Where it is left at: </p>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img src="" alt="IMG-ALT">
+                        </div>
+                        <div class="col-lg-3">
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="col-lg-7">
+                                <p class="card-text text-right">With supporting text below as a natural lead-in to additional content.</p>
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+
+<!-- Footer -->
+<% include ./partials/footer %>

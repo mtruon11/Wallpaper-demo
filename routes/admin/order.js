@@ -10,13 +10,23 @@ router.get('/', (req, res) => {
         if(orders) {
             var today, thisMonth, lastMonth, allTime;
 
-            await Order.countDocuments({}, (err, count) => {
+            var options = {month: 'long'};
+
+            var d = new Date();
+
+            var tMonth = new Date(d.getFullYear(), d.getMonth());
+
+            var lMonth= new Date(d.getFullYear(), d.getMonth() - 1);
+
+            await Order.countDocuments({orderedDate: {$gte: d.toDateString()}}, (err, count) => {
                 today = count;
             });
-            await Order.countDocuments({}, (err, count) => {
+
+            await Order.countDocuments({orderedDate: {$gte: tMonth, $lte: d}}, (err, count) => {
                 thisMonth= count;
             });
-            await Order.countDocuments({}, (err, count) => {
+ 
+            await Order.countDocuments({orderedDate: {$gte: lMonth, $lt: tMonth}}, (err, count) => {
                 lastMonth = count;
             });
             await Order.countDocuments({}, (err, count) => {
