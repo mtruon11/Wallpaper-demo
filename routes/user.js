@@ -10,6 +10,7 @@ const csrfProtection = csrf();
 
 // Load User model
 const User = require('../models/User');
+const Order = require('../models/Order');
 
 //Profile
 router.get('/profile', ensureLoggedIn('/users/login'), (req, res, next) => {
@@ -137,8 +138,17 @@ router.get('/account', (req, res) => {
 });
 
 router.get('/orders', (req, res) => {
-  res.render('./home/myOrder', {
-    user: req.user
+
+  Order.find({user: req.user._id}, (err, orders) => {
+    if(err) { 
+      console.log(err);
+      return res.render(err);
+    }
+    
+    res.render('./home/myOrder', {
+      user: req.user,
+      orders: orders
+    })
   })
 });
 

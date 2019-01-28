@@ -8,9 +8,7 @@ router.get('/', (req, res) => {
 
     Order.find({}, async (err, orders) => {
         if(orders) {
-            var today, thisMonth, lastMonth, allTime;
-
-            var options = {month: 'long'};
+            var today = 0, thisMonth = 0, lastMonth = 0, allTime = 0;
 
             var d = new Date();
 
@@ -46,10 +44,10 @@ router.get('/', (req, res) => {
             res.render('./admin/viewOrder', {
                 user: req.user,
                 data: null,
-                today: 0,
-                thisMonth: 0,
-                lastMonth: 0,
-                allTime: 0,
+                today: today,
+                thisMonth: thisMonth,
+                lastMonth: lastMonth,
+                allTime: allTime,
                 link: "/admin/orders"
             })
         }

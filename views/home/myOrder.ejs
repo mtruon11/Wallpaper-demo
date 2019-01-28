@@ -23,46 +23,58 @@
             </form>
         </div>
 
-        <div class="container card m-t-30 m-b-30">
-            <div class="card-header">
-                <div class="float-left">
-                    <span class="d-block">Order Placed</span>
-                    <span class="d-block">Date</span>
-                </div>
-
-                <div class="float-right">
-                    <span class="d-block text-right">Order # 123123123123</span>
-                    <span class="d-block">
-                        <a href="#" class="text-left text-primary m-r-10">Order Details</a> 
-                        <a href="#" class="text-right text-primary">Invoice</a>
-                    </span>
-                </div>
-
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">Delivered time: Date</h4>
-                <p class="card-text">Where it is left at: </p>
-
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <img src="" alt="IMG-ALT">
-                        </div>
-                        <div class="col-lg-3">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                        <div class="col-lg-7">
-                                <p class="card-text text-right">With supporting text below as a natural lead-in to additional content.</p>
-                            </div>
+        <% orders.forEach(function(order) { %>
+            <div class="container card m-t-30 m-b-30">
+                <div class="card-header">
+                    <div class="float-left">
+                        <span class="d-block">Order Placed</span>
+                        <span class="d-block"><%= order.orderedDate.toDateString()%></span>
                     </div>
-                    
+    
+                    <div class="float-right">
+                        <span class="d-block text-right">Order # <%= order._id%></span>
+                        <span class="d-block">
+                            <a href="#" class="text-left text-primary m-r-10">Order Details</a> 
+                            <a href="#" class="text-right text-primary">Invoice</a>
+                        </span>
+                    </div>
+    
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Delivered time: <%= order.updatedOn.toDateString() %></h4>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-8">
+                                <% for (var id in order.cart.items) {%> 
+                                <div class="row m-t-10 m-b-10">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <img src="<%= order.cart.items[id].item.imageUrl[0] %>" alt="IMG-ALT" class="img-fluid img-responsive img-thumbnail rounded" width="100px" height="100%">
+                                    </div>
+                                    <div class="col-sm-9 col-md-9 col-lg-9">
+                                        <address>
+                                            <p class="card-text"><b><%= order.cart.items[id].item.name %></b></p>
+                                            <p class="card-text"><i>Sold by: CompanyABC Inc.</i></p>
+                                            <p class="card-text"><strong>Qty: </strong><%= order.cart.items[id].qty %></p>
+                                        </address>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <div class="col-sm-6 col-md-6 col-lg-4 m-t-10 m-b-10">
+                                <a href="#" type="submit" class="btn btn-light d-block m-b-20">Track Your Package</a>
+                                <a href="#" type="submit" class="btn btn-light d-block m-t-10 m-b-10">Return Items</a>
+                                <a href="#" type="submit" class="btn btn-light d-block m-t-10 m-b-10">Write Product Review</a>
+                                <a href="#" type="submit" class="btn btn-warning d-block m-t-20 m-b-10">Buy Again</a>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
-        </div>
+        <%});%>
     </div>
-
-    
-
 </div>
 
 <!-- Footer -->
