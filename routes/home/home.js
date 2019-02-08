@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const Product = require('../../models/Product');
+
 // Home page 
 router.get('/', (req, res) => {
-    res.render('./home/index', {user: req.user})
+    Product.find({}, (err, products) => {
+        res.render('./home/index', {
+            user: req.user,
+            products: products
+        })
+    })
 });
 
 //Blog

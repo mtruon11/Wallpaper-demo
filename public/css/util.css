@@ -3626,7 +3626,7 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 }
 
 .w-size12 {
-	width: 200px;
+	width: auto;
 }
 
 .w-size13 {
@@ -3642,7 +3642,7 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 }
 
 .w-size16 {
-	width: 79%;
+	width: auto;
 }
 
 .w-size17 {
