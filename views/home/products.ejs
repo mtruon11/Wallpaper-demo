@@ -76,7 +76,7 @@
                     </div>
 
                     <span class="s-text8 p-t-5 p-b-5">
-                        Showing 1–12 of 16 results
+                        Showing <%= products.length %> results
                     </span>
                 </div>
 
@@ -100,7 +100,7 @@
         
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
-                                        <a href="/cart/addToCart/<%= product._id %>" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
+                                        <a href="/cart/addToCart/<%= product._id %>?pageNum=<%=currentPage%>̀&size=12" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
                                             Add to Cart
                                         </a>
                                     </div>
@@ -124,8 +124,9 @@
                 
                 <!-- Pagination -->
                 <div class="pagination flex-m flex-w p-t-26">
-                    <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-                    <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+                    <% for(var i = 1; i <= pages; i++) { %>
+                        <a href="/products?pageNum=<%= i %>&size=12" class="item-pagination flex-c-m trans-0-4"><%= i %></a>
+                    <% } %>
                 </div>
             </div>
         </div>

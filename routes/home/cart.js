@@ -18,6 +18,9 @@ router.get('/viewCart', (req, res, next) => {
 //Add to cart
 router.get('/addToCart/:id', (req, res) => {
     var productId = req.params.id;
+    var currentPage = parseInt(req.query.pageNum);
+    var size = parseInt(req.query.size);
+
     var cart = new Cart(req.session.cart ? req.session.cart : {});
     Product.findById(productId, (err, product) => {
         if (err) {
@@ -25,7 +28,7 @@ router.get('/addToCart/:id', (req, res) => {
         }
         cart.add(product, product._id);
         req.session.cart = cart;
-        res.redirect('/products');
+        res.redirect('/products?pageNum=' + currentPage + '&size='+ size);
     })
 })
 

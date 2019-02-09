@@ -9,21 +9,21 @@
         <% include ./productReport %>
         
         <!-- Add product form -->
-        <div class="container-fluid table-responsive m-t-50 m-b-50">
+        <div class="container-fluid table-responsive table-responsive-sm table-responsive-md table-responsive-lg m-t-50 m-b-50">
             <table id="dataTable" class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
                 <thead>
                     <tr>
-                        <th class="th-sm text-center" id="sku" scope="col">SKU</th>
-                        <th class="th-sm text-center" id="image" scope="col">Image</th>
-                        <th class="th-sm text-center" id="product" scope="col">Name</th>
-                        <th class="th-sm text-center" id="regPrice" scope="col">Reg. Price</th>
-                        <th class="th-sm text-center" id="disPrice" scope="col">Dis. Price</th>
-                        <th class="th-sm text-center" id="quantity" scope="col">Quantity</th>
-                        <th class="th-sm text-center" id="status" scope="col">Status</th>
-                        <th class="th-sm text-center" scope="col">Categories</th>
-                        <th class="th-sm text-center" scope="col">Tags</th>
-                        <th class="th-sm text-center" id="createdOn" scope="col">Added On</th>
-                        <th class="th-sm text-center" scope="col">Action</th>
+                        <th class="th-sm th-md th-lg text-center" id="sku" scope="col">SKU</th>
+                        <th class="th-sm th-md th-lg text-center" id="image" scope="col">Image</th>
+                        <th class="th-sm th-md th-lg text-center" id="product" scope="col">Name</th>
+                        <th class="th-sm th-md th-lg text-center" id="regPrice" scope="col">Reg. Price</th>
+                        <th class="th-sm th-md th-lg text-center" id="disPrice" scope="col">Dis. Price</th>
+                        <th class="th-sm th-md th-lg text-center" id="quantity" scope="col">Quantity</th>
+                        <th class="th-sm th-md th-lg text-center" id="status" scope="col">Status</th>
+                        <th class="th-sm th-md th-lg text-center" scope="col">Categories</th>
+                        <th class="th-sm th-md th-lg text-center" scope="col">Tags</th>
+                        <th class="th-sm th-md th-lg text-center" id="createdOn" scope="col">Added On</th>
+                        <th class="th-sm th-md th-lg text-center" scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +43,20 @@
                         <% } else { %>
                             <td class="text-center"><span class="label label-danger" style="background-color:red">Out of Stock</span></td>
                         <% } %>
-                        <td class="text-center"><%= data.categories %></td>
-                        <td class="text-center"><%= data.tags %></td>
+                        <td class="text-center">
+                            <% data.categories.forEach(function(category) { %>
+                                <p class="text-center">
+                                    <%= category %>
+                                </p>
+                            <% }); %>
+                        </td>
+                        <td class="text-center">
+                            <% data.tags.forEach(function(tag) { %>
+                                <p class="text-center">
+                                    <%= tag %>
+                                </p>
+                            <% }); %>
+                        </td>
                         <td class="text-center"><%= data.createdOn.toDateString() %></td>
                         <td class="text-center">
                             <a data-toggle="tooltip" data-placement="top" title="Edit" href="<%= link + data.sku %>" >
