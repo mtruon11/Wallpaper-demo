@@ -28,7 +28,7 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
     
     var cart = new Cart(req.session.cart);
 
-    var stripe = require('stripe')(stripeSecretKey);
+    var stripe = require('stripe')(process.env.STRIPE_SECRET);
     
     const {stripeToken, name, shippingAddress, city, state, country, zip} = req.body;
     

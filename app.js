@@ -20,11 +20,13 @@ var options = {
 
 const app = express();
 
+require('dotenv').load();
+
 //Passport config
 require('./config/passport')(passport);
 
 //DB config
-const db = require('./config/keys').mongoURI;
+const db = process.env.MONGO_URI;
 
 //Connect to MongoDB
 mongoose
@@ -108,6 +110,6 @@ app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./route
 app.use('*', (req, res) => { res.status(404).send('404')});
 
 // PORT 
-const PORT = process.env.PORT || 8443;
+const PORT = process.env.PORT || 8080;
 
-https.createServer(options, app).listen(PORT, ()=> console.log('Server running on port 8443!'));
+https.createServer(options, app).listen(PORT, ()=> console.log('Server running on port '+ PORT));

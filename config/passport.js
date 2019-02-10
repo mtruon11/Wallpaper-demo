@@ -35,10 +35,11 @@ module.exports = function(passport) {
     passport.use(
         new FacebookStrategy({
             clientID: keys.facebook.api_key,
-            clientSecret: keys.facebook.secret_key,
+            clientSecret: process.env.FB_SECRET,
             callbackURL: keys.facebook.callbackUrl,
             profileFields:['id','displayName', 'profileUrl','emails']
         }, (accessToken, refreshToken, profile, done) => {
+            
             var me = new User({
                 email: profile.emails[0].value,
                 password: accessToken,
@@ -64,7 +65,7 @@ module.exports = function(passport) {
     passport.use(
         new GoogleStrategy({
             clientID: keys.google.api_key,
-            clientSecret: keys.google.secret_key,
+            clientSecret: process.env.GG_SECRET,
             callbackURL: keys.google.callbackUrl,
             profileFields:['id','displayName', 'photos', 'emails']
         }, (accessToken, refreshToken, profile, done) => {
