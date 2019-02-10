@@ -16,6 +16,9 @@ router.get('/', ensureLoggedIn('/users/login'), csrfProtection, (req, res, next)
         products: cart.generateArray(),
         totalQty: cart.totalQty, 
         totalPrice: cart.totalPrice,
+        tax: cart.totalPrice * 0.06,
+        afterTax: cart.totalPrice + cart.totalPrice * 0.06, 
+        shippingPrice: 0.00,
         csrfToken: req.csrfToken()
     });
 })

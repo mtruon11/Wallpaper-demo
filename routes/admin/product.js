@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
                 });
 
             await Product
-                .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+                .countDocuments({status: false, quantity: {$eq: 0}}, (err, count) => {
                     outOfStock = count;
                 });
 
@@ -65,7 +65,7 @@ router.get('/addProduct', csrfProtection, async (req, res) => {
     var outOfStock;
 
     await Product
-        .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+        .countDocuments({status: false, quantity: {$eq: 0}}, (err, count) => {
             outOfStock = count;
         });
     
@@ -107,7 +107,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
     var outOfStock;
 
     await Product
-        .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+        .countDocuments({status: false, quantity: {$eq: 0}}, (err, count) => {
             outOfStock = count;
         });
     
@@ -169,7 +169,7 @@ router.get('/:sku', csrfProtection, (req, res) => {
             });
     
         await Product
-            .countDocuments({quantity: {$eq: 0}}, (err, count) => {
+            .countDocuments({status: false, quantity: {$eq: 0}}, (err, count) => {
                 outOfStock = count;
             });   
     

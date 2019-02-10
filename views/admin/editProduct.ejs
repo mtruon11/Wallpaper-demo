@@ -81,14 +81,12 @@
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="tags"><b>Tags</b></label>
                                     <div class="col-md-auto">
-                                        <input 
-                                            class="form-control text-box"
-                                            type="text"
-                                            id="tags"
-                                            name="tags"
-                                            placeholder="Examples: clothes, shirt..."
-                                            value= "<%= product.tags %>"
-                                        />
+                                        <select class="select-chosen text-box" id="tags" name="tags[]" data-role="tagsinput" multiple>
+                                            <option value="Tag 1">Tag 1</option>
+                                            <option value="Tag 2">Tag 2</option>
+                                            <option value="Tag 3">Tag 3</option>
+                                            <option value="Tag 4">Tag 4</option>
+                                        </select>
                                     </div>
                                 </div>
                                 

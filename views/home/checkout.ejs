@@ -197,10 +197,10 @@
                         <p class="text-center">
                             <h6 class="m-t-10 m-b-10"><strong>Order Summary</strong></h6>
                             <div>Items (<%= totalQty %>): <span class="float-right">$<%= totalPrice %></span></div>
-                            <div>Shipping & Handling: <span class="float-right">$0.00</span></div><hr/>
+                            <div>Shipping & Handling: <span class="float-right">$<%= shippingPrice %></span></div><hr/>
                             <div>Total before tax: <span class="float-right">$<%= totalPrice %></span></div>
-                            <div>Estimated tax: <span class="float-right">$<%= totalPrice * 0.06 %></span></div><hr/>
-                            <div class="text-danger">Order total: <span class="float-right">$<%= totalPrice + totalPrice * 0.06 %></span></div><hr/>
+                            <div>Estimated tax: <span class="float-right">$<%= tax %></span></div><hr/>
+                            <div class="text-danger">Order total: <span class="float-right">$<%= afterTax %></span></div><hr/>
                         </p>
                     </div>
                 </div>
