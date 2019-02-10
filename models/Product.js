@@ -22,6 +22,10 @@ var productSchema = new mongoose.Schema({
         required: true,
         default: true
     },
+    isSale: {
+        type:Boolean,
+        default: false
+    },
     regularPrice: {
         type: Number,
         required: true

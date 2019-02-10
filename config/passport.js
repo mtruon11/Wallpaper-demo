@@ -2,7 +2,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcryptjs');
-const keys = require('./keys');
 
 //Load User model
 const User = require('../models/User');
@@ -34,9 +33,9 @@ module.exports = function(passport) {
 
     passport.use(
         new FacebookStrategy({
-            clientID: keys.facebook.api_key,
+            clientID: process.env.FB_CLIENT,
             clientSecret: process.env.FB_SECRET,
-            callbackURL: keys.facebook.callbackUrl,
+            callbackURL: process.env.FB_CALLBACKURL,
             profileFields:['id','displayName', 'profileUrl','emails']
         }, (accessToken, refreshToken, profile, done) => {
             
@@ -64,9 +63,9 @@ module.exports = function(passport) {
 
     passport.use(
         new GoogleStrategy({
-            clientID: keys.google.api_key,
+            clientID: process.env.GG_CLIENT,
             clientSecret: process.env.GG_SECRET,
-            callbackURL: keys.google.callbackUrl,
+            callbackURL: process.env.GG_CALLBACKURL,
             profileFields:['id','displayName', 'photos', 'emails']
         }, (accessToken, refreshToken, profile, done) => {
             var me = new User({

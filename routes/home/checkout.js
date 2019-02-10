@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {stripeSecretKey} = require('../../config/keys');
 const csrf = require('csurf');
 const {ensureLoggedIn} = require('connect-ensure-login');
 const csrfProtection = csrf();
