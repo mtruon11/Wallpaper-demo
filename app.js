@@ -68,7 +68,7 @@ app.use( //Express session
             mongooseConnection: mongoose.connection,
             autoRemove: 'native'
         }),
-        cookie: {secure: true, maxAge: 30 * 24 * 60 * 60 * 1000} // 30 days * 24 hrs * 60m * 60s * 1000ms
+        cookie: {secure: true, maxAge: 24 * 60 * 60 * 1000} // 24 hrs * 60m * 60s * 1000ms
     })
 );
 

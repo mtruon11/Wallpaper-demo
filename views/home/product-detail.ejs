@@ -57,8 +57,8 @@
                 <%= product.name %>
             </h4>
 
-            <span class="m-text17">
-                $<%= product.regularPrice %>
+            <span class="m-text17 text-danger">
+                <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
             </span>
 
             <p class="s-text8 p-t-10">
@@ -190,7 +190,7 @@
                     <div class="item-slick2 p-l-15 p-r-15">
                         <!-- Block2 -->
                         <div class="block2">
-                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative  <%if (product.isSale) { %>block2-labelsale <% } else { %> block2-labelnew <% } %>">
                                 <img src="<%= product.imageUrl[0] %>" alt="IMG-PRODUCT">
     
                                 <div class="block2-overlay trans-0-4">
@@ -212,8 +212,8 @@
                                 <a href="/products/<%= product._id %>/" class="block2-name dis-block s-text3 p-b-5">
                                     <%= product.name %>
                                 </a>
-                                <span class="block2-price m-text6 p-r-5">
-                                    $<%= product.regularPrice %>
+                                <span class="block2-price m-text6 p-r-5 text-danger">
+                                    <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
                                 </span>
                             </div>
                         </div>
