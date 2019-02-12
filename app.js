@@ -10,14 +10,9 @@ const cookieParser = require('cookie-parser');
 const {ensureLoggedIn} = require('connect-ensure-login');
 const MongoStore = require('connect-mongo')(session);
 var fs = require('fs');
-var https = require('https'); 
-var options = { 
-    key: fs.readFileSync('./ssl/server-key.pem'), 
-    cert: fs.readFileSync('./ssl/server-crt.pem'), 
-    ca: fs.readFileSync('./ssl/ca-crt.pem'), 
-}; 
-// PORT 
-const PORT = process.env.PORT || 8443;
+var http = require('http'); 
+// PORT
+const PORT = process.env.PORT || 80;
 
 const app = express();
 
@@ -111,5 +106,5 @@ app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./route
 app.use('*', (req, res) => { res.status(404).send('404')});
 
 // Create server to listen on PORT 8443
-var server = https.createServer(options, app)
+var server = http.createServer(app)
 server.listen(PORT, () => console.log('Server running on port '+ PORT));
