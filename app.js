@@ -9,15 +9,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {ensureLoggedIn} = require('connect-ensure-login');
 const MongoStore = require('connect-mongo')(session);
-var fs = require('fs'); 
-var debug = require('debug')('Wallpaper-demo:app.js')
-var http = require('http');
+var fs = require('fs');
 var https = require('https'); 
 var options = { 
     key: fs.readFileSync('./ssl/server-key.pem'), 
     cert: fs.readFileSync('./ssl/server-crt.pem'), 
     ca: fs.readFileSync('./ssl/ca-crt.pem'), 
 }; 
+// PORT 
+const PORT = process.env.PORT || 8443;
 
 const app = express();
 
@@ -110,68 +110,6 @@ app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./route
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});
 
-// PORT 
-const PORT = normalizePort(process.env.PORT || '80');
+// Create server to listen on PORT 8443
 var server = https.createServer(options, app)
 server.listen(PORT, () => console.log('Server running on port '+ PORT));
-
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-    var port = parseInt(val, 10);
-  
-    if (isNaN(port)) {
-      // named pipe
-      return val;
-    }
-  
-    if (port >= 0) {
-      // port number
-      return port;
-    }
-  
-    return false;
-  }
-
-/**
- * Event listener for HTTP app.js "error" event
- */
-
-function onError(error){
-    if(error.syscall !== 'listen'){
-        throw error;
-    }
-
-    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
-    }
-}
-
-/**
- * Event listener for HTTP server.js "listening" event.
- */
-
-function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-  }
