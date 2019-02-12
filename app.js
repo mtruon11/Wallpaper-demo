@@ -110,6 +110,6 @@ app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./route
 app.use('*', (req, res) => { res.status(404).send('404')});
 
 // PORT 
-const PORT = process.env.PORT || 8080;
-
+const PORT = process.env.PORT || 80;
+http.createServer(options, app).listen(PORT, () => console.log('Serer running on port' + PORT));
 https.createServer(options, app).listen(PORT, ()=> console.log('Server running on port '+ PORT));
