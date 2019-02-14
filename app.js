@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 80;
 const app = express();
 
 require('dotenv').load();
+require('dotenv').config();
 
 //Passport config
 require('./config/passport')(passport);
