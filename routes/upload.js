@@ -1,46 +1,62 @@
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 
-const storageForProduct = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/uploads')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const storageForEmployee = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/employees')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const storageForVendor = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/vendors')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const uploadForProduct = multer({
-    storage: storageForProduct
+aws.config.update({
+	secretAccessKey: process.env.S3_SECRET_KEY,
+	accessKeyId: process.env.S3_ACCESS_KEY,
+	region: "us-east-1"
 });
 
-const uploadForEmployee = multer({
-    storage: storageForEmployee
-});
+const s3 = new aws.S3();
 
-const uploadForVendor = multer({
-    storage: storageForVendor
-});
+const storageForProduct = multer({
+	storage: multerS3({
+		dir: '/public/images/uploads',
+		s3: s3,
+		bucket: 'wallpaper-public',
+		acl: 'public-read',
+		metadata: function(req, file, cb){
+			cb(null, {fieldName: file.fieldName});
+		},
+		key: function(req, file, cb) {
+			cb(null, Date.now().toString() + '-' + file.originalName)	
+		}
+    	})
+})
+
+const storageForEmployee = multer({
+	storage: multerS3({
+		dir:'/public/images/employees',
+		s3: s3,
+		bucket: 'wallpaper-public',
+		acl: 'public-read',
+		metadata: function(req, file, cb){
+			cb(null, {fieldName: file.fieldName});
+		},
+		key: function(req, file, cb){
+			cb(null, Date.now().toString() + '-' + file.originalName)
+		}
+	})
+})
+
+const storageForVendor = multer({
+	storage: multerS3({
+		dir:'/public/images/vendors',
+		s3: s3,
+		bucket: 'wallpaper-public',
+		acl: 'public-read',
+		metadata: function(req, file, cb){
+			cb(null, {fieldName: file.fieldName});
+		},
+		key: function(req, file, cb){
+			cb(null. Date.now().toString() + '-' + file.originalName)
+		}
+	})
+})
 
 module.exports = {
-    uploadProduct: uploadForProduct,
-    uploadForEmployee: uploadForEmployee,
-    uploadForVendor: uploadForVendor
+    uploadProduct: storageForProduct,
+    uploadForEmployee: storageForEmployee,
+    uploadForVendor: storageForVendor
 }

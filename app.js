@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {ensureLoggedIn} = require('connect-ensure-login');
 const MongoStore = require('connect-mongo')(session);
+
 var fs = require('fs');
 var http = require('http'); 
 // PORT
@@ -64,7 +65,8 @@ app.use( //Express session
             mongooseConnection: mongoose.connection,
             autoRemove: 'native'
         }),
-        cookie: {secure: true, maxAge: 24 * 60 * 60 * 1000} // 24 hrs * 60m * 60s * 1000ms
+	cookie: {}
+	//cookie: {secure: true, maxAge: 24 * 60 * 60 * 1000} // 24 hrs * 60m * 60s * 1000ms
     })
 );
 
