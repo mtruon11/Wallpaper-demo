@@ -133,7 +133,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
             } else {
 
                 for(var idx in images){
-                    imageUrl.push('/images/uploads/' + images[idx].filename);
+                    imageUrl.push('http://ec2-35-173-191-97.compute-1.amazonaws.com/images/uploads/' + images[idx].originalname);
                 }
                 
                 const newProduct = new Product({

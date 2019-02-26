@@ -15,6 +15,7 @@ const storageForProduct = multer({
 		s3: s3,
 		bucket: 'wallpaper-public',
 		key: function(req, file, cb) {
+			console.log(Date.now().toString() + '-' + file.originalname)
 			cb(null,'public/images/uploads/' + Date.now().toString() + '-' + file.originalname)	
 		}
     	})
@@ -25,6 +26,7 @@ const storageForEmployee = multer({
 		s3: s3,
 		bucket: 'wallpaper-public',
 		key: function(req, file, cb){
+			console.log(Date.now().toString() + '-' + file.originalname)
 			cb(null,'public/images/employees/' + Date.now().toString() + '-' + file.originalname)
 		}
 	})
