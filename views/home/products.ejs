@@ -23,56 +23,71 @@
                         Categories
                     </h4>
 
-                    <ul class="p-b-54">
+                    <div class="wrap-tags flex-w p-b-54">
                         <% categories.forEach(function(category) { %>
-                            <li class="p-t-4">
-                                <a href="/products/categories/<%= category.name %>" class="s-text13">
+                                <a href="/products/categories?category=<%= category.name %>" class="tag-item s-text13">
                                     <%= category.name %>
-                                </a>
-                            </li>
+                        	</a>
                         <% }); %>
-                    </ul>
+                    </div>
 
                     <h4 class="m-text14 p-b-7">
                         Tags
                     </h4>
 
-                    <ul class="p-b-54">
+                    <div class="wrap-tags flex-w p-b-54">
                         <% tags.forEach(function(tag) { %>
-                            <li class="p-t-4">
-                                <a href="/products/tags/<%= tag.name %>" class="s-text13">
+                                <a href="/products/tags?tag=<%= tag.name %>" class="tag-item s-text13">
                                     <%= tag.name %>
                                 </a>
-                            </li>
                         <% }); %>
-                    </ul>
-                </div>
+                    </div>
+
+			<div class="flex-w p-b-54">
+				<form action="/search" method="POST">
+					<button type="submit"><i class="fas fa-search"></i></button>
+      					<input type="text" placeholder="Search.." name="search" class="search-box border p-1"/>
+    				</form>
+			</div>
+                
+		</div>
             </div>
 
             <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
                 <!--  -->
                 <div class="flex-sb-m flex-w p-b-35">
                     <div class="flex-w">
-                        <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                            <select class="selection-2" name="sorting">
-                                <option>Default Sorting</option>
-                                <option>Popularity</option>
-                                <option>Price: low to high</option>
-                                <option>Price: high to low</option>
-                            </select>
-                        </div>
 
-                        <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                            <select class="selection-2" name="sorting">
-                                <option>Price</option>
-                                <option>$0.00 - $50.00</option>
-                                <option>$50.00 - $100.00</option>
-                                <option>$100.00 - $150.00</option>
-                                <option>$150.00 - $200.00</option>
-                                <option>$200.00+</option>
+			<div class="dropdown border p-t-2 p-b-2 p-l-10 p-r-10">
+                        	<button class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-block">
+                           	     <h6>Default Sorting</h6>
+                           	</span>
+                       		</button>
+                       		 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                           		 <a class="dropdown-item" href="/products?sort=popular">Popular</a>
+                           		 <a class="dropdown-item" href="/products?sort=new">Newest</a>
+					 <a class="dropdown-item" href="/products?sort=old">Oldest</a>
+					 <a class="dropdown-item" href="/products?sort=ascending">Low To High</a>
+                           		 <a class="dropdown-item" href="/products?sort=descending">High To Low</a>
+                       		 </div>
+                   	 </div>
+				
+ 			<div class="dropdown m-l-20 border p-t-2 p-b-2 p-l-30 p-r-30">
+                                <button class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-block">
+                                     <h6>Price</h6>
+                                </span>
+                                </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="/products?min=0.0&max=50.0">$0.00 - $50.00</a>
+                                        <a class="dropdown-item" href="/products?min=50.0&max=100.0">$50.00 - $100.00</a>
+                                        <a class="dropdown-item" href="/products?min=100.0&max=150.0">$100.00 - $150.00</a>
+ 					<a class="dropdown-item" href="/products?min=150.0&max=200.0">$150.00 - $200.00</a>
+ 					<a class="dropdown-item" href="/products?min=200.0">$200.00+</a>
+                                 </div>
+                         </div>
 
-                            </select>
-                        </div>
                     </div>
 
                     <span class="s-text8 p-t-5 p-b-5">
@@ -85,7 +100,7 @@
 
                     <% products.forEach(function(product) { %>
 
-                    <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+                    <div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
                         <!-- Block2 -->
                         <div class="block2">
                             <!-- <div class="block2-img wrap-pic-w of-hidden pos-relative "> -->

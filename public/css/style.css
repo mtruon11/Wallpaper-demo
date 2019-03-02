@@ -17,6 +17,14 @@
     border-top: 4px solid white;
 }
 
+.search-box {
+	border-radius: 15px;
+}
+
+.user-image {
+	border-radius: 50px;
+}
+
 /* Stripe Form */
 .StripeElement, #card-name, #billingAddress, #name,
 #shippingAddress, #city, #state, #zip, #country, #phone{
