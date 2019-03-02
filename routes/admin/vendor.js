@@ -10,6 +10,7 @@ const Vendor = require('../../models/Vendor');
 module.exports = router;
 
 router.get('/viewVendor', (req, res) => {
+
     Vendor.find({}, (err, doc) => {
         res.status(200).render('./admin/viewVendor', {
             user: req.user,
@@ -20,7 +21,9 @@ router.get('/viewVendor', (req, res) => {
 });
 
 router.get('/addVendor', (req, res) => {
-    res.render("./admin/vendorForm");
+    res.render("./admin/vendorForm", {
+    	user: req.user
+    });
 });
 
 router.post('/addVendor', uploadForVendor.single('image'), (req, res) => {
@@ -85,7 +88,7 @@ router.post('/addVendor', uploadForVendor.single('image'), (req, res) => {
                     company: company,
                     address: address,
                     phone: phone,
-                    imageUrl: '/images/vendors/' + image.filename
+                    imageUrl: 'http://ec2-35-173-191-97.compute-1.amazonaws.com/images/vendors/' + image.originalname
                 });
                 newVendor.save().then(vendor => {
                 req.flash(

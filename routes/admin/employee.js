@@ -102,14 +102,14 @@ router.post('/addEmployee', uploadForEmployee.single('image'), csrfProtection, (
                     csrfToken: req.csrfToken()
                 });
             } else {
-                const newUser = new User({
+		const newUser = new User({
                     name: name,
                     email: email,
                     password: password,
                     phone: phone,
                     address: address,
                     role: role,
-                    imageUrl: '/images/employees/' + image.filename
+                    imageUrl: 'http://ec2-35-173-191-97.compute-1.amazonaws.com/images/employees/' + image.originalname
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {

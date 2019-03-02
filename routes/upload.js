@@ -1,46 +1,49 @@
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 
-const storageForProduct = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/uploads')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const storageForEmployee = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/employees')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const storageForVendor = multer.diskStorage({
-    destination: function(req, file, callback) { 
-        callback(null, './public/images/vendors')
-    },
-    filename: function(req, file, callback){
-        callback(null, Date.now().toString() + '-' + file.originalname)
-    }
-})
-
-const uploadForProduct = multer({
-    storage: storageForProduct
+aws.config.update({
+	secretAccessKey: process.env.S3_SECRET_KEY,
+	accessKeyId: process.env.S3_ACCESS_KEY,
+	region: "us-east-1"
 });
 
-const uploadForEmployee = multer({
-    storage: storageForEmployee
-});
+const s3 = new aws.S3();
 
-const uploadForVendor = multer({
-    storage: storageForVendor
-});
+const storageForProduct = multer({
+	storage: multerS3({
+		s3: s3,
+		bucket: 'wallpaper-public',
+		key: function(req, file, cb) {
+			console.log(Date.now().toString() + '-' + file.originalname)
+			cb(null,'public/images/uploads/' + Date.now().toString() + '-' + file.originalname)	
+		}
+    	})
+})
+
+const storageForEmployee = multer({
+	storage: multerS3({
+		s3: s3,
+		bucket: 'wallpaper-public',
+		key: function(req, file, cb){
+			console.log(Date.now().toString() + '-' + file.originalname)
+			cb(null,'public/images/employees/' + Date.now().toString() + '-' + file.originalname)
+		}
+	})
+})
+
+const storageForVendor = multer({
+	storage: multerS3({
+		s3: s3,
+		bucket: 'wallpaper-public',
+		key: function(req, file, cb){
+			cb(null,'public/images/vendors/' + Date.now().toString() + '-' + file.originalname)
+		}
+	})
+})
 
 module.exports = {
-    uploadProduct: uploadForProduct,
-    uploadForEmployee: uploadForEmployee,
-    uploadForVendor: uploadForVendor
+    uploadProduct: storageForProduct,
+    uploadForEmployee: storageForEmployee,
+    uploadForVendor: storageForVendor
 }

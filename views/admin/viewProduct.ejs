@@ -51,11 +51,11 @@
                             <% }); %>
                         </td>
                         <td class="text-center">
-                            <% data.tags.forEach(function(tag) { %>
-                                <p class="text-center">
-                                    <%= tag %>
-                                </p>
-                            <% }); %>
+				<p class="text-center">
+					<% data.tags.forEach(function(tag) { %>
+						<%= tag %> 
+                            		<% }); %>
+				</p>
                         </td>
                         <td class="text-center"><%= data.createdOn.toDateString() %></td>
                         <td class="text-center">
