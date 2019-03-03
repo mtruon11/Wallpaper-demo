@@ -5,6 +5,8 @@ const router = express.Router();
 const Product = require('../../models/Product');
 const Categories = require('../../models/Category');
 const Tag = require('../../models/Tag');
+const Color = require('../../models/Color');
+const Measurement = require('../../models/Measurement');
 
 //All Available Products
 router.get('/', async (req, res) => {
@@ -31,25 +33,37 @@ router.get('/', async (req, res) => {
                                 if (err) {
                                     console.log('Error while loading tags');
                                 } else {
-                                    var totalPages = Math.ceil(totalCount / size);
-                                    res.status(200).render('./home/products', {
-                                        user: req.user,
-                                        products: products,
-                                        categories: categories,
-                                        tags: tags,
-                                        pages: totalPages,
-                                        currentPage: pageNum
-                                    })
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 }
             });
         }
     })
-    
-
 });
 
 //Specific Product

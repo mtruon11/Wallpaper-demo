@@ -84,13 +84,13 @@ router.get('/addProduct', csrfProtection, async (req, res) => {
 
 router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
-        discountPrice, tags, categories} = req.body;
+        discountPrice, tags, categories, colors, measure} = req.body;
     const images = req.files;
     let errors = [];
     let imageUrl = [];
 
     if(!sku || !name || !quantity || !regularPrice || !discountPrice 
-        || !tags || !categories ) {
+        || !tags || !categories || !colors || !measure) {
             errors.push({msg: 'Please enter all fields.'});
     }
 
@@ -119,7 +119,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
     if(errors.length > 0) {
         res.status(404).render('./admin/productForm', {
             errors, sku, name, description, quantity, regularPrice, discountPrice, tags,
-            categories, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken()
+            categories, colors, measure, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken()
         });
     } else {
         Product.findOne({sku: sku}).then(product => {
@@ -138,7 +138,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
                 
                 const newProduct = new Product({
                     sku, name, description, quantity, regularPrice,
-                    discountPrice, tags, categories, imageUrl
+                    discountPrice, tags, categories, colors, measure, imageUrl
                 });
 
                 newProduct
@@ -186,13 +186,13 @@ router.get('/:sku', csrfProtection, (req, res) => {
 
 router.post('/editProduct', uploadProduct.array('images'), csrfProtection, (req, res) => {
     const {sku, name, description, quantity, regularPrice, 
-        discountPrice, tags, categories} = req.body;
+        discountPrice, tags, categories, colors, measure} = req.body;
     const images = req.files;
     let errors = [];
     let imageUrl = [];
 
     if(!sku || !name || !quantity || !regularPrice || !discountPrice 
-        || !tags || !categories ) {
+        || !tags || !categories || !colors || !measure ) {
             errors.push({msg: 'Please enter all fields.'});
     }
 
@@ -208,7 +208,7 @@ router.post('/editProduct', uploadProduct.array('images'), csrfProtection, (req,
     if(errors.length > 0) {
         const product = new Product({
             sku, name, description, quantity, regularPrice,
-            discountPrice, tags, categories, imageUrl 
+            discountPrice, tags, categories, colors, measure, imageUrl 
         });
         res.status(404).render('./admin/editProduct', {
             user: req.user, 
@@ -224,7 +224,8 @@ router.post('/editProduct', uploadProduct.array('images'), csrfProtection, (req,
             },
             {
                 name: name, description: description, quantity:quantity, regularPrice:regularPrice,
-                discountPrice:discountPrice, tags:tags, categories:categories, imageUrl:imageUrl
+                discountPrice:discountPrice, tags:tags, categories:categories, colors: colors,
+                measure: measure, imageUrl:imageUrl
             },
             {
                 upsert:true

@@ -4,6 +4,8 @@ const router = express.Router();
 router.use('/product', require('./product.js'));
 router.use('/categories', require('./category.js'));
 router.use('/tags', require('./tag.js'));
+router.use('/colors', require('./color.js'));
+router.use('/measurements', require('./measurement.js'));
 router.use('/vendors', require('./vendor.js'));
 router.use('/employees', require('./employee.js'));
 router.use('/orders', require('./order.js'));
