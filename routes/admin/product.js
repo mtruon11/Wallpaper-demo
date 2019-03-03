@@ -128,7 +128,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
                 res.status(200).render('./admin/productForm', {
                     user: req.user, 
                     errors, sku, name, description, quantity, regularPrice, discountPrice, tags, 
-                    categories, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken() 
+                    categories, colors, measure, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken() 
                 });
             } else {
 

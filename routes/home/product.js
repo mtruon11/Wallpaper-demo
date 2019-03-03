@@ -110,19 +110,33 @@ router.get('/onSale', async (req, res) => {
                                 if (err) {
                                     console.log('Error while loading tags');
                                 } else {
-                                    var totalPages = Math.ceil(totalCount / size);
-                                    res.status(200).render('./home/products', {
-                                        user: req.user,
-                                        products: products,
-                                        categories: categories,
-                                        tags: tags,
-                                        pages: totalPages,
-                                        currentPage: pageNum
-                                    })
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 }
             });
         }
@@ -155,24 +169,38 @@ router.get("/categories", async (req, res) => {
                                 if (err) {
                                     console.log('Error while loading tags');
                                 } else {
-                                    var totalPages = Math.ceil(totalCount / size);
-                                    res.status(200).render('./home/products', {
-                                        user: req.user,
-                                        products: products,
-                                        categories: categories,
-                                        tags: tags,
-                                        pages: totalPages,
-                                        currentPage: pageNum
-                                    })
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 }
             });
         }
     })
-})
+});
 
 //Find by tag
 router.get("/tags", async (req, res) => {
@@ -200,23 +228,157 @@ router.get("/tags", async (req, res) => {
                                 if (err) {
                                     console.log('Error while loading tags');
                                 } else {
-                                    var totalPages = Math.ceil(totalCount / size);
-                                    res.status(200).render('./home/products', {
-                                        user: req.user,
-                                        products: products,
-                                        categories: categories,
-                                        tags: tags,
-                                        pages: totalPages,
-                                        currentPage: pageNum
-                                    })
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 }
             });
         }
     })
-})
+});
+
+//Find by colors
+router.get("/colors", async (req, res) => {
+    var color = req.query.color;
+    var pageNum = parseInt(req.query.pageNum);
+    var size = parseInt(req.query.size);
+    var query = {};
+
+    query.skip = size * (pageNum - 1);
+    query.limit = size;
+
+    await Product.countDocuments({}, (err, totalCount) => {
+        if(err) {
+            console.log("Error while counting total products");
+        } else {
+            Product.find({status: true, colors: color}, null, query, (err, products) => {
+                if(err){
+                    console.log('Error while loading products');
+                } else {
+                    Categories.find({}, (err, categories) => {
+                        if(err) {
+                            console.log('Error while loading categories');
+                        } else {
+                            Tag.find({}, (err, tags) => {
+                                if (err) {
+                                    console.log('Error while loading tags');
+                                } else {
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    })
+});
+
+//Find by measurements
+router.get("/measurements", async (req, res) => {
+    var measure = req.query.measure;
+    var pageNum = parseInt(req.query.pageNum);
+    var size = parseInt(req.query.size);
+    var query = {};
+
+    query.skip = size * (pageNum - 1);
+    query.limit = size;
+
+    await Product.countDocuments({}, (err, totalCount) => {
+        if(err) {
+            console.log("Error while counting total products");
+        } else {
+            Product.find({status: true, measure: measure}, null, query, (err, products) => {
+                if(err){
+                    console.log('Error while loading products');
+                } else {
+                    Categories.find({}, (err, categories) => {
+                        if(err) {
+                            console.log('Error while loading categories');
+                        } else {
+                            Tag.find({}, (err, tags) => {
+                                if (err) {
+                                    console.log('Error while loading tags');
+                                } else {
+                                    Color.find({}, (err, colors) => {
+                                        if (err) {
+                                            console.log('Error while loading colors');
+                                        } else {
+                                            Measurement.find({}, (err, measurements) => {
+                                                if (err) {
+                                                    console.log('Error while loading measurements');
+                                                } else {
+                                                    var totalPages = Math.ceil(totalCount / size);
+                                                    res.status(200).render('./home/products', {
+                                                        user: req.user,
+                                                        products: products,
+                                                        categories: categories,
+                                                        tags: tags,
+                                                        colors: colors,
+                                                        measurements: measurements,
+                                                        pages: totalPages,
+                                                        currentPage: pageNum
+                                                    })
+                                                } 
+                                            });               
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    })
+});
+
+
 
 module.exports = router;
