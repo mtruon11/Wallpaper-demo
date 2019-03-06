@@ -1056,14 +1056,14 @@ li.sale-noti > a {
 .side-menu .main-menu {margin-bottom: 0;}
 
 .item-menu-mobile {
-  background-color: #e65540;
+  background-color: white;
 }
 
 .side-menu .main-menu > li > a {
   padding-left: 20px;
   font-family: Montserrat-Regular;
   font-size: 15px;
-  color: white;
+  color: black;
   line-height: 2.86;
 }
 
