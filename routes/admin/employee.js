@@ -109,7 +109,7 @@ router.post('/addEmployee', uploadForEmployee.single('image'), csrfProtection, (
                     phone: phone,
                     address: address,
                     role: role,
-                    imageUrl: 'http://ec2-18-233-167-209.compute-1.amazonaws.com/images/employees/' + image.originalname
+                    imageUrl: 'https://ec2-3-95-192-183.compute-1.amazonaws.com/images/employees/' + image.originalname
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {

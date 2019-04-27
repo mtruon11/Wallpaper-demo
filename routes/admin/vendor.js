@@ -88,7 +88,7 @@ router.post('/addVendor', uploadForVendor.single('image'), (req, res) => {
                     company: company,
                     address: address,
                     phone: phone,
-                    imageUrl: 'http://ec2-35-173-191-97.compute-1.amazonaws.com/images/vendors/' + image.originalname
+                    imageUrl: 'https://ec2-3-95-192-183.compute-1.amazonaws.com/images/vendors/' + image.originalname
                 });
                 newVendor.save().then(vendor => {
                 req.flash(

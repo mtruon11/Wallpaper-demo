@@ -13,7 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 var fs = require('fs');
 var http = require('http'); 
 // PORT
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -110,4 +110,4 @@ app.use('*', (req, res) => { res.status(404).send('404')});
 
 // Create server to listen on PORT 8443
 var server = http.createServer(app)
-server.listen(PORT, () => console.log('Server running on port '+ PORT));
+server.listen(80, () => console.log('Server running on port '+ 80));
