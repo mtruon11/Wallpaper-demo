@@ -30,7 +30,21 @@ const db = process.env.MONGO_URI;
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    {
+	useNewUrlParser: true,
+    	"server" : {
+	        "socketOptions" : {
+			      "keepAlive" : 300000,
+			      "connectTimeoutMS" : 30000
+			    }
+	 },
+	 "replset" : {
+		          "socketOptions" : {
+				        "keepAlive" : 300000,
+				        "connectTimeoutMS" : 30000
+		}
+	 }
+    }
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
