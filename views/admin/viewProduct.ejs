@@ -35,8 +35,8 @@
                             <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
                         </td>
                         <td class="text-center"><%= data.name %></td>
-                        <td class="text-center"><%= data.regularPrice %></td>
-                        <td class="text-center"><%= data.discountPrice %></td>
+                        <td class="text-center regularPrice"><%= data.regularPrice %></td>
+                        <td class="text-center discountPrice"><%= data.discountPrice %></td>
                         <td class="text-center"><%= data.quantity %></td>
                         <% if(data.status){ %>
                             <td class="text-center"><span class="label label-success" style="background-color:#449d44">Available</span></td>

@@ -119,7 +119,7 @@ router.post('/addProduct', uploadProduct.array('images'), csrfProtection, async 
     if(errors.length > 0) {
         res.status(404).render('./admin/productForm', {
             errors, sku, name, description, quantity, regularPrice, discountPrice, tags,
-            categories, colors, measure, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken()
+            categories, colors, measure, imageUrl, total: total, outOfStock: outOfStock, csrfToken: req.csrfToken(), user: req.user
         });
     } else {
         Product.findOne({sku: sku}).then(product => {
