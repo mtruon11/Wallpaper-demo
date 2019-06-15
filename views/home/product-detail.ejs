@@ -2,6 +2,7 @@
 <% include ./partials/header %>
 
 <!-- breadcrumb -->
+<!--
 <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
     <a href="/" class="s-text16">
         Home
@@ -22,7 +23,7 @@
         <%= product.name %>
     </span>
 </div>
-
+-->
 <!-- Product Detail -->
 <div class="container bgwhite p-t-35 p-b-80">
     <div class="flex-w flex-sb">
@@ -58,11 +59,11 @@
             </h4>
 
             <span class="m-text17 text-danger">
-                <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
+                <% if(product.isSale) { %> <del><%= product.regularPrice %> VNĐ</del> <%= product.discountPrice %> VNĐ<%} else { %> <%= product.regularPrice %> VNĐ<% } %>
             </span>
 
             <p class="s-text8 p-t-10">
-                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+		<%= product.description %>
             </p>
 
             <!--  -->
@@ -116,7 +117,7 @@
                         <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
                             <!-- Button -->
                             <a href="/cart/addToCart/<%= product._id %>" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4 btn">
-                                Add to Cart
+                                Thêm Vào Giỏ
                             </a>
                         </div>
                     </div>
@@ -124,14 +125,14 @@
             </div>
 
             <div class="p-b-45">
-                <span class="s-text8 m-r-35">SKU: <%= product.sku %></span>
-                <span class="s-text8">Categories: <%= product.categories %></span>
+                <span class="s-text8 m-r-35">Mã Số: <%= product.sku %></span>
+                <span class="s-text8">Phân Loại: <%= product.categories %></span>
             </div>
 
             <!--  -->
             <div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
                 <h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
-                    Description
+                    Miêu Tả
                     <i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
                     <i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
                 </h5>
@@ -142,7 +143,7 @@
                     </p>
                 </div>
             </div>
-
+<!--
             <div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
                 <h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
                     Additional information
@@ -156,7 +157,7 @@
                     </p>
                 </div>
             </div>
-
+-->
             <div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
                 <h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
                     Reviews (0)
@@ -166,7 +167,7 @@
 
                 <div class="dropdown-content dis-none p-t-15 p-b-23">
                     <p class="s-text8">
-                        Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
+                        Proin gravida arcu nisl, a dignissim mauris placerat
                     </p>
                 </div>
             </div>
@@ -179,7 +180,7 @@
     <div class="container">
         <div class="sec-title p-b-60">
             <h3 class="m-text5 t-center">
-                Related Products
+                Sản Phẩm Tương Tự
             </h3>
         </div>
 
@@ -202,7 +203,7 @@
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
                                         <a href="/cart/addToCart/<%= product._id %>" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
-                                            Add to Cart
+                                            Thêm Vào Giỏ
                                         </a>
                                     </div>
                                 </div>
@@ -213,7 +214,7 @@
                                     <%= product.name %>
                                 </a>
                                 <span class="block2-price m-text6 p-r-5 text-danger">
-                                    <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
+                                    <% if(product.isSale) { %> <del><%= product.regularPrice %> VNĐ</del> <%= product.discountPrice %> VNĐ<%} else { %> <%= product.regularPrice %> VNĐ<% } %>
                                 </span>
                             </div>
                         </div>

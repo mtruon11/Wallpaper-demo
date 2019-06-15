@@ -2,7 +2,7 @@
     <div class="container">
         <div class="sec-title p-b-60">
             <h3 class="m-text5 t-center">
-                Featured Products
+                Sản Phẩm Theo Tính Năng
             </h3>
         </div>
 
@@ -25,7 +25,7 @@
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
                                         <a href="/cart/addToCart/<%= product._id %>" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4 btn">
-                                            Add to Cart
+                                           Thêm Vào Giỏ
                                         </a>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                                 </a>
         
                                 <span class="block2-price m-text6 p-r-5 text-danger">
-                                    <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
+                                    <% if(product.isSale) { %> <del><%= product.regularPrice %> VNĐ</del> <%= product.discountPrice %> VNĐ <%} else { %> <%= product.regularPrice %> VNĐ<% } %>
                                 </span>
                             </div>
                         </div>

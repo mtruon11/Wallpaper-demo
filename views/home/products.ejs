@@ -4,11 +4,13 @@
 <!-- Title Page -->
 <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(../images/heading-pages-02.jpg);">
     <h2 class="l-text2 t-center">
-        Women
+        Bộ Sưu Tập 2019
     </h2>
+<!--
     <p class="m-text13 t-center">
-        New Arrivals Women Collection 2018
+        New Arrivals Collection 2018
     </p>
+-->
 </section>
 
 
@@ -20,7 +22,7 @@
                 <div class="leftbar p-r-20 p-r-0-sm">
                     <!--  -->
                     <h4 class="m-text14 p-b-7">
-                        Categories
+                    	Thể loại  
                     </h4>
 
                     <div class="wrap-tags flex-w p-b-54">
@@ -32,7 +34,7 @@
                     </div>
 
                     <h4 class="m-text14 p-b-7">
-                        Tags
+                        Tính Năng
                     </h4>
 
                     <div class="wrap-tags flex-w p-b-54">
@@ -44,7 +46,7 @@
                     </div>
 
                     <h4 class="m-text14 p-b-7">
-                        Colors
+                        Màu Sắc
                     </h4>
 
                     <div class="wrap-tags flex-w p-b-54">
@@ -56,7 +58,7 @@
                     </div>
 
                     <h4 class="m-text14 p-b-7">
-                        Measurements
+                        Kích Thước
                     </h4>
 
                     <div class="wrap-tags flex-w p-b-54">
@@ -84,37 +86,37 @@
                         <div class="dropdown border p-t-2 p-b-2 p-l-10 p-r-10">
                             <button class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-block">
-                                    <h6>Default Sorting</h6>
+                                    <h6>Phân loại</h6>
                             </span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="/products?sort=popular">Popular</a>
-                                <a class="dropdown-item" href="/products?sort=new">Newest</a>
-                                <a class="dropdown-item" href="/products?sort=old">Oldest</a>
-                                <a class="dropdown-item" href="/products?sort=ascending">Low To High</a>
-                                <a class="dropdown-item" href="/products?sort=descending">High To Low</a>
+                                <a class="dropdown-item" href="/products?sort=popular">Phổ biến</a>
+                                <a class="dropdown-item" href="/products?sort=new">Mới nhất</a>
+                                <a class="dropdown-item" href="/products?sort=old">Cũ nhất</a>
+                                <a class="dropdown-item" href="/products?sort=ascending">Thấp</a>
+                                <a class="dropdown-item" href="/products?sort=descending">Cao</a>
                             </div>
                         </div>
                             
                         <div class="dropdown m-l-20 border p-t-2 p-b-2 p-l-30 p-r-30">
                             <button class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-block">
-                                        <h6>Price</h6>
+                                        <h6>Giá Tiền</h6>
                                 </span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="/products?min=0.0&max=50.0">$0.00 - $50.00</a>
-                                <a class="dropdown-item" href="/products?min=50.0&max=100.0">$50.00 - $100.00</a>
-                                <a class="dropdown-item" href="/products?min=100.0&max=150.0">$100.00 - $150.00</a>
-                                <a class="dropdown-item" href="/products?min=150.0&max=200.0">$150.00 - $200.00</a>
-                                <a class="dropdown-item" href="/products?min=200.0">$200.00+</a>
+                                <a class="dropdown-item" href="/products?min=0.0&max=50.0">0.00 VNĐ - 50.00 VNĐ</a>
+                                <a class="dropdown-item" href="/products?min=50.0&max=100.0">50.00 VNĐ - 100.00 VNĐ</a>
+                                <a class="dropdown-item" href="/products?min=100.0&max=150.0">100.00 VNĐ - 150.00 VNĐ</a>
+                                <a class="dropdown-item" href="/products?min=150.0&max=200.0">150.00 VNĐ - 200.00 VNĐ</a>
+                                <a class="dropdown-item" href="/products?min=200.0">200.00+ VNĐ</a>
                             </div>
                         </div>
 
                     </div>
 
                     <span class="s-text8 p-t-5 p-b-5">
-                        Showing <%= products.length %> results
+                        Hiển Thị <%= products.length %> Kết Quả
                     </span>
                  </div>
 
@@ -139,7 +141,7 @@
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
                                         <a href="/cart/addToCart/<%= product._id %>?pageNum=<%=currentPage%>̀&size=12" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
-                                            Add to Cart
+                                            Thêm Vào Giỏ
                                         </a>
                                     </div>
                                 </div>
@@ -151,7 +153,7 @@
                                 </a>
         
                                 <span class="block2-price m-text6 p-r-5 text-danger">
-                                    <% if(product.isSale) { %> <del>$<%= product.regularPrice %></del> $<%= product.discountPrice %> <%} else { %> $<%= product.regularPrice %> <% } %>
+                                    <% if(product.isSale) { %> <del><%= product.regularPrice %> VNĐ</del> <%= product.discountPrice %> VNĐ<%} else { %> <%= product.regularPrice %> VNĐ<% } %>
                                 </span>
                             </div>
                         </div>

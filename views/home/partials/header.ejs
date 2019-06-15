@@ -8,11 +8,11 @@
                 <a href="#" class="topbar-social-item fab fa-snapchat-ghost"></a>
                 <a href="#" class="topbar-social-item fab fa-youtube"></a>
             </div>
-
+<!--
             <span class="topbar-child1">
                 Free shipping for standard order over $100
             </span>
-
+-->
             <div class="topbar-child2">
                 <span class="topbar-email">
                     giaydantuongthuydien@gmail.com
@@ -32,31 +32,32 @@
                 <nav class="menu">
                     <ul class="main_menu">
                         <li>
-                            <a href="/">Home</a>
+                            <a href="/">Trang Chủ</a>
                          </li>
 
                         <li>
-                            <a href="/products?pageNum=1&size=12">Shop</a>
+                            <a href="/products?pageNum=1&size=12">Sản Phẩm</a>
                         </li>
 
                         <li class="sale-noti">
-                            <a href="/products/onSale?pageNum=1&size=12">Sale <i class="fas fa-fire-alt" color="red"></i></a>
+                            <a href="/products/onSale?pageNum=1&size=12">Giảm Giá <i class="fas fa-fire-alt" color="red"></i></a>
                         </li>
 
                         <li>
-                            <a href="/#features">Features</a>
+                            <a href="/#features">Tính Năng</a>
                         </li>
 
+<!--
                         <li>
                             <a href="/blog">Blog</a>
                         </li>
-
+-->
                         <li>
-                            <a href="/about">About</a>
+                            <a href="/about">Giới Thiệu</a>
                         </li>
 
                         <li>
-                            <a href="/contact">Contact</a>
+                            <a href="/contact">Liên Lạc</a>
                         </li>
                     </ul>
                 </nav>
@@ -72,21 +73,25 @@
                     <div class="dropdown">
                         <button class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="d-block">
-                                Hello, <%= user.name %>
+                                Xin chào, <%= user.name %>
                             </span>
+<!--
                             <span class="d-block">
-                                <h6>Account & List</h6>
+                                <h6></h6>
                             </span>
+-->
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <% if(user.role.includes('Admin') || user.role.includes('Employee')) { %>
-                                <a class="dropdown-item" href="/admin">Admin Dashboard</a>
+                                <a class="dropdown-item" href="/admin">Trang Chủ Admin</a>
                             <% } %>
-                            <a class="dropdown-item" href="/users/account">Your Account</a>
-                            <a class="dropdown-item" href="/users/orders">Your Orders</a>
-                            <a class="dropdown-item" href="/users/changePassword">Change Your Password</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/users/logout">Log Out</a>
+                            <a class="dropdown-item" href="/users/account">Thông Tin Tài Khoản</a>
+                            <a class="dropdown-item" href="/users/orders">Thông Tin Orders</a>
+                            <!--
+				<a class="dropdown-item" href="/users/changePassword">Change Your Password</a>
+                            -->
+			<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/users/logout">Đăng Xuất</a>
                         </div>
                     </div>
                 <% } %>
@@ -144,23 +149,26 @@
         <nav class="side-menu">
             <ul class="main-menu">
                 <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-                    <span class="topbar-child1">
-                        Free shipping for standard order over $100
-                    </span>
+<!--   
+   	        <span class="topbar-child1">
+        	      Free shipping for standard order over $100    
+		</span>
+-->
                 </li>
 
                 <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                     <div class="topbar-child2-mobile">
                         <span class="topbar-email">
-                            info@example.com
+                            giaydantuongthuydien@gmail.com
                         </span>
-
+<!--
                         <div class="topbar-language rs1-select2">
                             <select class="selection-1" name="time">
                                 <option>USD</option>
                                 <option>EUR</option>
                             </select>
                         </div>
+-->
                     </div>
                 </li>
 
@@ -174,53 +182,56 @@
                 </li>
 
                 <li class="item-menu-mobile">
-                    <a href="/">Home</a>
+                    <a href="/">Trang Chủ</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                 </li>
 
                 <li class="item-menu-mobile">
-                    <a href="/products?pageNum=1&size=12">Shop</a>
+                    <a href="/products?pageNum=1&size=12">Sản Phẩm</a>
                 </li>
 
                 <li class="item-menu-mobile">
-                    <a href="/products/onSale?pageNum=1&size=12">Sale</a>
+                    <a href="/products/onSale?pageNum=1&size=12">Giảm Giá <i class="fas fa-fire-alt" color="red"></i
+></a>
                 </li>
 
                 <li class="item-menu-mobile">
-                    <a href="/#features">Features</a>
+                    <a href="/#features">Tính Năng</a>
                 </li>
-
+<!--
                 <li class="item-menu-mobile">
                     <a href="/blog">Blog</a>
                 </li>
-
+-->
                 <li class="item-menu-mobile">
-                    <a href="/about">About</a>
+                    <a href="/about">Giới Thiệu</a>
                 </li>
 
                 <li class="item-menu-mobile">
-                    <a href="/contact">Contact</a>
+                    <a href="/contact">Liên Lạc</a>
                 </li>
 
                 <li class="item-menu-mobile">
                     <% if (!user) { %>
-                        <a href="/users/login">Login</a>
+                        <a href="/users/login">Đăng Nhập</a>
                     <% } else { %>
                         <div class="dropdown">
                             <button  style="background-color: transparent" class="btn shadow p-0 bg-white rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-block">
-                                    <h6>My Account & List</h6>
+                                    <h6>Tài Khoản & Danh Sách</h6>
                                 </span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <% if(user.role.includes('Admin') || user.role.includes('Employee')) { %>
-                                    <a class="dropdown-item" href="/admin">Admin Dashboard</a>
+                                    <a class="dropdown-item" href="/admin">Trang Chủ Admin</a>
                                 <% } %>
-                                <a class="dropdown-item" href="/users/account">Your Account</a>
-                                <a class="dropdown-item" href="/users/orders">Your Orders</a>
+                                <a class="dropdown-item" href="/users/account">Tài Khoản Của Bạn</a>
+                                <a class="dropdown-item" href="/users/orders">Thông tin Orders</a>
+<!--
                                 <a class="dropdown-item" href="/users/changePassword">Change Your Password</a>
+-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/users/logout">Log Out</a>
+                                <a class="dropdown-item" href="/users/logout">Đăng Xuất</a>
                             </div>
                         </div>
                     <% } %>

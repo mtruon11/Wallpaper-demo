@@ -12,11 +12,11 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="container-fluid">
                             <div class="float-left">
-                                <h2>Shipping address</h2>
+                                <h2>Địa Chỉ Gửi Hàng</h2>
                             </div>
                             <div class="float-right">
                                 <a data-toggle="collapse" href="#collapseShippingAddress" role="button" aria-expanded="true" aria-controls="collapseShippingAddress">
-                                    Change address
+                                    Thay Đổi
                                 </a>
                             </div>
                         </div>
@@ -25,49 +25,49 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 collapse" id="collapseShippingAddress">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="name">Name:</label>
+                            <label class="col-sm-3 col-form-label" for="name">Tên:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="name" class="form-control" name="name" required>
                             </div>
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="shippingAddress">Address:</label>
+                            <label class="col-sm-3 col-form-label" for="shippingAddress">Địa Chỉ:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="shippingAddress" class="form-control" required name="shippingAddress">
                             </div>
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="city">City:</label>
+                            <label class="col-sm-3 col-form-label" for="city">Thành Phố:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="city" class="form-control" required name="city">
                             </div>
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="state">State/Province/Region:</label>
+                            <label class="col-sm-3 col-form-label" for="state">Quận/Huyện:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="state" class="form-control" required name="state">
                             </div>
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="zip">ZIP:</label>
+                            <label class="col-sm-3 col-form-label" for="zip">Mã Vùng:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="zip" class="form-control" required name="zip">
                             </div>
                         </div>
-        
+        		
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="country">Country/Region:</label>
+                            <label class="col-sm-3 col-form-label" for="country">Quốc Gia:</label>
                             <div class="col-sm-9">
-                                <input type="text" id="country" class="form-control" required name="country">
+                                <input type="text" id="country" class="form-control" required name="country" value="Việt Nam">
                             </div>
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="phone">Phone number:</label>
+                            <label class="col-sm-3 col-form-label" for="phone">Số Điện Thoại:</label>
                             <div class="col-sm-9">
                                 <input type="tel" id="phone" class="form-control" required name="phone">
                             </div>
@@ -116,7 +116,7 @@
 --!>                <hr/>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                        <h2 class="m-l-15 m-t-10 m-b-10">Review items and shipping</h2>
+                        <h2 class="m-l-15 m-t-10 m-b-10">Sản Phẩm Trong Giỏ</h2>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="table table-responsive col-sm-12 col-md-6 col-lg-6">
@@ -130,12 +130,12 @@
                                                 <td>
                                                     <address>
                                                         <p><b><%= product.item.name %></b></p>
-                                                        <p style="color:red">$<%= product.price %></p>
+                                                        <p style="color:red"><%= product.price %> VNĐ</p>
                                                         <p><strong>Qty: </strong><%= product.qty %></p>
                                                         <% if(product.item.status) { %>
-                                                            <p style="color:green">In stock</p>    
+                                                            <p style="color:green">Có Sẵn</p>    
                                                         <% } else { %>
-                                                            <p style="color:red">Out of stock</p>
+                                                            <p style="color:red">Hết Hàng</p>
                                                         <% } %>
                                                     </address>
                                                 </td>
@@ -144,7 +144,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
+
+			<!--	<div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="m-t-3 m-b-3">
                                         <h4>Choose your delivery option:</h4>
                                     </div>
@@ -177,30 +178,32 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div> 
+                    -->
+			        </div> 
                         </div>
                         <hr/>
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <hr/>
                 <div class="container">
                     <div class="justify-content-center m-t-10 m-b-10">
-                        <button type="submit" class="btn flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">Place Your Order</button>
-                        <div class="container">
+                        <button type="submit" class="btn flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">Đặt Hàng</button>
+                        <!--<div class="container">
                             <span><p class="text-center">By placing your order, you agree to Wallpaper's <a href="#">privacy notice</a> and <a href="#">conditions of use</a>.</p></span>
-                        </div>
+                        </div>-->
                     </div>
                     <hr/>   
                     <div>
                         <p class="text-center">
-                            <h6 class="m-t-10 m-b-10"><strong>Order Summary</strong></h6>
-                            <div>Items (<%= totalQty %>): <span class="float-right">$<%= totalPrice %></span></div>
-                            <div>Shipping & Handling: <span class="float-right">$<%= shippingPrice %></span></div><hr/>
-                            <div>Total before tax: <span class="float-right">$<%= totalPrice %></span></div>
-                            <div>Estimated tax: <span class="float-right">$<%= tax %></span></div><hr/>
-                            <div class="text-danger">Order total: <span class="float-right">$<%= afterTax %></span></div><hr/>
+                            <h6 class="m-t-10 m-b-10"><strong>Tổng Kết Đơn Hàng</strong></h6>
+                            <div>Sản Phẩm (<%= totalQty %>): <span class="float-right"><%= totalPrice %> VNĐ</span></div>
+                            <div>Chi Phí Giao Hàng: <span class="float-right"><%= shippingPrice %> VNĐ</span></div><hr/>
+                            <div>Tổng Chi Phí Trước Thuế: <span class="float-right"><%= totalPrice %> VNĐ</span></div>
+                            <div>Thuế Ước Tính: <span class="float-right"><%= tax %> VNĐ</span></div><hr/>
+                            <div class="text-danger">Tổng Chi Phí: <span class="float-right"><%= afterTax %> VNĐ</span></div><hr/>
                         </p>
                     </div>
                 </div>

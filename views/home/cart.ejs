@@ -4,7 +4,7 @@
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/images/heading-pages-01.jpg);">
     <h2 class="l-text2 t-center">
-        Shopping Cart
+        Giỏ Hàng
     </h2>
 </section>
 
@@ -18,11 +18,11 @@
                     <thead>
                         <tr class="table-head">
                             <th scope="col" class="th-sm"></th>
-                            <th scope="col" class="th-sm">Product</th>
-                            <th scope="col" class="th-sm">Price</th>
-                            <th scope="col" class="th-sm">Quantity</th>
-                            <th scope="col" class="th-sm">Total</th>
-                            <th scope="col" class="th-sm">Action</th>
+                            <th scope="col" class="th-sm">Sản Phẩm</th>
+                            <th scope="col" class="th-sm">Giá</th>
+                            <th scope="col" class="th-sm">Số Lượng</th>
+                            <th scope="col" class="th-sm">Tổng</th>
+                            <th scope="col" class="th-sm"></th>
                         </tr>
                     </thead>
                    <tbody>
@@ -42,11 +42,11 @@
                             <td>
 
                                 <a href="" onclick="this.href='/cart/update?id=<%= product.item._id %>&qty=' + document.getElementById('qty').value" class="btn btn-secondary">
-                                    Update
+                                    Cập Nhập
                                 </a>
 
                                 <a href="/cart/remove/<%= product.item._id %>" class="btn btn-danger">
-                                    Remove
+                                    Xóa
                                 </a>
                             </td>
                         </tr>
@@ -63,7 +63,7 @@
                 <!--  -->
                 <div class="flex-w flex-sb-m p-b-12">
                     <h2 class="d-inline">
-                        Subtotal (<%= totalQty %> items):
+                        Tổng phụ (<%= totalQty %> sản phẩm):
                     </h2>
                     <h2 class="d-inline text-danger">$<%= totalPrice %></h2>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="size15 trans-0-4">
                     <!-- Button -->
                     <a href='/checkout' class="btn flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                        Proceed to Checkout
+                        Tiến hành đặt hàng
                     </a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
-                <h2 class="text-center">No Items in Cart</h2>
+                <h2 class="text-center">Không có sản phẩm trong giỏ</h2>
             </div>
         </div>
     </div>
