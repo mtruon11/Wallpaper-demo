@@ -5,7 +5,7 @@ const Product = require('../../models/Product');
 
 // Home page 
 router.get('/', (req, res) => {
-    Product.find({}, (err, products) => {
+    Product.find({status:true}, (err, products) => {
         res.render('./home/index', {
             user: req.user,
             products: products
@@ -26,6 +26,12 @@ router.get('/about', (req, res) => {
 //Contact
 router.get('/contact', (req, res) => {
     res.render('./home/contact', {user: req.user})
+});
+
+//Subscribe
+router.post('/subscribe', (req, res) => {
+	console.log('Email: ' + req.query.email);
+	res.status(200).redirect('/');
 });
 
 

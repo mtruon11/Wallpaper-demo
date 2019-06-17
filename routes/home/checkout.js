@@ -30,37 +30,21 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
     
     var cart = new Cart(req.session.cart);
 
-    var stripe = require('stripe')(process.env.STRIPE_SECRET);
-    
-    const {stripeToken, name, shippingAddress, city, state, country, zip} = req.body;
-    
-    console.log('Totol price is ', cart.totalPrice * 100 + cart.totalPrice * 0.06 * 100);
+    const {name, shippingAddress, city, state, country, zip, phone} = req.body;
 
-    stripe.charges.create({
-        amount: cart.totalPrice * 100 + cart.totalPrice * 0.06 * 100, 
-        currency: "usd",
-        source: stripeToken,
-        description: "Test Charge"
-    }, (err, charge) => {
-        if(err){
-            req.flash('error', err.message);
-            return res.redirect('/checkout');
-        } else {
-            var order = new Order({
-                name: name,
-                user: req.user._id,
-                cart: cart,
-                shippingAddress: (shippingAddress + ' ' + city + ' ' + state + ' ' + country + ' ' + zip),
-                total: (cart.totalPrice + cart.totalPrice * 0.06),
-                paymentId: charge.id
-            });
-            
-            order.save((err, result) => {
-                req.flash('success', 'Successfully bought product!');
-                req.session.cart = null;
-                res.redirect('/');
-            })
-        }
+    var order = new Order({
+	name: name,
+	user: req.user._id,
+	cart: cart,
+	shippingAddress: (shippingAddress + ' ' + city + ' ' + state + ' ' + country + ' ' + zip),
+	total: cart.totalPrice,
+	phone: phone
+    });
+    
+    order.save((err, result) => {
+	req.flash('success', 'Successfully bought product!');
+	req.session.cart = null;
+	res.redirect('/');
     })
 })
 
