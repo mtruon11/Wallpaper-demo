@@ -12,6 +12,14 @@ const MongoStore = require('connect-mongo')(session);
 
 var fs = require('fs');
 var http = require('http'); 
+var https = require('https');
+
+var options = {
+    key: fs.readFileSync('./ssl/server-key.pem'), 
+    cert: fs.readFileSync('./ssl/server-crt.pem'), 
+    ca: fs.readFileSync('./ssl/ca-crt.pem'), 
+};
+
 // PORT
 const PORT = process.env.PORT;
 
@@ -54,16 +62,16 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 // override with POST having ?_method=DELETE
-app.use((req, res, next) => {
-    if(req.query._method == 'DELETE'){
-        req.method = 'DELETE';
-        req.url = req.path;
-    } else if (req.query._method == 'PUT'){
-        req.method = 'PUT';
-        req.url = req.path;
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if(req.query._method == 'DELETE'){
+//         req.method = 'DELETE';
+//         req.url = req.path;
+//     } else if (req.query._method == 'PUT'){
+//         req.method = 'PUT';
+//         req.url = req.path;
+//     }
+//     next();
+// });
 
 //Access to public folder
 app.use(express.static(path.join(__dirname, '/public')));
@@ -118,10 +126,8 @@ app.use('/products', require('./routes/home/product.js'));
 app.use('/auth', require('./routes/auth-routes.js'));
 app.use('/users', require('./routes/user.js'));
 app.use('/admin', ensureLoggedIn('/users/login'), roleRequired, require('./routes/admin/dashboard.js'));
-
+app.use('/api', ensureLoggedIn('/users/login'), roleRequired, require('./routes/api/api.js'));
 //Handle 404 errors. The last middleware.
 app.use('*', (req, res) => { res.status(404).send('404')});
 
-// Create server to listen on PORT 8443
-var server = http.createServer(app)
-server.listen(80, () => console.log('Server running on port '+ 80));
+https.createServer(options, app).listen(8080, ()=> console.log('Server running on port ' + 8080))

@@ -9,8 +9,175 @@
         <% include ./productReport %>
         
         <!-- Add product form -->
-        <div class="container-fluid table-responsive table-responsive-sm table-responsive-md table-responsive-lg m-t-50 m-b-50">
-            <table id="dataTable" class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
+        <div class="product-form container-fluid m-t-50 m-b-50" style="display:none">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-10 col-sm-12" style="border-radius: 15px; background-color: lightgray">
+                    <div class="block mx-4 my-4">
+                        
+                        <div class="mx-4 my-4 block-title">
+                            <h2>
+                                <i class="fa fa-plus"></i>
+                                <strong> Add </strong> New Product
+                            </h2>
+                        </div>
+                        <div class="block-form">
+                        <form action="/api/products/" method="post" enctype="multipart/form-data">
+                            <input class="form-control text-box" type="text", id="id", name="id" hidden/>
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="sku"><b>SKU</b></label>
+                                <div class="col-md-auto">
+                                    <input 
+                                        class="form-control text-box"
+                                        type="text"
+                                        id="sku"
+                                        name="sku"
+                                        placeholder="Enter sku..."
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="name"><b>Product Name</b></label>
+                                <div class="col-md-auto">
+                                    <input 
+                                        class="form-control text-box"
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter product name..."
+                                        />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="description"><b>Description</b></label>
+                                <div class="col-md-auto">
+                                    <textarea 
+                                        class="form-control text-box overflow-auto"
+                                        type="text"
+                                        id="description"
+                                        name="description"
+                                        placeholder="Enter product description..."
+                                        rows="5"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="categories"><b>Categories</b></label>
+                                <div class="col-md-auto">
+                                    <select class="text-box" id="categories" name="categories[]" multiple>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="tags"><b>Tags</b></label>
+                                <div class="col-md-auto">
+                                    <select class="text-box" id="tags" name="tags[]" multiple>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="colors"><b>Colors</b></label>
+                                <div class="col-md-auto">
+                                    <select class="text-box" id="colors" name="colors[]" multiple>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="measure"><b>Measure</b></label>
+                                <div class="col-md-auto">
+                                    <select class="text-box" id="measure" name="measure[]" multiple>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="quantity"><b>Quantity</b></label>
+                                <div class="col-md-auto">
+                                    <input 
+                                        class="form-control text-box"
+                                        type="number"
+                                        min=0
+                                        step=1
+                                        id="quantity"
+                                        name="quantity"
+                                        placeholder="Enter the number of products"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="regularPrice">
+                                    <i class="fa fa-usd"></i> <b>Regular Price</b>
+                                </label>
+                                <div class="col-md-auto">
+                                    <input 
+                                        class="form-control text-box"
+                                        type="number"
+                                        min=0
+                                        step=0.25
+                                        id="regularPrice"
+                                        name="regularPrice"
+                                        placeholder="0.00"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="discountPrice">
+                                    <i class="fa fa-usd"></i> <b>Discount Price</b>
+                                </label>
+                                <div class="col-md-auto">
+                                    <input 
+                                    class="form-control text-box"
+                                    type="number"
+                                    min=0
+                                    step=0.25
+                                    id="discountPrice"
+                                    name="discountPrice"
+                                    placeholder="0.00"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-auto control-label" for="images"><i class="fa fa-picture-o"></i><b>Upload Product Images</b></label>
+                                <div class="col-md-auto">
+                                    <input 
+                                    type="file" 
+                                    name="images" 
+                                    id="images" 
+                                    class="form-control text-box" 
+                                    multiple>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-auto">
+                                    <button type="submit" class="btn btn-sm btn-primary p-2 mr-2 btn-save">
+                                        <i class="fa fa-floppy-o"></i>
+                                        Save
+                                    </button>
+                                    <button type="reset" class="btn btn-sm btn-warning p-2 mr-2 btn-reset">
+                                        <i class="fa fa-repeat"></i>
+                                        Reset
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="product-table container-fluid table-responsive table-responsive-sm table-responsive-md table-responsive-lg m-t-50 m-b-50">
+            <table class="table table-light table-striped table-bordered table-hover table-sm mx-8 my-8">
                 <thead>
                     <tr>
                         <th class="th-sm th-md th-lg text-center" id="sku" scope="col">SKU</th>
@@ -26,52 +193,12 @@
                         <th class="th-sm th-md th-lg text-center" scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <% data.forEach(function(data) { %>
-                    <tr class="mw-100 p-3 text-center">
-                        <td class="text-center"><%= data.sku %></td>
-                        <td class="h-50 mx-auto my-auto text-center">
-                            <!-- <img src='/images/uploads/1547227742454-banner-01.jpg' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/> -->
-                            <img src='<%= data.imageUrl[0] %>' alt="Image" class="img-fluid img-thumbnail rounded" width="100px"/>
-                        </td>
-                        <td class="text-center"><%= data.name %></td>
-                        <td class="text-center regularPrice"><%= data.regularPrice %></td>
-                        <td class="text-center discountPrice"><%= data.discountPrice %></td>
-                        <td class="text-center"><%= data.quantity %></td>
-                        <% if(data.status){ %>
-                            <td class="text-center"><span class="label label-success" style="background-color:#449d44">Available</span></td>
-                        <% } else { %>
-                            <td class="text-center"><span class="label label-danger" style="background-color:red">Out of Stock</span></td>
-                        <% } %>
-                        <td class="text-center">
-                            <% data.categories.forEach(function(category) { %>
-                                <p class="text-center">
-                                    <%= category %>
-                                </p>
-                            <% }); %>
-                        </td>
-                        <td class="text-center">
-				<p class="text-center">
-					<% data.tags.forEach(function(tag) { %>
-						<%= tag %> 
-                            		<% }); %>
-				</p>
-                        </td>
-                        <td class="text-center"><%= data.createdOn.toDateString() %></td>
-                        <td class="text-center">
-                            <a data-toggle="tooltip" data-placement="top" title="Edit" href="<%= link + data.sku %>" >
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a data-toggle="tooltip" data-placement="top" title="Delete" href="<%= link + data.sku + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
-                                <i class="fas fa-trash-alt" style="color:red"></i>
-                            </a> 
-                        </td>
-                    </tr>
-                    <% }); %>
-                </tbody>
+                <tbody id="product-table"></tbody>
             </table>
         </div>
         
     </div>
 
 </div>
+
+<script type="text/javascript" src="/js/product.js"></script>

@@ -4,10 +4,10 @@
 <!-- Title Page -->
 <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(../images/heading-pages-02.jpg);">
     <h2 class="l-text2 t-center">
-        Women
+        Wallpaper
     </h2>
     <p class="m-text13 t-center">
-        New Arrivals Women Collection 2018
+        New Arrivals Collection 2018
     </p>
 </section>
 
@@ -19,64 +19,63 @@
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                 <div class="leftbar p-r-20 p-r-0-sm">
                     <!--  -->
-                    <h4 class="m-text14 p-b-7">
+                    <h4 class="m-text14 p-b-5">
                         Categories
                     </h4>
 
-                    <div class="wrap-tags flex-w p-b-54">
+                    <div class="wrap-tags flex-w p-b-25">
                         <% categories.forEach(function(category) { %>
-                                <a href="/products/categories?category=<%= category.name %>" class="tag-item s-text13">
+                            <button type="submit" id="<%= category.name %>" class="btn tag-item category s-text13">
                                     <%= category.name %>
-                        	</a>
+                        	</button>
                         <% }); %>
                     </div>
 
-                    <h4 class="m-text14 p-b-7">
+                    <h4 class="m-text14 p-b-5">
                         Tags
                     </h4>
 
-                    <div class="wrap-tags flex-w p-b-54">
+                    <div class="wrap-tags flex-w p-b-25">
                         <% tags.forEach(function(tag) { %>
-                                <a href="/products/tags?tag=<%= tag.name %>" class="tag-item s-text13">
+                            <button type="submit" id="<%= tag.name %>" class="btn tag-item tag s-text13">
                                     <%= tag.name %>
-                                </a>
+                            </button>
                         <% }); %>
                     </div>
 
-                    <h4 class="m-text14 p-b-7">
+                    <h4 class="m-text14 p-b-5">
                         Colors
                     </h4>
 
-                    <div class="wrap-tags flex-w p-b-54">
+                    <div class="wrap-tags flex-w p-b-25">
                         <% colors.forEach(function(color) { %>
-                                <a href="/products/colors?color=<%= color.name %>" class="tag-item s-text13">
+                            <button type="submit" id="<%= color.name %>" class="btn tag-item color s-text13">
                                     <%= color.name %>
-                                </a>
+                            </button>
                         <% }); %>
                     </div>
 
-                    <h4 class="m-text14 p-b-7">
+                    <h4 class="m-text14 p-b-5">
                         Measurements
                     </h4>
 
-                    <div class="wrap-tags flex-w p-b-54">
+                    <div class="wrap-tags flex-w p-b-25">
                         <% measurements.forEach(function(measure) { %>
-                                <a href="/products/measurements?measure=<%= measure.measure %>" class="tag-item s-text13">
+                                <button type="submit" id="<%= measure.measure %>" class="btn tag-item measure s-text13">
                                     <%= measure.measure %>
-                                </a>
+                                </button>
                         <% }); %>
                     </div>
 
-                    <div class="flex-w p-b-54">
-                        <form action="/search" method="POST">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                            <input type="text" placeholder="Search.." name="search" class="search-box border p-1"/>
+                    <div class="flex-w p-b-25">
+                        <form action="/filter?pageNum=1&size=12" method="GET">
+                            <button type="submit" class="filter btn btn-sm btn-secondary">Filter</button>
                         </form>
                     </div>
 		        </div>
             </div>
 
-            <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+            <div class="product-col col-sm-6 col-md-8 col-lg-9 p-b-50">
                 <!--  -->
                 <div class="flex-sb-m flex-w p-b-35">
                     <div class="flex-w">
@@ -119,7 +118,7 @@
                  </div>
 
                 <!-- Product -->
-                <div class="row">
+                <div class="row products">
 
                     <% products.forEach(function(product) { %>
 
@@ -146,7 +145,7 @@
                             </div>
         
                             <div class="block2-txt p-t-20">
-                                <a href="/products/pid/<%= product._id %>" class="block2-name dis-block s-text3 p-b-5">
+                                <a href="/products/id/<%= product._id %>" class="block2-name dis-block s-text3 p-b-5">
                                     <%= product.name %>
                                 </a>
         
@@ -170,6 +169,8 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript" src="/js/filter.js"></script>
 
 <!-- Footer -->
 <% include ./partials/footer %>

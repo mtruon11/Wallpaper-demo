@@ -18,10 +18,6 @@
                             </h2>
                         </div>
                         <div class="block-form">
-
-                            <% include ../partials/messages %>
-                            <form action="/admin/categories/addCategory" method="post">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                 <div class="form-group">
                                     <label class="col-md-auto control-label" for="name"><b>Category Name</b></label>
                                     <div class="col-md-auto">
@@ -34,10 +30,9 @@
                                         />
                                     </div>
                                 </div>
-                                
                                 <div class="form-group">
                                     <div class="col-md-auto">
-                                        <button type="submit" class="btn btn-sm btn-primary p-2 mr-2">
+                                        <button type="submit" class="btn btn-sm btn-primary p-2 mr-2" id="btn-save">
                                             <i class="fa fa-floppy-o"></i>
                                             Save
                                         </button>
@@ -58,7 +53,7 @@
 
         <!-- Category Table View  -->
         <div class="container-fluid table-responsive m-t-50 m-b-50">
-            <table id="dataTable" class="table table-light table-striped table-bordered table-hover mx-8 my-8">
+            <table id="categories-table" class="table table-light table-striped table-bordered table-hover mx-8 my-8">
                 <thead>
                     <tr>
                         <th class="th-sm" scope="col">Category Name</th>
@@ -67,26 +62,12 @@
                         <th class="th-sm" scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <% doc.forEach(function(doc) { %>
-                    <tr class="mw-100 p-3">
-                        <td><%= doc.name %></td>
-                        <td><%= doc.createdOn.toDateString() %></td>
-                        <td><%= doc.updatedOn.toDateString() %></td>
-                        <td>
-                            <a doc-toggle="tooltip" doc-placement="top" title="Edit" href="<%= link + doc.name %>" >
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a doc-toggle="tooltip" doc-placement="top" title="Delete" href="<%= link + doc.name + '?_method=DELETE' %>" onclick="return confirm('Are you sure?')">
-                                <i class="fas fa-trash-alt" style="color:red"></i>
-                            </a> 
-                        </td>
-                    </tr>
-                    <% }); %>
+                <tbody id="category-table">
                 </tbody>
             </table>
         </div>
-        
-    </div>
+    </div>  
 
+    
 </div>
+<script type="text/javascript" src="/js/category.js"></script>

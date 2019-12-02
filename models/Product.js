@@ -47,6 +47,14 @@ var productSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    measurements: {
+        type: Array,
+        required: true
+    },
+    colors: {
+        type: Array,
+        required: true
+    },
     imageUrl: {
         type: Array,
         required: true

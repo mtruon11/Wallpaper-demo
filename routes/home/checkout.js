@@ -28,13 +28,12 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
         return res.redirect('/products');
     }
     
-    var cart = new Cart(req.session.cart);
-
+    
     var stripe = require('stripe')(process.env.STRIPE_SECRET);
     
     const {stripeToken, name, shippingAddress, city, state, country, zip} = req.body;
     
-    console.log('Totol price is ', cart.totalPrice * 100 + cart.totalPrice * 0.06 * 100);
+    var cart = new Cart(req.session.cart);
 
     stripe.charges.create({
         amount: cart.totalPrice * 100 + cart.totalPrice * 0.06 * 100, 
@@ -46,6 +45,7 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
             req.flash('error', err.message);
             return res.redirect('/checkout');
         } else {
+        
             var order = new Order({
                 name: name,
                 user: req.user._id,
@@ -60,8 +60,9 @@ router.post('/', ensureLoggedIn('/users/login'), (req, res, next) => {
                 req.session.cart = null;
                 res.redirect('/');
             })
+        
         }
-    })
+    }) 
 })
 
 
